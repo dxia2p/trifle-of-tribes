@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <title>CHAT</title>
+</head>
+
+<body>
+    <header>Chat</header>
+    <div class="chatBox" id="chatBox">
+        
+    </div>
+    <p>NAME:</p>
+    <input type="text" id="usernameBox">
+    <p>message:</p>
+    <input type="text" id="messageBox">
+
+
+    <button type="button" id="sendButton">Send</button>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.1/socket.io.js"></script>
+    <script src="index.js"></script>
+</body>
+
+</html>
