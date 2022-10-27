@@ -15,7 +15,7 @@ class Vector2{
 
 
 let cam = new Camera(854, 480, new Vector2(0, 0));
-let square = new RectRenderer(new Vector2(50, 50), 20, 20, 45);
+let square = new RectRenderer(new Vector2(50, 50), 30, 30, 45);
 
 function loop(time){
     drawAll(ctx);
