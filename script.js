@@ -14,10 +14,11 @@ class Vector2{
 }
 
 
-let cam = Camera(854, 480, Vector2(0, 0));
+let cam = new Camera(854, 480, new Vector2(0, 0));
+let square = new RectRenderer(new Vector2(50, 50), 30, 30, 45);
 
 function loop(time){
-    drawAll();
+    drawAll(ctx);
     requestAnimationFrame(loop);
 }
 requestAnimationFrame(loop);
