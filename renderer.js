@@ -16,32 +16,21 @@ class Renderer{
 }
 
 class RectRenderer extends Renderer{
-    constructor(pos, width, height, degrees){
+    constructor(pos, width, height, degrees, color, camera){
         super();
         this.pos = pos;
         this.width = width;
         this.height = height;
         this.degrees = degrees;
+        this.color = color;
+        this.camera = camera;
     }
     draw(ctx){
-        // First save the untranslated / un-rotated context
-        ctx.save();
-
         ctx.beginPath();
-        // Move the rotation point to the center of the rect
-        ctx.translate(this.pos.x+this.width/2, this.pos.y+this.height/2 );
-        // Rotate the rect
-        ctx.rotate(this.degrees*Math.PI/180);
-
-        // Draw the rect on the transformed context
-        // Note: after transforming [0,0] is visually [x,y] so the rect needs to be offset accordingly when drawn
-        ctx.rect( -this.width/2, -this.height/2, this.width, this.height);
-
-        ctx.fillStyle="green";
+        ctx.fillStyle = this.color;
+        ctx.rect((this.pos.x - (this.width / 2) - this.camera.pos.x + (this.camera.width /2)), 
+        this.pos.y - (this.height / 2) - (this.camera.pos.y - this.camera.height / 2), this.width, this.height);
         ctx.fill();
-
-        // Restore the context to its untranslated / un-rotated state
-        ctx.restore();
     }
 }
 
