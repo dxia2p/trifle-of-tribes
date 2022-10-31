@@ -24,24 +24,23 @@ class RectRenderer extends Renderer{
         this.degrees = degrees;
     }
     draw(ctx){
-        // first save the untranslated/unrotated context
+        // First save the untranslated / un-rotated context
         ctx.save();
 
         ctx.beginPath();
-        // move the rotation point to the center of the rect
+        // Move the rotation point to the center of the rect
         ctx.translate(this.pos.x+this.width/2, this.pos.y+this.height/2 );
-        // rotate the rect
+        // Rotate the rect
         ctx.rotate(this.degrees*Math.PI/180);
 
-        // draw the rect on the transformed context
-        // Note: after transforming [0,0] is visually [x,y]
-        //       so the rect needs to be offset accordingly when drawn
+        // Draw the rect on the transformed context
+        // Note: after transforming [0,0] is visually [x,y] so the rect needs to be offset accordingly when drawn
         ctx.rect( -this.width/2, -this.height/2, this.width, this.height);
 
         ctx.fillStyle="green";
         ctx.fill();
 
-        // restore the context to its untranslated/unrotated state
+        // Restore the context to its untranslated / un-rotated state
         ctx.restore();
     }
 }

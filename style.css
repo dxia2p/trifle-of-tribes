@@ -6,6 +6,22 @@ body {
     font: bolder;
 }
 
+canvas {
+    background-color: whitesmoke;
+}
+
 #canv{
-    border: 1px solid black;
+    border: 3px solid black;
+    border-radius: 10px;
+}
+
+h1 {
+    font-size: 40px;
+}
+
+p {
+    width: 600px;
+    margin: auto;
+    padding-top: 30px;
+    font-weight: bold;
 }
