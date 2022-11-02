@@ -16,12 +16,11 @@ class Renderer{
 }
 
 class RectRenderer extends Renderer{
-    constructor(pos, width, height, degrees, color, camera){
+    constructor(pos, width, height, color, camera){
         super();
         this.pos = pos;
         this.width = width;
         this.height = height;
-        this.degrees = degrees;
         this.color = color;
         this.camera = camera;
     }
