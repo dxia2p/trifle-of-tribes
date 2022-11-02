@@ -37,6 +37,20 @@ for(let y = (BACKGROUNDSIZE / 2); y > -(BACKGROUNDSIZE / 2); y -= BACKGROUNDSQUA
 
 }
 
+// Mouse movement (snap mouse to grid)
+document.addEventListener('mousemove', (event) => {
+	let mousePos = getMousePos(canvas, event);
+    console.log(mousePos);
+});
+
+function getMousePos(canvas, evt) {
+    var rect = canvas.getBoundingClientRect();
+    return {
+      x: evt.clientX - rect.left,
+      y: evt.clientY - rect.top
+    };
+  }
+
 // Camera Movement
 document.addEventListener("keydown", keydownHandler);
 document.addEventListener("keyup", keyupHandler);
