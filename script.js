@@ -45,13 +45,13 @@ let leftRightValue = 0;
 
 function keydownHandler(event) {
     if (event.code == "KeyW") {
-        upDownValue = -1;
+        upDownValue = 3;
     } else if (event.code == "KeyS") {
-        upDownValue = 1;
+        upDownValue = -3;
     } else if (event.code == "KeyA") {
-        leftRightValue = -1;
+        leftRightValue = -3;
     } else if (event.code == "KeyD") {
-        leftRightValue = 1;
+        leftRightValue = 3;
     }
 }
 
