@@ -13,12 +13,38 @@ class Vector2{
     }
 }
 
-
 let cam = new Camera(854, 480, new Vector2(0, 0));
 let square = new RectRenderer(new Vector2(0, 0), 30, 30, 0, "green", cam);
 
+// Camera Movement
+document.addEventListener("keydown", keydownHandler);
+document.addEventListener("keyup", keyupHandler);
+let upDownValue = 0;
+let leftRightValue = 0;
+
+function keydownHandler(event) {
+    if (event.code == "KeyW") {
+        upDownValue = -1;
+    } else if (event.code == "KeyS") {
+        upDownValue = 1;
+    } else if (event.code == "KeyA") {
+        leftRightValue = -1;
+    } else if (event.code == "KeyD") {
+        leftRightValue = 1;
+    }
+}
+
+function keyupHandler(event) {
+    if (event.code == "KeyW" || event.code == "KeyS") {
+        upDownValue = 0;
+    } else if (event.code == "KeyA" || event.code == "KeyD") {
+        leftRightValue = 0;
+    }
+}
+
 function loop(time){
-    cam.pos.y -= 1;
+    cam.pos.y += upDownValue;
+    cam.pos.x += leftRightValue;
     drawAll(ctx);
     requestAnimationFrame(loop);
 }
