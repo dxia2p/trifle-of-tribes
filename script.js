@@ -53,7 +53,6 @@ function getMousePos(canvas, evt) {
       y: (evt.clientY - rect.top) - canvas.height / 2
     };
   }
-
 // Camera Movement
 document.addEventListener("keydown", keydownHandler);
 document.addEventListener("keyup", keyupHandler);
