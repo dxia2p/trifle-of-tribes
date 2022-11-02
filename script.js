@@ -18,7 +18,7 @@ let cam = new Camera(854, 480, new Vector2(0, 0));
 let square = new RectRenderer(new Vector2(0, 0), 30, 30, 0, "green", cam);
 
 function loop(time){
-    cam.pos.y -= 1;
+    
     drawAll(ctx);
     requestAnimationFrame(loop);
 }
