@@ -16,12 +16,11 @@ class Renderer{
 }
 
 class RectRenderer extends Renderer{
-    constructor(pos, width, height, degrees, color, camera){
+    constructor(pos, width, height, color, camera){
         super();
         this.pos = pos;
         this.width = width;
         this.height = height;
-        this.degrees = degrees;
         this.color = color;
         this.camera = camera;
     }
@@ -29,7 +28,7 @@ class RectRenderer extends Renderer{
         ctx.beginPath();
         ctx.fillStyle = this.color;
         ctx.rect((this.pos.x - (this.width / 2) - this.camera.pos.x + (this.camera.width /2)), 
-        this.pos.y - (this.height / 2) - (this.camera.pos.y - this.camera.height / 2), this.width, this.height);
+        this.pos.y - (this.height / 2) - (-this.camera.pos.y - this.camera.height / 2), this.width, this.height);
         ctx.fill();
     }
 }
