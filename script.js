@@ -16,14 +16,23 @@ class Vector2{
 
 let cam = new Camera(854, 480, new Vector2(0, 0));
 const BACKGROUNDSIZE = 2000;
-let square = new RectRenderer(new Vector2(0, 0), BACKGROUNDSIZE, BACKGROUNDSIZE, 0, "#A6E57A", cam);
+let square = new RectRenderer(new Vector2(0, 0), BACKGROUNDSIZE, BACKGROUNDSIZE, "#A6E57A", cam);
 let backgroundSquares = [];
 const BACKGROUNDSQUARESSIZE = 30;
-for(let y = 0; y < BACKGROUNDSIZE; y+= BACKGROUNDSQUARESSIZE){
-    if(y % 2 == 0){
-        for(let x = 0; x < BACKGROUNDSIZE; x += BACKGROUNDSQUARESSIZE * 2){
-
-        }   
+let offsetRow = false;
+for(let y = (BACKGROUNDSIZE / 2); y > -(BACKGROUNDSIZE / 2); y -= BACKGROUNDSQUARESSIZE){
+    if(!offsetRow){
+        for(let x = BACKGROUNDSIZE / -2; x < BACKGROUNDSIZE / 2; x += BACKGROUNDSQUARESSIZE * 2){
+            backgroundSquares.push(new RectRenderer(new Vector2(x, y), 
+            BACKGROUNDSQUARESSIZE, BACKGROUNDSQUARESSIZE, "#78D03B", cam));
+        }
+        offsetRow = true;
+    }else{
+        for(let x = (BACKGROUNDSIZE / -2) + BACKGROUNDSQUARESSIZE; x < BACKGROUNDSIZE / 2; x += BACKGROUNDSQUARESSIZE * 2){
+            backgroundSquares.push(new RectRenderer(new Vector2(x, y), 
+            BACKGROUNDSQUARESSIZE, BACKGROUNDSQUARESSIZE, "#78D03B", cam));
+        }
+        offsetRow = false
     }
 
 }
