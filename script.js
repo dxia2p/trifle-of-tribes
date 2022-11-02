@@ -43,7 +43,6 @@ document.addEventListener('mousemove', (event) => {
 	let mousePos = getMousePos(canvas, event);
     mouseRect.pos.x = Math.round((mousePos.x + cam.pos.x) / 30) * 30;
     mouseRect.pos.y = Math.round((mousePos.y - cam.pos.y) / 30) * 30;
-    console.log(mouseRect.pos);
 });
 
 function getMousePos(canvas, evt) {
