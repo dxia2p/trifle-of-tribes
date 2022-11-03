@@ -1,13 +1,14 @@
 let canvas = document.getElementById("canv");
+document.getElementById("goldTest").addEventListener("click", goldLevelIncrease)
 
 let ctx = canvas.getContext("2d");
 
 canvas.width = "854";
 canvas.height = "480";
-class Vector2{
+class Vector2 {
     x = 0;
     y = 0;
-    constructor(x, y){
+    constructor(x, y) {
         this.x = x;
         this.y = y;
     }
@@ -20,17 +21,17 @@ let square = new RectRenderer(new Vector2(0, 0), BACKGROUNDSIZE, BACKGROUNDSIZE,
 let backgroundSquares = [];
 const BACKGROUNDSQUARESSIZE = 30;
 let offsetRow = false;
-for(let y = (BACKGROUNDSIZE / 2); y > -(BACKGROUNDSIZE / 2); y -= BACKGROUNDSQUARESSIZE){
-    if(!offsetRow){
-        for(let x = BACKGROUNDSIZE / -2; x < BACKGROUNDSIZE / 2; x += BACKGROUNDSQUARESSIZE * 2){
-            backgroundSquares.push(new RectRenderer(new Vector2(x, y), 
-            BACKGROUNDSQUARESSIZE, BACKGROUNDSQUARESSIZE, "#78D03B", cam));
+for (let y = (BACKGROUNDSIZE / 2); y > -(BACKGROUNDSIZE / 2); y -= BACKGROUNDSQUARESSIZE) {
+    if (!offsetRow) {
+        for (let x = BACKGROUNDSIZE / -2; x < BACKGROUNDSIZE / 2; x += BACKGROUNDSQUARESSIZE * 2) {
+            backgroundSquares.push(new RectRenderer(new Vector2(x, y),
+                BACKGROUNDSQUARESSIZE, BACKGROUNDSQUARESSIZE, "#78D03B", cam));
         }
         offsetRow = true;
-    }else{
-        for(let x = (BACKGROUNDSIZE / -2) + BACKGROUNDSQUARESSIZE; x < BACKGROUNDSIZE / 2; x += BACKGROUNDSQUARESSIZE * 2){
-            backgroundSquares.push(new RectRenderer(new Vector2(x, y), 
-            BACKGROUNDSQUARESSIZE, BACKGROUNDSQUARESSIZE, "#78D03B", cam));
+    } else {
+        for (let x = (BACKGROUNDSIZE / -2) + BACKGROUNDSQUARESSIZE; x < BACKGROUNDSIZE / 2; x += BACKGROUNDSQUARESSIZE * 2) {
+            backgroundSquares.push(new RectRenderer(new Vector2(x, y),
+                BACKGROUNDSQUARESSIZE, BACKGROUNDSQUARESSIZE, "#78D03B", cam));
         }
         offsetRow = false
     }
@@ -63,10 +64,26 @@ function keyupHandler(event) {
     }
 }
 
-function loop(time){
+function loop(time) {
     cam.pos.y += upDownValue;
     cam.pos.x += leftRightValue;
     drawAll(ctx);
     requestAnimationFrame(loop);
 }
 requestAnimationFrame(loop);
+
+let gold = 0;
+function goldLevelIncrease() {
+    let goldLevel = 1;
+    goldLevel + 1;
+    let goldInterval = 600 * 1/goldLevel
+    console.log(goldLevel);
+
+    window.setInterval(
+        () => {
+            gold++ ;
+            console.log(gold);
+        },
+        goldInterval);
+}   
+
