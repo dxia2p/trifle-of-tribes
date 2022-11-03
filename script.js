@@ -1,5 +1,5 @@
 let canvas = document.getElementById("canv");
-document.getElementById("goldTest").addEventListener("click", goldLevelIncrease)
+document.getElementById("goldTest").addEventListener("click", goldLevelIncrease);
 
 let ctx = canvas.getContext("2d");
 
@@ -16,32 +16,31 @@ class Vector2 {
 
 
 let cam = new Camera(854, 480, new Vector2(0, 0));
-const BACKGROUNDSIZE = 1980;
-let square = new RectRenderer(new Vector2(0, 0), BACKGROUNDSIZE, BACKGROUNDSIZE, "#A6E57A", 1, cam);
+const BACKGROUND_SIZE = 1980;
+let square = new RectRenderer(new Vector2(0, 0), BACKGROUND_SIZE, BACKGROUND_SIZE, "#A6E57A", 1, cam);
 let backgroundSquares = [];
-const BACKGROUNDSQUARESSIZE = 30;
+const BACKGROUND_SQUARES_SIZE = 30;
 let offsetRow = false;
-for(let y = (BACKGROUNDSIZE / 2); y > -(BACKGROUNDSIZE / 2); y -= BACKGROUNDSQUARESSIZE){
-    if(!offsetRow){
-        for(let x = BACKGROUNDSIZE / -2; x < BACKGROUNDSIZE / 2; x += BACKGROUNDSQUARESSIZE * 2){
-            backgroundSquares.push(new RectRenderer(new Vector2(x, y), 
-            BACKGROUNDSQUARESSIZE, BACKGROUNDSQUARESSIZE, "#78D03B", 1, cam));
+for (let y = (BACKGROUND_SIZE / 2); y > -(BACKGROUND_SIZE / 2); y -= BACKGROUND_SQUARES_SIZE) {
+    if (!offsetRow) {
+        for (let x = BACKGROUND_SIZE / -2; x < BACKGROUND_SIZE / 2; x += BACKGROUND_SQUARES_SIZE * 2) {
+            backgroundSquares.push(new RectRenderer(new Vector2(x, y),
+                BACKGROUND_SQUARES_SIZE, BACKGROUND_SQUARES_SIZE, "#78D03B", 1, cam));
         }
         offsetRow = true;
-    }else{
-        for(let x = (BACKGROUNDSIZE / -2) + BACKGROUNDSQUARESSIZE; x < BACKGROUNDSIZE / 2; x += BACKGROUNDSQUARESSIZE * 2){
-            backgroundSquares.push(new RectRenderer(new Vector2(x, y), 
-            BACKGROUNDSQUARESSIZE, BACKGROUNDSQUARESSIZE, "#78D03B", 1, cam));
+    } else {
+        for (let x = (BACKGROUND_SIZE / -2) + BACKGROUND_SQUARES_SIZE; x < BACKGROUND_SIZE / 2; x += BACKGROUND_SQUARES_SIZE * 2) {
+            backgroundSquares.push(new RectRenderer(new Vector2(x, y),
+                BACKGROUND_SQUARES_SIZE, BACKGROUND_SQUARES_SIZE, "#78D03B", 1, cam));
         }
-        offsetRow = false
+        offsetRow = false;
     }
-
 }
 
 // Mouse movement (snap mouse to grid)
-let mouseRect = new RectRenderer(new Vector2(0, 0), BACKGROUNDSQUARESSIZE, BACKGROUNDSQUARESSIZE, "#FFFFFF", 0.7, cam);
+let mouseRect = new RectRenderer(new Vector2(0, 0), BACKGROUND_SQUARES_SIZE, BACKGROUND_SQUARES_SIZE, "#FFFFFF", 0.7, cam);
 document.addEventListener('mousemove', (event) => {
-	let mousePos = getMousePos(canvas, event);
+    let mousePos = getMousePos(canvas, event);
     mouseRect.pos.x = Math.round((mousePos.x + cam.pos.x) / 30) * 30;
     mouseRect.pos.y = Math.round((mousePos.y - cam.pos.y) / 30) * 30;
 });
@@ -49,10 +48,11 @@ document.addEventListener('mousemove', (event) => {
 function getMousePos(canvas, evt) {
     var rect = canvas.getBoundingClientRect();
     return {
-      x: (evt.clientX - rect.left) - canvas.width / 2,
-      y: (evt.clientY - rect.top) - canvas.height / 2
+        x: (evt.clientX - rect.left) - canvas.width / 2,
+        y: (evt.clientY - rect.top) - canvas.height / 2
     };
-  }
+}
+
 // Camera Movement
 document.addEventListener("keydown", keydownHandler);
 document.addEventListener("keyup", keyupHandler);
@@ -79,6 +79,7 @@ function keyupHandler(event) {
     }
 }
 
+// Main Game Loop
 function loop(time) {
     cam.pos.y += upDownValue;
     cam.pos.x += leftRightValue;
@@ -87,18 +88,18 @@ function loop(time) {
 }
 requestAnimationFrame(loop);
 
+// Gold Counter
 let gold = 0;
 function goldLevelIncrease() {
     let goldLevel = 1;
     goldLevel + 1;
-    let goldInterval = 600 * 1/goldLevel
+    let goldInterval = 600 * 1 / goldLevel;
     console.log(goldLevel);
 
     window.setInterval(
         () => {
-            gold++ ;
+            gold++;
             console.log(gold);
         },
         goldInterval);
-}   
-
+}
