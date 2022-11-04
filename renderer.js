@@ -1,23 +1,23 @@
 let drawList = [];
-class Camera{
-    constructor(width, height, pos){
+class Camera {
+    constructor(width, height, pos) {
         this.width = width;
         this.height = height;
         this.pos = pos;
     }
 }
 
-class Renderer{
-    constructor(){
+class Renderer {
+    constructor() {
         drawList.push(this);
     }
-    draw(){
+    draw() {
 
     }
 }
 
-class RectRenderer extends Renderer{
-    constructor(pos, width, height, color, alpha, camera){
+class RectRenderer extends Renderer {
+    constructor(pos, width, height, color, alpha, camera) {
         super();
         this.pos = pos;
         this.width = width;
@@ -26,12 +26,12 @@ class RectRenderer extends Renderer{
         this.alpha = alpha;
         this.camera = camera;
     }
-    draw(ctx){
+    draw(ctx) {
         ctx.beginPath();
         ctx.fillStyle = this.color;
         ctx.globalAlpha = this.alpha;
-        ctx.rect((this.pos.x - (this.width / 2) - this.camera.pos.x + (this.camera.width /2)), 
-        this.pos.y - (this.height / 2) - (-this.camera.pos.y - this.camera.height / 2), this.width, this.height);
+        ctx.rect((this.pos.x - (this.width / 2) - this.camera.pos.x + (this.camera.width / 2)),
+            this.pos.y - (this.height / 2) - (-this.camera.pos.y - this.camera.height / 2), this.width, this.height);
         ctx.fill();
         ctx.globalAlpha = 1;
     }
@@ -39,7 +39,7 @@ class RectRenderer extends Renderer{
 
 function drawAll(ctx) {
     ctx.clearRect(0, 0, 854, 480);
-    for(let i = 0; i < drawList.length; i++){
+    for (let i = 0; i < drawList.length; i++) {
         drawList[i].draw(ctx);
-    } 
+    }
 }

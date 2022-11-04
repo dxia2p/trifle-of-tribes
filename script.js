@@ -1,8 +1,16 @@
+// Setup Canvas
 let canvas = document.getElementById("canv");
-document.getElementById("goldTest").addEventListener("click", goldLevelIncrease);
 let ctx = canvas.getContext("2d");
 canvas.width = "854";
 canvas.height = "480";
+
+// Add HTML Elements
+let goldTestEl = document.getElementById("goldTest");
+let buildingBtn1 = document.getElementById("building-btn-1");
+
+// Add Event Listeners
+goldTestEl.addEventListener("click", goldLevelIncrease);
+buildingBtn1.addEventListener("click", selectBuilding(1));
 
 class Vector2 {
     x = 0;
@@ -101,4 +109,11 @@ function goldLevelIncrease() {
             console.log(gold);
         },
         goldInterval);
+}
+
+// Select Building
+function selectBuilding(buildingType) {
+    if (buildingType === 1) {
+
+    }
 }
