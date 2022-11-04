@@ -6,6 +6,7 @@ class Camera{
         this.pos = pos;
     }
 }
+
 class Renderer{
     constructor(){
         drawList.push(this);

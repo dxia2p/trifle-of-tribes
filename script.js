@@ -1,10 +1,9 @@
 let canvas = document.getElementById("canv");
 document.getElementById("goldTest").addEventListener("click", goldLevelIncrease);
-
 let ctx = canvas.getContext("2d");
-
 canvas.width = "854";
 canvas.height = "480";
+
 class Vector2 {
     x = 0;
     y = 0;
@@ -14,13 +13,13 @@ class Vector2 {
     }
 }
 
-
 let cam = new Camera(854, 480, new Vector2(0, 0));
 const BACKGROUND_SIZE = 1980;
 let square = new RectRenderer(new Vector2(0, 0), BACKGROUND_SIZE, BACKGROUND_SIZE, "#A6E57A", 1, cam);
 let backgroundSquares = [];
 const BACKGROUND_SQUARES_SIZE = 30;
 let offsetRow = false;
+
 for (let y = (BACKGROUND_SIZE / 2); y > -(BACKGROUND_SIZE / 2); y -= BACKGROUND_SQUARES_SIZE) {
     if (!offsetRow) {
         for (let x = BACKGROUND_SIZE / -2; x < BACKGROUND_SIZE / 2; x += BACKGROUND_SQUARES_SIZE * 2) {
