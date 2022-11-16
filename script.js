@@ -113,8 +113,15 @@ function goldLevelIncrease() {
 // Select Building
 let buildings = [];
 let selectedBuilding;
+
 function selectBuilding(buildingType) {
     if (buildingType === 1) {
 
     }
 }
+
+// Place building
+document.addEventListener('mousedown', (event) => {
+    let mousePos = getMousePos(canvas, event); // get mouse pos function defined in mouse movement section
+    // place building here
+});

@@ -7,6 +7,10 @@ class Building{
     }
 }
 
+class GoldStorage extends Building{
+    
+}
+
 class RockThrower extends Building{
     constructor(gridWidth, gridHeight, pos, color){
         super(gridWidth, gridHeight, pos, color);
