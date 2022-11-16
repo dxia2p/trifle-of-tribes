@@ -7,8 +7,18 @@ canvas.height = "480";
 let goldTestEl = document.getElementById("goldTest");
 let buildingBtn1 = document.getElementById("building-btn-1");
 
+// Gold Variables
+let gold = 0;
+var goldLevel = 1;
+let goldStorageCost = 30;
+
 // Add Event Listeners
-goldTestEl.addEventListener("click", goldLevelIncrease);
+goldTestEl.addEventListener("click", () => {
+if (gold >= goldStorageCost) {
+    gold -= goldStorageCost;
+    goldLevelIncrease();
+}
+});
 buildingBtn1.addEventListener("click", selectBuilding(1));
 
 class Vector2 {
@@ -94,12 +104,13 @@ function loop(time) {
 }
 requestAnimationFrame(loop);
 
-// Gold Counter
-let gold = 0;
-var goldLevel = 1;
+// Gold
+
 
 
 function goldLevelIncrease() {
+    goldStorageCost *= 3;
+    console.log(goldStorageCost);
     goldLevel *= 2;
     console.log(goldLevel);
 }
@@ -110,6 +121,10 @@ window.setInterval(
         document.getElementById("goldAmount").innerHTML = gold;
     },
     600);
+
+
+
+
 
 // Select Building
 let buildings = [];
