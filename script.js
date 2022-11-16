@@ -97,19 +97,20 @@ requestAnimationFrame(loop);
 
 // Gold Counter
 let gold = 0;
-function goldLevelIncrease() {
-    let goldLevel = 1;
-    goldLevel + 1;
-    let goldInterval = 600 * 1 / goldLevel;
-    console.log(goldLevel);
+var goldLevel = 1;
 
-    window.setInterval(
-        () => {
-            gold++;
-            console.log(gold);
-        },
-        goldInterval);
+
+function goldLevelIncrease() {
+    goldLevel *= 2;
+    console.log(goldLevel);
 }
+
+window.setInterval(
+    () => {
+        gold += goldLevel;
+        document.getElementById("goldAmount").innerHTML = gold;
+    },
+    600);
 
 // Select Building
 function selectBuilding(buildingType) {
