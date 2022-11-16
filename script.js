@@ -1,4 +1,3 @@
-// Setup Canvas
 let canvas = document.getElementById("canv");
 let ctx = canvas.getContext("2d");
 canvas.width = "854";
