@@ -104,7 +104,7 @@ function keyupHandler(event) {
     }
 }
 
-// Main Game Loop
+// Main Game Loop--------------------------------------------------------
 function loop(time) {
     cam.pos.y += upDownValue;
     cam.pos.x += leftRightValue;
@@ -144,8 +144,17 @@ function selectBuilding(buildingType) {
     }
 }
 
+// place gold storage
+let goldStorageImg = document.getElementById("goldStorage");
+let goldStorageRenderer = new SpriteRenderer(new Vector2(0, 0), 90, 90, 1, goldStorageImg, cam);
+let goldStorage = new GoldStorage(new Vector2(0, 0), 3, 3, 500, goldStorageRenderer);
+
 // Place building
 document.addEventListener('mousedown', (event) => {
     let mousePos = getMousePos(canvas, event); // get mouse pos function defined in mouse movement section
     // place building here
 });
+
+// temp
+let rockThrowerImg = document.getElementById("rockThrower");
+let rockThrowerRenderer = new SpriteRenderer(new Vector2(120 + 15, 0 + 15), 60, 60, 1, rockThrowerImg, cam);
