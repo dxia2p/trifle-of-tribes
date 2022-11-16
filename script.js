@@ -7,8 +7,18 @@ canvas.height = "480";
 let goldTestEl = document.getElementById("goldTest");
 let buildingBtn1 = document.getElementById("building-btn-1");
 
+// Gold Variables
+let gold = 0;
+var goldLevel = 1;
+let goldStorageCost = 30;
+
 // Add Event Listeners
-goldTestEl.addEventListener("click", goldLevelIncrease);
+goldTestEl.addEventListener("click", () => {
+if (gold >= goldStorageCost) {
+    gold -= goldStorageCost;
+    goldLevelIncrease();
+}
+});
 buildingBtn1.addEventListener("click", selectBuilding(1));
 
 class Vector2 {
@@ -94,21 +104,24 @@ function loop(time) {
 }
 requestAnimationFrame(loop);
 
-// Gold Counter
-let gold = 0;
-function goldLevelIncrease() {
-    let goldLevel = 1;
-    goldLevel + 1;
-    let goldInterval = 600 * 1 / goldLevel;
-    console.log(goldLevel);
+// Gold
 
-    window.setInterval(
-        () => {
-            gold++;
-            console.log(gold);
-        },
-        goldInterval);
+
+function goldLevelIncrease() {
+    goldStorageCost *= 3;
+    console.log(goldStorageCost);
+    goldLevel *= 2;
+    console.log(goldLevel);
 }
+
+window.setInterval(() => {
+    gold += goldLevel;
+    document.getElementById("goldAmount").innerHTML = gold;
+}, 600);
+
+
+
+
 
 // Select Building
 let buildings = [];
@@ -116,7 +129,15 @@ let selectedBuilding;
 
 function selectBuilding(buildingType) {
     if (buildingType === 1) {
-
+        selectedBuilding = 1;
+    } else if (buildingType === 2) {
+        selectedBuilding = 2;
+    } else if (buildingType === 3) {
+        selectedBuilding = 3;
+    } else if (buildingType === 4) {
+        selectedBuilding = 4;
+    } else if (buildingType === 5) {
+        selectedBuilding = 5;
     }
 }
 
