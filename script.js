@@ -85,10 +85,6 @@ function keyupHandler(event) {
     }
 }
 
-// Place buildings
-let buildings = [];
-
-
 // Main Game Loop
 function loop(time) {
     cam.pos.y += upDownValue;
@@ -115,6 +111,8 @@ function goldLevelIncrease() {
 }
 
 // Select Building
+let buildings = [];
+let selectedBuilding
 function selectBuilding(buildingType) {
     if (buildingType === 1) {
 
