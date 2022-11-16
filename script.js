@@ -112,7 +112,7 @@ function goldLevelIncrease() {
 
 // Select Building
 let buildings = [];
-let selectedBuilding
+let selectedBuilding;
 function selectBuilding(buildingType) {
     if (buildingType === 1) {
 
