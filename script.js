@@ -113,17 +113,16 @@ let buildings = [];
 let selectedBuilding;
 
 function selectBuilding(buildingType) {
-    let selected;
     if (buildingType === 1) {
-        selected = 1;
+        selectedBuilding = 1;
     } else if (buildingType === 2) {
-        selected = 2;
+        selectedBuilding = 2;
     } else if (buildingType === 3) {
-        selected = 3;
+        selectedBuilding = 3;
     } else if (buildingType === 4) {
-        selected = 4;
+        selectedBuilding = 4;
     } else if (buildingType === 5) {
-        selected = 5;
+        selectedBuilding = 5;
     }
 }
 
