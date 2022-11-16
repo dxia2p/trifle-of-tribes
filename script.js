@@ -96,21 +96,25 @@ requestAnimationFrame(loop);
 
 // Gold Counter
 let gold = 0;
-function goldLevelIncrease() {
-    let goldLevel = 1;
-    goldLevel + 1;
-    let goldInterval = 600 * 1 / goldLevel;
-    console.log(goldLevel);
+var goldLevel = 1;
 
-    window.setInterval(
-        () => {
-            gold++;
-            console.log(gold);
-        },
-        goldInterval);
+
+function goldLevelIncrease() {
+    goldLevel *= 2;
+    console.log(goldLevel);
 }
 
+window.setInterval(
+    () => {
+        gold += goldLevel;
+        document.getElementById("goldAmount").innerHTML = gold;
+    },
+    600);
+
 // Select Building
+let buildings = [];
+let selectedBuilding;
+
 function selectBuilding(buildingType) {
     let selected;
     if (buildingType === 1) {
@@ -125,3 +129,9 @@ function selectBuilding(buildingType) {
         selected = 5;
     }
 }
+
+// Place building
+document.addEventListener('mousedown', (event) => {
+    let mousePos = getMousePos(canvas, event); // get mouse pos function defined in mouse movement section
+    // place building here
+});
