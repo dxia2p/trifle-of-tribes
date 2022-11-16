@@ -107,7 +107,6 @@ requestAnimationFrame(loop);
 // Gold
 
 
-
 function goldLevelIncrease() {
     goldStorageCost *= 3;
     console.log(goldStorageCost);
@@ -115,12 +114,10 @@ function goldLevelIncrease() {
     console.log(goldLevel);
 }
 
-window.setInterval(
-    () => {
-        gold += goldLevel;
-        document.getElementById("goldAmount").innerHTML = gold;
-    },
-    600);
+window.setInterval(() => {
+    gold += goldLevel;
+    document.getElementById("goldAmount").innerHTML = gold;
+}, 600);
 
 
 
