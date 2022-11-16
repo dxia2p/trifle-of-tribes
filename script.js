@@ -98,18 +98,15 @@ requestAnimationFrame(loop);
 let gold = 0;
 var goldLevel = 1;
 
-
 function goldLevelIncrease() {
     goldLevel *= 2;
     console.log(goldLevel);
 }
 
-window.setInterval(
-    () => {
-        gold += goldLevel;
-        document.getElementById("goldAmount").innerHTML = gold;
-    },
-    600);
+window.setInterval(() => {
+    gold += goldLevel;
+    document.getElementById("goldAmount").innerHTML = gold;
+}, 600);
 
 // Select Building
 let buildings = [];
