@@ -6,3 +6,11 @@ class Building{
         this.color = color;
     }
 }
+
+class RockThrower extends Building{
+    constructor(gridWidth, gridHeight, pos, color){
+        super(gridWidth, gridHeight, pos, color);
+    }
+
+    // add logic here
+}

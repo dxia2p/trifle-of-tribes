@@ -85,6 +85,10 @@ function keyupHandler(event) {
     }
 }
 
+// Place buildings
+let buildings = [];
+
+
 // Main Game Loop
 function loop(time) {
     cam.pos.y += upDownValue;
