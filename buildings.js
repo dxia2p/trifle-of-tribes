@@ -1,3 +1,11 @@
+let placedBuildings = [];
+
+function updateAllBuildings(){
+    for(let i = 0; i < placedBuildings.length; i++){
+        placedBuildings[i].update();
+    }
+}
+
 class Building {
     constructor(pos, gridWidth, gridHeight, maxHealth, spriteRenderer) {
         this.gridWidth = gridWidth;
@@ -6,9 +14,13 @@ class Building {
         this.maxHealth = maxHealth;
         this.health = maxHealth;
         this.spriteRenderer = spriteRenderer;
+
+        placedBuildings.push(this);
     }
 
+    update(){
 
+    }
 }
 
 class GoldStorage extends Building {
@@ -20,11 +32,14 @@ class GoldStorage extends Building {
 }
 
 class RockThrower extends Building {
+
     constructor(pos, gridWidth, gridHeight) {
         let maxHealth = 200;
-        let sr = new SpriteRenderer(pos, 60, 60, 1, rockThrowerImg, cam);
+        let sr = new SpriteRenderer(pos, BACKGROUND_SQUARES_SIZE * gridWidth, BACKGROUND_SQUARES_SIZE * gridHeight, 1, rockThrowerImg, cam);
         super(pos, gridWidth, gridHeight, maxHealth, sr);
     }
 
-    // add logic here
+    update(){
+        //throw projectile
+    }
 }

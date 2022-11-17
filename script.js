@@ -96,6 +96,7 @@ function keyupHandler(event) {
 function loop(time) {
     cam.pos.y += upDownValue;
     cam.pos.x += leftRightValue;
+    updateAllBuildings();
     drawAll(ctx);
     requestAnimationFrame(loop);
 }
@@ -151,4 +152,4 @@ document.addEventListener('mousedown', (event) => {
 });
 
 // temp
-let rockThrower = new RockThrower(new Vector2(90 + 15, 90 + 15), 2, 2);
+let rockThrower = new RockThrower(new Vector2(90 + 15, 90 + 15), 4, 2);
