@@ -7,6 +7,7 @@ canvas.height = "480";
 let goldTestEl = document.getElementById("goldTest");
 let buildingBtn1 = document.getElementById("building-btn-1");
 
+
 // Gold Variables
 let gold = 0;
 var goldLevel = 1;
@@ -19,22 +20,16 @@ if (gold >= goldStorageCost) {
     goldLevelIncrease();
 }
 });
-buildingBtn1.addEventListener("click", selectBuilding(1));
+//buildingBtn1.addEventListener("click", selectBuilding(1));
 
-class Vector2 {
-    x = 0;
-    y = 0;
-    constructor(x, y) {
-        this.x = x;
-        this.y = y;
-    }
-}
 
+
+// draw background
 let cam = new Camera(854, 480, new Vector2(0, 0));
-const BACKGROUND_SIZE = 1980;
+
 let square = new RectRenderer(new Vector2(0, 0), BACKGROUND_SIZE, BACKGROUND_SIZE, "#A6E57A", 1, cam);
 let backgroundSquares = [];
-const BACKGROUND_SQUARES_SIZE = 30;
+
 let offsetRow = false;
 
 for (let y = (BACKGROUND_SIZE / 2); y > -(BACKGROUND_SIZE / 2); y -= BACKGROUND_SQUARES_SIZE) {
@@ -124,7 +119,9 @@ window.setInterval(() => {
 
 
 // Select Building
+
 let buildings = [];
+/*
 let selectedBuilding;
 
 function selectBuilding(buildingType) {
@@ -140,11 +137,12 @@ function selectBuilding(buildingType) {
         selectedBuilding = 5;
     }
 }
+*/
 
 // place gold storage
-let goldStorageImg = document.getElementById("goldStorage");
-let goldStorageRenderer = new SpriteRenderer(new Vector2(0, 0), 90, 90, 1, goldStorageImg, cam);
-let goldStorage = new GoldStorage(new Vector2(0, 0), 3, 3, 500, goldStorageRenderer);
+
+
+let goldStorage = new GoldStorage(new Vector2(0, 0), 3, 3);
 
 // Place building
 document.addEventListener('mousedown', (event) => {
@@ -153,5 +151,3 @@ document.addEventListener('mousedown', (event) => {
 });
 
 // temp
-let rockThrowerImg = document.getElementById("rockThrower");
-let rockThrowerRenderer = new SpriteRenderer(new Vector2(120 + 15, 0 + 15), 60, 60, 1, rockThrowerImg, cam);
