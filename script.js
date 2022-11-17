@@ -151,3 +151,4 @@ document.addEventListener('mousedown', (event) => {
 });
 
 // temp
+let rockThrower = new RockThrower(new Vector2(90 + 15, 90 + 15), 2, 2);

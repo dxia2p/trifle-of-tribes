@@ -22,7 +22,7 @@ class GoldStorage extends Building {
 class RockThrower extends Building {
     constructor(pos, gridWidth, gridHeight) {
         let maxHealth = 200;
-        let sr = new SpriteRenderer(new Vector2(120 + 15, 0 + 15), 60, 60, 1, rockThrowerImg, cam);
+        let sr = new SpriteRenderer(pos, 60, 60, 1, rockThrowerImg, cam);
         super(pos, gridWidth, gridHeight, maxHealth, sr);
     }
 
