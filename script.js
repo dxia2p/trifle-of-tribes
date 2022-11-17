@@ -26,7 +26,7 @@ if (gold >= goldStorageCost) {
 }
 });
 
-// draw background
+// Draw Background
 let cam = new Camera(854, 480, new Vector2(0, 0));
 
 let square = new RectRenderer(new Vector2(0, 0), BACKGROUND_SIZE, BACKGROUND_SIZE, "#A6E57A", 1, cam);
@@ -50,7 +50,7 @@ for (let y = (BACKGROUND_SIZE / 2); y > -(BACKGROUND_SIZE / 2); y -= BACKGROUND_
     }
 }
 
-// Mouse movement (snap mouse to grid)
+// Mouse Movement (snap mouse to grid)
 let mouseRect = new RectRenderer(new Vector2(0, 0), BACKGROUND_SQUARES_SIZE, BACKGROUND_SQUARES_SIZE, "#FFFFFF", 0.7, cam);
 document.addEventListener('mousemove', (event) => {
     let mousePos = getMousePos(canvas, event);
@@ -140,15 +140,13 @@ buildingBtn3.addEventListener("click", selectBuilding(3));
 buildingBtn4.addEventListener("click", selectBuilding(4));
 buildingBtn5.addEventListener("click", selectBuilding(5));
 
-// place gold storage
-
-
+// Place Gold Storage
 let goldStorage = new GoldStorage(new Vector2(0, 0), 3, 3);
 
 // Place building
 document.addEventListener('mousedown', (event) => {
     let mousePos = getMousePos(canvas, event); // get mouse pos function defined in mouse movement section
-    // place building here
+    // Place Building Here
 });
 
 // temp
