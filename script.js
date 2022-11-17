@@ -26,16 +26,6 @@ if (gold >= goldStorageCost) {
 }
 });
 
-
-class Vector2 {
-    x = 0;
-    y = 0;
-    constructor(x, y) {
-        this.x = x;
-        this.y = y;
-    }
-}
-
 // draw background
 let cam = new Camera(854, 480, new Vector2(0, 0));
 
