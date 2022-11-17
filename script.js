@@ -24,11 +24,7 @@ if (gold >= goldStorageCost) {
     goldLevelIncrease();
 }
 });
-buildingBtn1.addEventListener("click", selectBuilding(1));
-buildingBtn2.addEventListener("click", selectBuilding(2));
-buildingBtn3.addEventListener("click", selectBuilding(3));
-buildingBtn4.addEventListener("click", selectBuilding(4));
-buildingBtn5.addEventListener("click", selectBuilding(5));
+
 
 class Vector2 {
     x = 0;
@@ -114,8 +110,6 @@ function loop(time) {
 requestAnimationFrame(loop);
 
 // Gold
-
-
 function goldLevelIncrease() {
     goldStorageCost *= 3;
     console.log(goldStorageCost);
@@ -130,6 +124,8 @@ window.setInterval(() => {
 
 // Select Building
 let buildings = [];
+let selectedBuilding;
+
 function selectBuilding(buildingType) {
     if (buildingType == 1) {
         selectedBuilding = 1;
@@ -143,6 +139,12 @@ function selectBuilding(buildingType) {
         selectedBuilding = 5;
     }
 }
+
+buildingBtn1.addEventListener("click", selectBuilding(1));
+buildingBtn2.addEventListener("click", selectBuilding(2));
+buildingBtn3.addEventListener("click", selectBuilding(3));
+buildingBtn4.addEventListener("click", selectBuilding(4));
+buildingBtn5.addEventListener("click", selectBuilding(5));
 
 // place gold storage
 let goldStorageImg = document.getElementById("goldStorage");
