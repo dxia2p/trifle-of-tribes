@@ -8,6 +8,7 @@ class Camera {
 }
 
 class Renderer {
+    //drawOrder = 0; // higher draw order means it is on top
     constructor() {
         drawList.push(this);
     }
