@@ -3,7 +3,7 @@ let ctx = canvas.getContext("2d");
 canvas.width = "854";
 canvas.height = "480";
 
-// Add HTML Elements
+// Add HTML Elements (Buttons)
 let goldTestEl = document.getElementById("goldTest");
 let buildingBtn1 = document.getElementById("building-btn-1");
 let buildingBtn2 = document.getElementById("building-btn-2");
@@ -11,27 +11,15 @@ let buildingBtn3 = document.getElementById("building-btn-3");
 let buildingBtn4 = document.getElementById("building-btn-4");
 let buildingBtn5 = document.getElementById("building-btn-5");
 
-
-
 // Gold Variables
 let gold = 0;
 var goldLevel = 1;
 let goldStorageCost = 30;
 
-// Add Event Listeners
-goldTestEl.addEventListener("click", () => {
-if (gold >= goldStorageCost) {
-    gold -= goldStorageCost;
-    goldLevelIncrease();
-}
-});
-
 // Draw Background
 let cam = new Camera(854, 480, new Vector2(0, 0));
-
 let square = new RectRenderer(new Vector2(0, 0), BACKGROUND_SIZE, BACKGROUND_SIZE, "#A6E57A", 1, cam);
 let backgroundSquares = [];
-
 let offsetRow = false;
 
 for (let y = (BACKGROUND_SIZE / 2); y > -(BACKGROUND_SIZE / 2); y -= BACKGROUND_SQUARES_SIZE) {
@@ -116,7 +104,6 @@ window.setInterval(() => {
 }, 600);
 
 // Select Building
-
 let buildings = [];
 let selectedBuilding;
 
@@ -134,6 +121,15 @@ function selectBuilding(buildingType) {
     }
 }
 
+// Add Event Listeners
+goldTestEl.addEventListener("click", () => {
+    // Upgrade Gold Storage, Deduct Gold
+    if (gold >= goldStorageCost) {
+        gold -= goldStorageCost;
+        goldLevelIncrease();
+    }
+});
+
 buildingBtn1.addEventListener("click", selectBuilding(1));
 buildingBtn2.addEventListener("click", selectBuilding(2));
 buildingBtn3.addEventListener("click", selectBuilding(3));
@@ -150,4 +146,4 @@ document.addEventListener('mousedown', (event) => {
 });
 
 // temp
-let rockThrower = new RockThrower(new Vector2(90 + 15, 90 + 15), 4, 2);
+let rockThrower = new RockThrower(new Vector2(75, 105), 2, 2);
