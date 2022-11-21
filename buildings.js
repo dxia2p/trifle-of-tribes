@@ -39,6 +39,14 @@ class RockThrower extends Building {
         let sr = new SpriteRenderer(pos, BACKGROUND_SQUARES_SIZE * gridWidth, BACKGROUND_SQUARES_SIZE * gridHeight, 1, rockThrowerImg, cam);
         super(pos, gridWidth, gridHeight, maxHealth, sr);
     }
+}
+
+class Wall extends Building {
+    constructor(pos, gridWidth, gridHeight) {
+        let maxHealth = 250;
+        let sr = new SpriteRenderer(pos, BACKGROUND_SQUARES_SIZE * gridWidth, BACKGROUND_SQUARES_SIZE * gridHeight, 1, wallImg, cam);
+        super(pos, gridWidth, gridHeight, maxHealth, sr);
+    }
 
     update(time){
         //throw projectile

@@ -139,13 +139,24 @@ buildingBtn4.addEventListener("click", selectBuilding(4));
 buildingBtn5.addEventListener("click", selectBuilding(5));
 
 // Place Gold Storage
-let goldStorage = new GoldStorage(new Vector2(0 + 15, 0 + 15), 2, 2);
+let goldStorage = new GoldStorage(new Vector2(0 + 15, 0 + 15), 4, 4);
 
 // Place building
 document.addEventListener('mousedown', (event) => {
     let mousePos = getMousePos(canvas, event); // get mouse pos function defined in mouse movement section
     // Place Building Here
 });
+
+// Wall
+let wall = new Wall(new Vector2(0, 90),1,1);
+let wall1 = new Wall(new Vector2(30, 90),1,1);
+let wall2 = new Wall(new Vector2(60, 90),1,1);
+let wall3 = new Wall(new Vector2(-30, 90),1,1);
+let wall4 = new Wall(new Vector2(-60, 90),1,1);
+let wall5 = new Wall(new Vector2(-60, 60),1,1);
+let wall6 = new Wall(new Vector2(-60, 30),1,1);
+let wall7 = new Wall(new Vector2(-60, 0),1,1);
+
 
 // temp
 let rockThrower = new RockThrower(new Vector2(90 + 15, 90 + 15), 2, 2);
