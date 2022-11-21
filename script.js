@@ -81,11 +81,13 @@ function keyupHandler(event) {
 }
 
 // Main Game Loop--------------------------------------------------------
+let prevTime = 0;
 function loop(time) {
     cam.pos.y += upDownValue;
     cam.pos.x += leftRightValue;
-    updateAllBuildings();
+    updateAllBuildings(time);
     drawAll(ctx);
+    prevTime = time;
     requestAnimationFrame(loop);
 }
 requestAnimationFrame(loop);
@@ -137,7 +139,7 @@ buildingBtn4.addEventListener("click", selectBuilding(4));
 buildingBtn5.addEventListener("click", selectBuilding(5));
 
 // Place Gold Storage
-let goldStorage = new GoldStorage(new Vector2(0, 0), 3, 3);
+let goldStorage = new GoldStorage(new Vector2(0 + 15, 0 + 15), 2, 2);
 
 // Place building
 document.addEventListener('mousedown', (event) => {
@@ -146,4 +148,4 @@ document.addEventListener('mousedown', (event) => {
 });
 
 // temp
-let rockThrower = new RockThrower(new Vector2(75, 105), 2, 2);
+let rockThrower = new RockThrower(new Vector2(90 + 15, 90 + 15), 2, 2);

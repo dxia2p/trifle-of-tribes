@@ -1,8 +1,8 @@
 let placedBuildings = [];
 
-function updateAllBuildings(){
+function updateAllBuildings(time){
     for(let i = 0; i < placedBuildings.length; i++){
-        placedBuildings[i].update();
+        placedBuildings[i].update(time);
     }
 }
 
@@ -26,20 +26,22 @@ class Building {
 class GoldStorage extends Building {
     constructor(pos, gridWidth, gridHeight) {
         let maxHealth = 500;
-        let sr = new SpriteRenderer(new Vector2(0, 0), 90, 90, 1, goldStorageImg, cam);
+        let sr = new SpriteRenderer(pos, BACKGROUND_SQUARES_SIZE * gridWidth, BACKGROUND_SQUARES_SIZE * gridHeight, 1, goldStorageImg, cam);
         super(pos, gridWidth, gridHeight, maxHealth, sr);
     }
 }
 
 class RockThrower extends Building {
-
+    maxTimeBtwThrow = 0.5;
+    timeBtwThrow = 0;
     constructor(pos, gridWidth, gridHeight) {
         let maxHealth = 200;
         let sr = new SpriteRenderer(pos, BACKGROUND_SQUARES_SIZE * gridWidth, BACKGROUND_SQUARES_SIZE * gridHeight, 1, rockThrowerImg, cam);
         super(pos, gridWidth, gridHeight, maxHealth, sr);
     }
 
-    update(){
+    update(time){
         //throw projectile
+        console.log(time);
     }
 }
