@@ -145,6 +145,9 @@ let goldStorage = new GoldStorage(new Vector2(0 + 15, 0 + 15), 2, 2);
 document.addEventListener('mousedown', (event) => {
     let mousePos = getMousePos(canvas, event); // get mouse pos function defined in mouse movement section
     // Place Building Here
+    for(let i = 0; i < placedBuildings.length(); i++){
+        
+    }
 });
 
 // temp
