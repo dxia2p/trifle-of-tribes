@@ -6,6 +6,15 @@ function updateAllBuildings(time){
     }
 }
 
+class BuildingTemplate{
+    constructor(pos, gridWidth, gridHeight, spriteRenderer){
+        this.pos = pos;
+        this.gridWidth = gridWidth;
+        this.gridHeight = gridHeight;
+        this.spriteRenderer = spriteRenderer;
+    }
+}
+
 class Building {
     constructor(pos, gridWidth, gridHeight, maxHealth, spriteRenderer) {
         this.gridWidth = gridWidth;
@@ -46,10 +55,5 @@ class Wall extends Building {
         let maxHealth = 250;
         let sr = new SpriteRenderer(pos, BACKGROUND_SQUARES_SIZE * gridWidth, BACKGROUND_SQUARES_SIZE * gridHeight, 1, wallImg, cam);
         super(pos, gridWidth, gridHeight, maxHealth, sr);
-    }
-
-    update(time){
-        //throw projectile
-        console.log(time);
     }
 }

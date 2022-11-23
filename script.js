@@ -42,9 +42,13 @@ for (let y = (BACKGROUND_SIZE / 2); y > -(BACKGROUND_SIZE / 2); y -= BACKGROUND_
 let mouseRect = new RectRenderer(new Vector2(0, 0), BACKGROUND_SQUARES_SIZE, BACKGROUND_SQUARES_SIZE, "#FFFFFF", 0.7, cam);
 document.addEventListener('mousemove', (event) => {
     let mousePos = getMousePos(canvas, event);
-    mouseRect.pos.x = Math.round((mousePos.x + cam.pos.x) / 30) * 30;
-    mouseRect.pos.y = Math.round((mousePos.y - cam.pos.y) / 30) * 30;
+    setMouseRectPos(mousePos);
 });
+
+function setMouseRectPos(mp) {
+    mouseRect.pos.x = Math.round((mp.x + cam.pos.x) / 30) * 30;
+    mouseRect.pos.y = Math.round((mp.y - cam.pos.y) / 30) * 30;
+}
 
 function getMousePos(canvas, evt) {
     var rect = canvas.getBoundingClientRect();
@@ -108,19 +112,19 @@ window.setInterval(() => {
 // Select Building
 let buildings = [];
 let selectedBuilding;
+let buildingTemplates = [];
+let rockMan = new BuildingTemplate(new Vector2(0, 0), 2, 2, null);
+let rockManSr = new SpriteRenderer(rockMan.pos, rockMan.gridWidth * BACKGROUND_SQUARES_SIZE, rockMan.gridHeight * BACKGROUND_SQUARES_SIZE
+    , 0.5, rockThrowerImg, cam);
+rockMan.spriteRenderer = rockManSr;
+buildingTemplates.push(rockMan);
 
 function selectBuilding(buildingType) {
-    if (buildingType == 1) {
-        selectedBuilding = 1;
-    } else if (buildingType == 2) {
-        selectedBuilding = 2;
-    } else if (buildingType == 3) {
-        selectedBuilding = 3;
-    } else if (buildingType == 4) {
-        selectedBuilding = 4;
-    } else if (buildingType == 5) {
-        selectedBuilding = 5;
+    if (buildingType === selectedBuilding) {
+        selectedBuilding = 0;
+        return;
     }
+    selectedBuilding = buildingType;
 }
 
 // Add Event Listeners
@@ -132,11 +136,11 @@ goldTestEl.addEventListener("click", () => {
     }
 });
 
-buildingBtn1.addEventListener("click", selectBuilding(1));
-buildingBtn2.addEventListener("click", selectBuilding(2));
-buildingBtn3.addEventListener("click", selectBuilding(3));
-buildingBtn4.addEventListener("click", selectBuilding(4));
-buildingBtn5.addEventListener("click", selectBuilding(5));
+buildingBtn1.addEventListener("click", () => {selectBuilding(1)});
+buildingBtn2.addEventListener("click", () => {selectBuilding(2)});
+buildingBtn3.addEventListener("click", () => {selectBuilding(3)});
+buildingBtn4.addEventListener("click", () => {selectBuilding(4)});
+buildingBtn5.addEventListener("click", () => {selectBuilding(5)});
 
 // Place Gold Storage
 let goldStorage = new GoldStorage(new Vector2(0 + 15, 0 + 15), 4, 4);
@@ -145,20 +149,20 @@ let goldStorage = new GoldStorage(new Vector2(0 + 15, 0 + 15), 4, 4);
 document.addEventListener('mousedown', (event) => {
     let mousePos = getMousePos(canvas, event); // get mouse pos function defined in mouse movement section
     // Place Building Here
-    for(let i = 0; i < placedBuildings.length(); i++){
-        
+    for (let i = 0; i < placedBuildings.length; i++) {
+
     }
 });
 
 // Wall
-let wall = new Wall(new Vector2(0, 90),1,1);
-let wall1 = new Wall(new Vector2(30, 90),1,1);
-let wall2 = new Wall(new Vector2(60, 90),1,1);
-let wall3 = new Wall(new Vector2(-30, 90),1,1);
-let wall4 = new Wall(new Vector2(-60, 90),1,1);
-let wall5 = new Wall(new Vector2(-60, 60),1,1);
-let wall6 = new Wall(new Vector2(-60, 30),1,1);
-let wall7 = new Wall(new Vector2(-60, 0),1,1);
+let wall = new Wall(new Vector2(0, 90), 1, 1);
+let wall1 = new Wall(new Vector2(30, 90), 1, 1);
+let wall2 = new Wall(new Vector2(60, 90), 1, 1);
+let wall3 = new Wall(new Vector2(-30, 90), 1, 1);
+let wall4 = new Wall(new Vector2(-60, 90), 1, 1);
+let wall5 = new Wall(new Vector2(-60, 60), 1, 1);
+let wall6 = new Wall(new Vector2(-60, 30), 1, 1);
+let wall7 = new Wall(new Vector2(-60, 0), 1, 1);
 
 
 // temp
