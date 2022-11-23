@@ -102,6 +102,7 @@ function goldLevelIncrease() {
     console.log(goldStorageCost);
     goldLevel *= 2;
     console.log(goldLevel);
+    document.getElementById("upgradeCost").innerHTML = goldStorageCost;
 }
 
 window.setInterval(() => {
@@ -132,9 +133,11 @@ goldTestEl.addEventListener("click", () => {
     // Upgrade Gold Storage, Deduct Gold
     if (gold >= goldStorageCost) {
         gold -= goldStorageCost;
+        
         goldLevelIncrease();
     }
 });
+
 
 buildingBtn1.addEventListener("click", () => {selectBuilding(1)});
 buildingBtn2.addEventListener("click", () => {selectBuilding(2)});
