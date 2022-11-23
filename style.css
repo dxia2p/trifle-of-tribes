@@ -29,3 +29,9 @@ p {
 .hidden{
     display:none;
 }
+
+.building-btn{
+    border-radius: 5px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
