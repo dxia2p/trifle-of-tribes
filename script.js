@@ -22,26 +22,27 @@ let square = new RectRenderer(new Vector2(0, 0), BACKGROUND_SIZE, BACKGROUND_SIZ
 let backgroundSquares = [];
 let offsetRow = false;
 
-for (let y = (BACKGROUND_SIZE / 2); y > -(BACKGROUND_SIZE / 2); y -= BACKGROUND_SQUARES_SIZE) {
+for (let y = (BACKGROUND_SIZE / 2); y > -(BACKGROUND_SIZE / 2); y -= GRID_SIZE) {
     if (!offsetRow) {
-        for (let x = BACKGROUND_SIZE / -2; x < BACKGROUND_SIZE / 2; x += BACKGROUND_SQUARES_SIZE * 2) {
+        for (let x = BACKGROUND_SIZE / -2; x < BACKGROUND_SIZE / 2; x += GRID_SIZE * 2) {
             backgroundSquares.push(new RectRenderer(new Vector2(x, y),
-                BACKGROUND_SQUARES_SIZE, BACKGROUND_SQUARES_SIZE, "#78D03B", 1, cam));
+                GRID_SIZE, GRID_SIZE, "#78D03B", 1, cam));
         }
         offsetRow = true;
     } else {
-        for (let x = (BACKGROUND_SIZE / -2) + BACKGROUND_SQUARES_SIZE; x < BACKGROUND_SIZE / 2; x += BACKGROUND_SQUARES_SIZE * 2) {
+        for (let x = (BACKGROUND_SIZE / -2) + GRID_SIZE; x < BACKGROUND_SIZE / 2; x += GRID_SIZE * 2) {
             backgroundSquares.push(new RectRenderer(new Vector2(x, y),
-                BACKGROUND_SQUARES_SIZE, BACKGROUND_SQUARES_SIZE, "#78D03B", 1, cam));
+                GRID_SIZE, GRID_SIZE, "#78D03B", 1, cam));
         }
         offsetRow = false;
     }
 }
 
-// Mouse Movement (snap mouse to grid)
-let mouseRect = new RectRenderer(new Vector2(0, 0), BACKGROUND_SQUARES_SIZE, BACKGROUND_SQUARES_SIZE, "#FFFFFF", 0.7, cam);
+// Mouse Movement Event (snap mouse to grid)
+let mouseRect = new RectRenderer(new Vector2(0, 0), GRID_SIZE, GRID_SIZE, "#FFFFFF", 0.7, cam);
 document.addEventListener('mousemove', (event) => {
     let mousePos = getMousePos(canvas, event);
+    drawBuildingTemplate(mousePos);
     setMouseRectPos(mousePos);
 });
 
@@ -86,10 +87,15 @@ function keyupHandler(event) {
 
 // Main Game Loop--------------------------------------------------------
 let prevTime = 0;
+let changeInTime = 0;
 function loop(time) {
+    changeInTime = time - prevTime;
     cam.pos.y += upDownValue;
     cam.pos.x += leftRightValue;
-    updateAllBuildings(time);
+
+    updateAllBuildings(changeInTime);
+
+
     drawAll(ctx);
     prevTime = time;
     requestAnimationFrame(loop);
@@ -111,13 +117,10 @@ window.setInterval(() => {
 
 // Select Building
 let buildings = [];
-let selectedBuilding;
-let buildingTemplates = [];
-let rockMan = new BuildingTemplate(new Vector2(0, 0), 2, 2, null);
-let rockManSr = new SpriteRenderer(rockMan.pos, rockMan.gridWidth * BACKGROUND_SQUARES_SIZE, rockMan.gridHeight * BACKGROUND_SQUARES_SIZE
-    , 0.5, rockThrowerImg, cam);
-rockMan.spriteRenderer = rockManSr;
-buildingTemplates.push(rockMan);
+let selectedBuilding = 0;
+let buildingTemplates = [
+    new BuildingTemplate(new Vector2(0, 0), 2, 2, rockThrowerImg, cam)
+];
 
 function selectBuilding(buildingType) {
     if (buildingType === selectedBuilding) {
@@ -144,6 +147,25 @@ buildingBtn5.addEventListener("click", () => {selectBuilding(5)});
 
 // Place Gold Storage
 let goldStorage = new GoldStorage(new Vector2(0 + 15, 0 + 15), 4, 4);
+
+function drawBuildingTemplate(mp){
+    console.log(selectedBuilding);
+    if(selectedBuilding === 0){
+        return;
+    }
+    let bt = buildingTemplates[selectedBuilding - 1];
+
+    bt.pos.x = Math.round((mp.x + cam.pos.x) / 30) * 30;
+    bt.pos.y = Math.round((mp.y - cam.pos.y) / 30) * 30;
+    
+    if(bt.gridWidth % 2 == 0){ // OFFSET IT BY HALF THE GRID SIZE IF THE WIDTH IS EVEn
+        bt.pos.x -= GRID_SIZE / 2;
+    }
+    if(bt.gridHeight % 2 == 0){ // DO THE SAME FOR THE HEIGHT
+        bt.pos.y -= GRID_SIZE / 2;
+    }
+    
+}
 
 // Place building
 document.addEventListener('mousedown', (event) => {

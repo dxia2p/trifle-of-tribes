@@ -5,4 +5,4 @@ const rockImg = document.getElementById("rock");
 const wallImg = document.getElementById("wall");
 // values
 const BACKGROUND_SIZE = 1980;
-const BACKGROUND_SQUARES_SIZE = 30;
+const GRID_SIZE = 30;

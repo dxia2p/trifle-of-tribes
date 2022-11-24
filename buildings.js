@@ -7,11 +7,12 @@ function updateAllBuildings(time){
 }
 
 class BuildingTemplate{
-    constructor(pos, gridWidth, gridHeight, spriteRenderer){
+    constructor(pos, gridWidth, gridHeight, img, cam){
         this.pos = pos;
         this.gridWidth = gridWidth;
         this.gridHeight = gridHeight;
-        this.spriteRenderer = spriteRenderer;
+        this.spriteRenderer = new SpriteRenderer(this.pos, this.gridWidth * GRID_SIZE,
+            this.gridHeight * GRID_SIZE, 0.7, img, cam);
     }
 }
 
@@ -35,7 +36,7 @@ class Building {
 class GoldStorage extends Building {
     constructor(pos, gridWidth, gridHeight) {
         let maxHealth = 500;
-        let sr = new SpriteRenderer(pos, BACKGROUND_SQUARES_SIZE * gridWidth, BACKGROUND_SQUARES_SIZE * gridHeight, 1, goldStorageImg, cam);
+        let sr = new SpriteRenderer(pos, GRID_SIZE * gridWidth, GRID_SIZE * gridHeight, 1, goldStorageImg, cam);
         super(pos, gridWidth, gridHeight, maxHealth, sr);
     }
 }
@@ -45,7 +46,7 @@ class RockThrower extends Building {
     timeBtwThrow = 0;
     constructor(pos, gridWidth, gridHeight) {
         let maxHealth = 200;
-        let sr = new SpriteRenderer(pos, BACKGROUND_SQUARES_SIZE * gridWidth, BACKGROUND_SQUARES_SIZE * gridHeight, 1, rockThrowerImg, cam);
+        let sr = new SpriteRenderer(pos, GRID_SIZE * gridWidth, GRID_SIZE * gridHeight, 1, rockThrowerImg, cam);
         super(pos, gridWidth, gridHeight, maxHealth, sr);
     }
 }
@@ -53,7 +54,7 @@ class RockThrower extends Building {
 class Wall extends Building {
     constructor(pos, gridWidth, gridHeight) {
         let maxHealth = 250;
-        let sr = new SpriteRenderer(pos, BACKGROUND_SQUARES_SIZE * gridWidth, BACKGROUND_SQUARES_SIZE * gridHeight, 1, wallImg, cam);
+        let sr = new SpriteRenderer(pos, GRID_SIZE * gridWidth, GRID_SIZE * gridHeight, 1, wallImg, cam);
         super(pos, gridWidth, gridHeight, maxHealth, sr);
     }
 }
