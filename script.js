@@ -118,7 +118,7 @@ window.setInterval(() => {
 
 // Select Building
 let buildings = [];
-let selectedBuilding = 0;
+let selectedBuilding = -1;
 let buildingTemplates = [
     new BuildingTemplate(new Vector2(0, 0), 2, 2, rockThrowerImg, cam)
 ];
@@ -141,23 +141,22 @@ goldTestEl.addEventListener("click", () => {
     }
 });
 
-buildingBtn1.addEventListener("click", () => { selectBuilding(1) });
-buildingBtn2.addEventListener("click", () => { selectBuilding(2) });
-buildingBtn3.addEventListener("click", () => { selectBuilding(3) });
-buildingBtn4.addEventListener("click", () => { selectBuilding(4) });
-buildingBtn5.addEventListener("click", () => { selectBuilding(5) });
+buildingBtn1.addEventListener("click", () => { selectBuilding(0) });
+buildingBtn2.addEventListener("click", () => { selectBuilding(1) });
+buildingBtn3.addEventListener("click", () => { selectBuilding(2) });
+buildingBtn4.addEventListener("click", () => { selectBuilding(3) });
+buildingBtn5.addEventListener("click", () => { selectBuilding(4) });
 
 // Place Gold Storage
 let goldStorage = new GoldStorage(new Vector2(0 + 15, 0 + 15), 4, 4);
 
 function drawBuildingTemplate(mp) {
-    console.log(selectedBuilding);
-    if (selectedBuilding === 0) {
+    if (selectedBuilding === -1) {
         return;
     }
-    let bt = buildingTemplates[selectedBuilding - 1];
+    let bt = buildingTemplates[selectedBuilding];
     bt.pos.x = Math.round((mp.x + cam.pos.x) / 30) * 30;
-    bt.pos.y = Math.round((mp.y - cam.pos.y) / 30) * 30;
+    bt.pos.y = Math.round((mp.y - cam.pos.y) / 30) * -30;
     if (bt.gridWidth % 2 == 0) { // OFFSET IT BY HALF THE GRID SIZE IF THE WIDTH IS EVEN
         bt.pos.x -= GRID_SIZE / 2;
     }
@@ -169,11 +168,39 @@ function drawBuildingTemplate(mp) {
 // Place building
 document.addEventListener('mousedown', (event) => {
     let mousePos = getMousePos(canvas, event); // get mouse pos function defined in mouse movement section
+    if(selectedBuilding === -1){
+        return;
+    }
+
     // Place Building Here
     for (let i = 0; i < placedBuildings.length; i++) {
-
+        if(rectangleOverlap(buildingTemplates[selectedBuilding].pos, buildingTemplates[selectedBuilding].gridWidth * GRID_SIZE, buildingTemplates[selectedBuilding].gridHeight * GRID_SIZE,
+        placedBuildings[i].pos, placedBuildings[i].gridWidth * GRID_SIZE, placedBuildings[i].gridHeight * GRID_SIZE)){
+            return;
+        }
     }
+    console.log("ASAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 });
+
+function rectangleOverlap(r1center, r1width, r1height, r2center, r2width, r2height){
+    let r1TopLeft = new Vector2(r1center.x - (r1width / 2), r1center.y + (r1height / 2));
+    let r1BottomRight = new Vector2(r1center.x + (r1width / 2), r1center.y - (r1height / 2));
+
+    let r2TopLeft = new Vector2(r2center.x - (r2width / 2), r2center.y + (r2height / 2));
+    let r2BottomRight = new Vector2(r2center.x + (r2width / 2), r2center.y - (r2height / 2));
+
+    console.log(r1TopLeft, r1BottomRight, r2TopLeft, r2BottomRight);
+
+    if(r1TopLeft.x > r2BottomRight.x || r2TopLeft.x > r1BottomRight.x)
+        return false;
+
+    if(r1BottomRight.y > r2TopLeft.y || r2BottomRight.y > r1TopLeft.y)
+        return false;
+
+    return true;
+}
+
+console.log(rectangleOverlap(new Vector2(0, 0), 1, 1, new Vector2(-1, 1), 1, 1));
 
 // Wall
 let wall = new Wall(new Vector2(0, 90), 1, 1);
