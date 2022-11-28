@@ -189,12 +189,12 @@ function rectangleOverlap(r1center, r1width, r1height, r2center, r2width, r2heig
     let r2TopLeft = new Vector2(r2center.x - (r2width / 2), r2center.y + (r2height / 2));
     let r2BottomRight = new Vector2(r2center.x + (r2width / 2), r2center.y - (r2height / 2));
 
-    console.log(r1TopLeft, r1BottomRight, r2TopLeft, r2BottomRight);
+    //console.log(r1TopLeft, r1BottomRight, r2TopLeft, r2BottomRight);
 
-    if(r1TopLeft.x > r2BottomRight.x || r2TopLeft.x > r1BottomRight.x)
+    if(r1TopLeft.x >= r2BottomRight.x || r2TopLeft.x >= r1BottomRight.x)
         return false;
 
-    if(r1BottomRight.y > r2TopLeft.y || r2BottomRight.y > r1TopLeft.y)
+    if(r1BottomRight.y >= r2TopLeft.y || r2BottomRight.y >= r1TopLeft.y)
         return false;
 
     return true;
