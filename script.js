@@ -136,38 +136,34 @@ goldTestEl.addEventListener("click", () => {
     // Upgrade Gold Storage, Deduct Gold
     if (gold >= goldStorageCost) {
         gold -= goldStorageCost;
-        
+
         goldLevelIncrease();
     }
 });
 
-
-buildingBtn1.addEventListener("click", () => {selectBuilding(1)});
-buildingBtn2.addEventListener("click", () => {selectBuilding(2)});
-buildingBtn3.addEventListener("click", () => {selectBuilding(3)});
-buildingBtn4.addEventListener("click", () => {selectBuilding(4)});
-buildingBtn5.addEventListener("click", () => {selectBuilding(5)});
+buildingBtn1.addEventListener("click", () => { selectBuilding(1) });
+buildingBtn2.addEventListener("click", () => { selectBuilding(2) });
+buildingBtn3.addEventListener("click", () => { selectBuilding(3) });
+buildingBtn4.addEventListener("click", () => { selectBuilding(4) });
+buildingBtn5.addEventListener("click", () => { selectBuilding(5) });
 
 // Place Gold Storage
 let goldStorage = new GoldStorage(new Vector2(0 + 15, 0 + 15), 4, 4);
 
-function drawBuildingTemplate(mp){
+function drawBuildingTemplate(mp) {
     console.log(selectedBuilding);
-    if(selectedBuilding === 0){
+    if (selectedBuilding === 0) {
         return;
     }
     let bt = buildingTemplates[selectedBuilding - 1];
-
     bt.pos.x = Math.round((mp.x + cam.pos.x) / 30) * 30;
     bt.pos.y = Math.round((mp.y - cam.pos.y) / 30) * 30;
-    
-    if(bt.gridWidth % 2 == 0){ // OFFSET IT BY HALF THE GRID SIZE IF THE WIDTH IS EVEn
+    if (bt.gridWidth % 2 == 0) { // OFFSET IT BY HALF THE GRID SIZE IF THE WIDTH IS EVEN
         bt.pos.x -= GRID_SIZE / 2;
     }
-    if(bt.gridHeight % 2 == 0){ // DO THE SAME FOR THE HEIGHT
+    if (bt.gridHeight % 2 == 0) { // DO THE SAME FOR THE HEIGHT
         bt.pos.y -= GRID_SIZE / 2;
     }
-    
 }
 
 // Place building
@@ -188,7 +184,6 @@ let wall4 = new Wall(new Vector2(-60, 90), 1, 1);
 let wall5 = new Wall(new Vector2(-60, 60), 1, 1);
 let wall6 = new Wall(new Vector2(-60, 30), 1, 1);
 let wall7 = new Wall(new Vector2(-60, 0), 1, 1);
-
 
 // temp
 let rockThrower = new RockThrower(new Vector2(90 + 15, 90 + 15), 2, 2);
