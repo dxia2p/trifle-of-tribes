@@ -53,8 +53,32 @@ class RockThrower extends Building {
 
 class Wall extends Building {
     constructor(pos, gridWidth, gridHeight) {
-        let maxHealth = 250;
+        let maxHealth = 300;
         let sr = new SpriteRenderer(pos, GRID_SIZE * gridWidth, GRID_SIZE * gridHeight, 1, wallImg, cam);
+        super(pos, gridWidth, gridHeight, maxHealth, sr);
+    }
+}
+
+class Spearman extends Building {
+    constructor(pos, gridWidth, gridHeight) {
+        let maxHealth = 250;
+        let sr = new SpriteRenderer(pos, GRID_SIZE * gridWidth, GRID_SIZE * gridHeight, 1, spearmanImg, cam);
+        super(pos, gridWidth, gridHeight, maxHealth, sr);
+    }
+}
+
+class Bowman extends Building {
+    constructor(pos, gridWidth, gridHeight) {
+        let maxHealth = 150;
+        let sr = new SpriteRenderer(pos, GRID_SIZE * gridWidth, GRID_SIZE * gridHeight, 1, bowmanImg, cam);
+        super(pos, gridWidth, gridHeight, maxHealth, sr);
+    }
+}
+
+class Mageman extends Building {
+    constructor(pos, gridWidth, gridHeight) {
+        let maxHealth = 150;
+        let sr = new SpriteRenderer(pos, GRID_SIZE * gridWidth, GRID_SIZE * gridHeight, 1, magemanImg, cam);
         super(pos, gridWidth, gridHeight, maxHealth, sr);
     }
 }
