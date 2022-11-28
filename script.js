@@ -188,7 +188,9 @@ let wall4 = new Wall(new Vector2(-60, 90), 1, 1);
 let wall5 = new Wall(new Vector2(-60, 60), 1, 1);
 let wall6 = new Wall(new Vector2(-60, 30), 1, 1);
 let wall7 = new Wall(new Vector2(-60, 0), 1, 1);
-
+let spearman1 = new Spearman(new Vector2(-105,15), 2, 2);
+let bowman1 = new Bowman(new Vector2(-105, 195), 2, 2)
+let mageman1 = new Mageman(new Vector2(-105, 105), 2, 2)
 
 // temp
 let rockThrower = new RockThrower(new Vector2(90 + 15, 90 + 15), 2, 2);
