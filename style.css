@@ -10,7 +10,7 @@ canvas {
     background-color: whitesmoke;
 }
 
-#canv{
+#canv {
     border: 3px solid black;
     border-radius: 10px;
 }
@@ -26,16 +26,22 @@ p {
     font-weight: bold;
 }
 
-.hidden{
-    display:none;
+.hidden {
+    display: none;
 }
 
-.building-btn{
+button {
     border-radius: 5px;
     font-family: Georgia, 'Times New Roman', Times, serif;
+    background-color: lightgray;
 }
 
-#goldTest {
-    border-radius: 5px;
-    font-family: Georgia, 'Times New Roman', Times, serif;
+button:hover {
+    background-color: white;
+    cursor: pointer;
+}
+
+button:active {
+    background-color: gray;
+    border-color: darkgray;
 }
