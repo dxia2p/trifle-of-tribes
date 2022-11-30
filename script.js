@@ -120,12 +120,16 @@ window.setInterval(() => {
 let buildings = [];
 let selectedBuilding = -1;
 let buildingTemplates = [
-    new BuildingTemplate(new Vector2(0, 0), 2, 2, rockThrowerImg, cam)
+    new BuildingTemplate(new Vector2(0, 0), 2, 2, rockThrowerImg, cam),
+    new BuildingTemplate(new Vector2(0, 0), 2, 2, spearmanImg, cam),
+    new BuildingTemplate(new Vector2(0, 0), 2, 2, bowmanImg, cam),
+    new BuildingTemplate(new Vector2(0, 0), 2, 2, magemanImg, cam),
+    new BuildingTemplate(new Vector2(0, 0), 1, 1, wallImg, cam)
 ];
 
 function selectBuilding(buildingType) {
     if (buildingType === selectedBuilding) {
-        selectedBuilding = 0;
+        selectedBuilding = -1;
         return;
     }
     selectedBuilding = buildingType;
@@ -168,33 +172,50 @@ function drawBuildingTemplate(mp) {
 // Place building
 document.addEventListener('mousedown', (event) => {
     let mousePos = getMousePos(canvas, event); // get mouse pos function defined in mouse movement section
-    if(selectedBuilding === -1){
+    if (selectedBuilding === -1) {
         return;
     }
 
     // Place Building Here
     for (let i = 0; i < placedBuildings.length; i++) {
-        if(rectangleOverlap(buildingTemplates[selectedBuilding].pos, buildingTemplates[selectedBuilding].gridWidth * GRID_SIZE, buildingTemplates[selectedBuilding].gridHeight * GRID_SIZE,
-        placedBuildings[i].pos, placedBuildings[i].gridWidth * GRID_SIZE, placedBuildings[i].gridHeight * GRID_SIZE)){
+        if (rectangleOverlap(buildingTemplates[selectedBuilding].pos, buildingTemplates[selectedBuilding].gridWidth * GRID_SIZE, buildingTemplates[selectedBuilding].gridHeight * GRID_SIZE,
+            placedBuildings[i].pos, placedBuildings[i].gridWidth * GRID_SIZE, placedBuildings[i].gridHeight * GRID_SIZE)) {
             return;
         }
     }
-    console.log("ASAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    let b;
+    switch(selectedBuilding){
+        case 0:
+            b = new RockThrower(new Vector2(buildingTemplates[selectedBuilding].pos.x, buildingTemplates[selectedBuilding].pos.y));
+            break;
+        case 1:
+            b = new Spearman(new Vector2(buildingTemplates[selectedBuilding].pos.x, buildingTemplates[selectedBuilding].pos.y));
+            break;
+        case 2:
+            b = new Bowman(new Vector2(buildingTemplates[selectedBuilding].pos.x, buildingTemplates[selectedBuilding].pos.y));
+            break;
+        case 3:
+            b = new Mageman(new Vector2(buildingTemplates[selectedBuilding].pos.x, buildingTemplates[selectedBuilding].pos.y));
+            break;
+        case 4:
+            b = new Wall(new Vector2(buildingTemplates[selectedBuilding].pos.x, buildingTemplates[selectedBuilding].pos.y));
+            break;
+    }
 });
 
-function rectangleOverlap(r1center, r1width, r1height, r2center, r2width, r2height){
+function rectangleOverlap(r1center, r1width, r1height, r2center, r2width, r2height) {
     let r1TopLeft = new Vector2(r1center.x - (r1width / 2), r1center.y + (r1height / 2));
     let r1BottomRight = new Vector2(r1center.x + (r1width / 2), r1center.y - (r1height / 2));
 
     let r2TopLeft = new Vector2(r2center.x - (r2width / 2), r2center.y + (r2height / 2));
     let r2BottomRight = new Vector2(r2center.x + (r2width / 2), r2center.y - (r2height / 2));
 
-    //console.log(r1TopLeft, r1BottomRight, r2TopLeft, r2BottomRight);
+    // console.log(r1TopLeft, r1BottomRight, r2TopLeft, r2BottomRight);
 
-    if(r1TopLeft.x >= r2BottomRight.x || r2TopLeft.x >= r1BottomRight.x)
+    if (r1TopLeft.x >= r2BottomRight.x || r2TopLeft.x >= r1BottomRight.x)
         return false;
 
-    if(r1BottomRight.y >= r2TopLeft.y || r2BottomRight.y >= r1TopLeft.y)
+    if (r1BottomRight.y >= r2TopLeft.y || r2BottomRight.y >= r1TopLeft.y)
         return false;
 
     return true;
@@ -203,17 +224,17 @@ function rectangleOverlap(r1center, r1width, r1height, r2center, r2width, r2heig
 console.log(rectangleOverlap(new Vector2(0, 0), 1, 1, new Vector2(-1, 1), 1, 1));
 
 // Wall
-let wall = new Wall(new Vector2(0, 90), 1, 1);
-let wall1 = new Wall(new Vector2(30, 90), 1, 1);
-let wall2 = new Wall(new Vector2(60, 90), 1, 1);
-let wall3 = new Wall(new Vector2(-30, 90), 1, 1);
-let wall4 = new Wall(new Vector2(-60, 90), 1, 1);
-let wall5 = new Wall(new Vector2(-60, 60), 1, 1);
-let wall6 = new Wall(new Vector2(-60, 30), 1, 1);
-let wall7 = new Wall(new Vector2(-60, 0), 1, 1);
-let spearman1 = new Spearman(new Vector2(-105,15), 2, 2);
-let bowman1 = new Bowman(new Vector2(-105, 195), 2, 2)
-let mageman1 = new Mageman(new Vector2(-105, 105), 2, 2)
+let wall = new Wall(new Vector2(0, 90));
+let wall1 = new Wall(new Vector2(30, 90));
+let wall2 = new Wall(new Vector2(60, 90));
+let wall3 = new Wall(new Vector2(-30, 90));
+let wall4 = new Wall(new Vector2(-60, 90));
+let wall5 = new Wall(new Vector2(-60, 60));
+let wall6 = new Wall(new Vector2(-60, 30));
+let wall7 = new Wall(new Vector2(-60, 0));
+let spearman1 = new Spearman(new Vector2(-105, 15));
+let bowman1 = new Bowman(new Vector2(-105, 195))
+let mageman1 = new Mageman(new Vector2(-105, 105))
 
 // temp
-let rockThrower = new RockThrower(new Vector2(90 + 15, 90 + 15), 2, 2);
+let rockThrower = new RockThrower(new Vector2(90 + 15, 90 + 15));

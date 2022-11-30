@@ -44,40 +44,53 @@ class GoldStorage extends Building {
 class RockThrower extends Building {
     maxTimeBtwThrow = 0.5;
     timeBtwThrow = 0;
-    constructor(pos, gridWidth, gridHeight) {
+    constructor(pos) {
         let maxHealth = 200;
+        let gridWidth = 2;
+        let gridHeight = 2;
         let sr = new SpriteRenderer(pos, GRID_SIZE * gridWidth, GRID_SIZE * gridHeight, 1, rockThrowerImg, cam);
+
         super(pos, gridWidth, gridHeight, maxHealth, sr);
     }
 }
 
 class Wall extends Building {
-    constructor(pos, gridWidth, gridHeight) {
+    constructor(pos) {
         let maxHealth = 300;
+        let gridWidth = 1;
+        let gridHeight = 1;
         let sr = new SpriteRenderer(pos, GRID_SIZE * gridWidth, GRID_SIZE * gridHeight, 1, wallImg, cam);
+
         super(pos, gridWidth, gridHeight, maxHealth, sr);
     }
 }
 
 class Spearman extends Building {
-    constructor(pos, gridWidth, gridHeight) {
+    constructor(pos) {
         let maxHealth = 250;
+        let gridWidth = 2;
+        let gridHeight = 2;
         let sr = new SpriteRenderer(pos, GRID_SIZE * gridWidth, GRID_SIZE * gridHeight, 1, spearmanImg, cam);
+
         super(pos, gridWidth, gridHeight, maxHealth, sr);
     }
 }
 
 class Bowman extends Building {
-    constructor(pos, gridWidth, gridHeight) {
+    constructor(pos) {
         let maxHealth = 150;
+        let gridWidth = 2;
+        let gridHeight = 2;
         let sr = new SpriteRenderer(pos, GRID_SIZE * gridWidth, GRID_SIZE * gridHeight, 1, bowmanImg, cam);
         super(pos, gridWidth, gridHeight, maxHealth, sr);
     }
 }
 
 class Mageman extends Building {
-    constructor(pos, gridWidth, gridHeight) {
+    constructor(pos) {
         let maxHealth = 150;
+        let gridWidth = 2;
+        let gridHeight = 2;
         let sr = new SpriteRenderer(pos, GRID_SIZE * gridWidth, GRID_SIZE * gridHeight, 1, magemanImg, cam);
         super(pos, gridWidth, gridHeight, maxHealth, sr);
     }
