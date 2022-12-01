@@ -11,7 +11,6 @@ let buildingBtn3 = document.getElementById("building-btn-3");
 let buildingBtn4 = document.getElementById("building-btn-4");
 let buildingBtn5 = document.getElementById("building-btn-5");
 
-
 // Gold Variables
 let gold = 0;
 var goldLevel = 1;
@@ -31,14 +30,12 @@ let offsetRow = false;
 for (let y = (BACKGROUND_SIZE / 2); y > -(BACKGROUND_SIZE / 2); y -= GRID_SIZE) {
     if (!offsetRow) {
         for (let x = BACKGROUND_SIZE / -2; x < BACKGROUND_SIZE / 2; x += GRID_SIZE * 2) {
-            backgroundSquares.push(new RectRenderer(new Vector2(x, y),
-                GRID_SIZE, GRID_SIZE, "#78D03B", 1, cam));
+            backgroundSquares.push(new RectRenderer(new Vector2(x, y), GRID_SIZE, GRID_SIZE, "#78D03B", 1, cam));
         }
         offsetRow = true;
     } else {
         for (let x = (BACKGROUND_SIZE / -2) + GRID_SIZE; x < BACKGROUND_SIZE / 2; x += GRID_SIZE * 2) {
-            backgroundSquares.push(new RectRenderer(new Vector2(x, y),
-                GRID_SIZE, GRID_SIZE, "#78D03B", 1, cam));
+            backgroundSquares.push(new RectRenderer(new Vector2(x, y), GRID_SIZE, GRID_SIZE, "#78D03B", 1, cam));
         }
         offsetRow = false;
     }
@@ -101,7 +98,6 @@ function loop(time) {
 
     updateAllBuildings(changeInTime);
 
-
     drawAll(ctx);
     prevTime = time;
     requestAnimationFrame(loop);
@@ -118,6 +114,25 @@ function goldLevelIncrease() {
 window.setInterval(() => {
     gold += goldLevel;
     document.getElementById("goldAmount").innerHTML = gold;
+
+    // Check if buildings can be bought
+    if (gold >= rockmanCost) {
+        buildingBtn1.disabled = false;
+    } else if (gold >= spearmanCost) {
+        buildingBtn2.disabled = false;
+    } else if (gold >= bowmanCost) {
+        buildingBtn3.disabled = false;
+    } else if (gold >= magemanCost) {
+        buildingBtn4.disabled = false;
+    } else if (gold >= wallCost) {
+        buildingBtn5.disabled = false;
+    } else {
+        buildingBtn1.disabled = true;
+        buildingBtn2.disabled = true;
+        buildingBtn3.disabled = true;
+        buildingBtn4.disabled = true;
+        buildingBtn5.disabled = true;
+    }
 }, 600);
 
 // Select Building
@@ -144,7 +159,6 @@ goldTestEl.addEventListener("click", () => {
     // Upgrade Gold Storage, Deduct Gold
     if (gold >= goldStorageCost) {
         gold -= goldStorageCost;
-
         goldLevelIncrease();
     }
 });
