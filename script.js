@@ -11,10 +11,16 @@ let buildingBtn3 = document.getElementById("building-btn-3");
 let buildingBtn4 = document.getElementById("building-btn-4");
 let buildingBtn5 = document.getElementById("building-btn-5");
 
+
 // Gold Variables
 let gold = 0;
 var goldLevel = 1;
 let goldStorageCost = 30;
+let spearmanCost = 25;
+let bowmanCost = 25;
+let rockmanCost = 30;
+let magemanCost = 40;
+let wallCost = 15;
 
 // Draw Background
 let cam = new Camera(854, 480, new Vector2(0, 0));
@@ -186,19 +192,44 @@ document.addEventListener('mousedown', (event) => {
     let b;
     switch(selectedBuilding){
         case 0:
+            if (gold >= rockmanCost) {
+            gold -= rockmanCost;
             b = new RockThrower(new Vector2(buildingTemplates[selectedBuilding].pos.x, buildingTemplates[selectedBuilding].pos.y));
+            } else {
+                alert("NOT ENOUGH GOLD");
+            }
             break;
         case 1:
+            if (gold >= spearmanCost) {
+            gold -= spearmanCost;
             b = new Spearman(new Vector2(buildingTemplates[selectedBuilding].pos.x, buildingTemplates[selectedBuilding].pos.y));
+            } else {
+                alert("NOT ENOUGH GOLD");
+            }
             break;
         case 2:
+            if (gold >= bowmanCost) {
+            gold -= bowmanCost;
             b = new Bowman(new Vector2(buildingTemplates[selectedBuilding].pos.x, buildingTemplates[selectedBuilding].pos.y));
+            } else {
+                alert("NOT ENOUGH GOLD");
+            }
             break;
-        case 3:
+        case 3: 
+            if (gold >= magemanCost) {
+            gold -= magemanCost;
             b = new Mageman(new Vector2(buildingTemplates[selectedBuilding].pos.x, buildingTemplates[selectedBuilding].pos.y));
+            } else {
+                alert("NOT ENOUGH GOLD");
+            }
             break;
         case 4:
+            if (gold >= wallCost) {
+            gold -= wallCost;
             b = new Wall(new Vector2(buildingTemplates[selectedBuilding].pos.x, buildingTemplates[selectedBuilding].pos.y));
+            } else {
+                alert("NOT ENOUGH GOLD");
+            }
             break;
     }
 });
@@ -224,17 +255,6 @@ function rectangleOverlap(r1center, r1width, r1height, r2center, r2width, r2heig
 console.log(rectangleOverlap(new Vector2(0, 0), 1, 1, new Vector2(-1, 1), 1, 1));
 
 // Wall
-let wall = new Wall(new Vector2(0, 90));
-let wall1 = new Wall(new Vector2(30, 90));
-let wall2 = new Wall(new Vector2(60, 90));
-let wall3 = new Wall(new Vector2(-30, 90));
-let wall4 = new Wall(new Vector2(-60, 90));
-let wall5 = new Wall(new Vector2(-60, 60));
-let wall6 = new Wall(new Vector2(-60, 30));
-let wall7 = new Wall(new Vector2(-60, 0));
-let spearman1 = new Spearman(new Vector2(-105, 15));
-let bowman1 = new Bowman(new Vector2(-105, 195))
-let mageman1 = new Mageman(new Vector2(-105, 105))
+
 
 // temp
-let rockThrower = new RockThrower(new Vector2(90 + 15, 90 + 15));
