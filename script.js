@@ -172,6 +172,9 @@ function drawBuildingTemplate(mp) {
 // Place building
 document.addEventListener('mousedown', (event) => {
     let mousePos = getMousePos(canvas, event); // get mouse pos function defined in mouse movement section
+    if(mousePos.x < -canvas.width / 2 || mousePos.x > canvas.width / 2 || mousePos.y > canvas.height / 2 || mousePos.y < -canvas.height / 2){
+        return;
+    }
     if (selectedBuilding === -1) {
         return;
     }
