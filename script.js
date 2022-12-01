@@ -111,9 +111,7 @@ requestAnimationFrame(loop);
 // Gold
 function goldLevelIncrease() {
     goldStorageCost *= 3;
-    console.log(goldStorageCost);
     goldLevel *= 2;
-    console.log(goldLevel);
     document.getElementById("upgradeCost").innerHTML = goldStorageCost;
 }
 
@@ -178,7 +176,7 @@ function drawBuildingTemplate(mp) {
 // Place building
 document.addEventListener('mousedown', (event) => {
     let mousePos = getMousePos(canvas, event); // get mouse pos function defined in mouse movement section
-    if(mousePos.x < -canvas.width / 2 || mousePos.x > canvas.width / 2 || mousePos.y > canvas.height / 2 || mousePos.y < -canvas.height / 2){
+    if (mousePos.x < -canvas.width / 2 || mousePos.x > canvas.width / 2 || mousePos.y > canvas.height / 2 || mousePos.y < -canvas.height / 2) {
         return;
     }
     if (selectedBuilding === -1) {
@@ -193,43 +191,43 @@ document.addEventListener('mousedown', (event) => {
         }
     }
     let b;
-    switch(selectedBuilding){
+    switch (selectedBuilding) {
         case 0:
             if (gold >= rockmanCost) {
-            gold -= rockmanCost;
-            b = new RockThrower(new Vector2(buildingTemplates[selectedBuilding].pos.x, buildingTemplates[selectedBuilding].pos.y));
+                gold -= rockmanCost;
+                b = new RockThrower(new Vector2(buildingTemplates[selectedBuilding].pos.x, buildingTemplates[selectedBuilding].pos.y));
             } else {
                 alert("NOT ENOUGH GOLD");
             }
             break;
         case 1:
             if (gold >= spearmanCost) {
-            gold -= spearmanCost;
-            b = new Spearman(new Vector2(buildingTemplates[selectedBuilding].pos.x, buildingTemplates[selectedBuilding].pos.y));
+                gold -= spearmanCost;
+                b = new Spearman(new Vector2(buildingTemplates[selectedBuilding].pos.x, buildingTemplates[selectedBuilding].pos.y));
             } else {
                 alert("NOT ENOUGH GOLD");
             }
             break;
         case 2:
             if (gold >= bowmanCost) {
-            gold -= bowmanCost;
-            b = new Bowman(new Vector2(buildingTemplates[selectedBuilding].pos.x, buildingTemplates[selectedBuilding].pos.y));
+                gold -= bowmanCost;
+                b = new Bowman(new Vector2(buildingTemplates[selectedBuilding].pos.x, buildingTemplates[selectedBuilding].pos.y));
             } else {
                 alert("NOT ENOUGH GOLD");
             }
             break;
-        case 3: 
+        case 3:
             if (gold >= magemanCost) {
-            gold -= magemanCost;
-            b = new Mageman(new Vector2(buildingTemplates[selectedBuilding].pos.x, buildingTemplates[selectedBuilding].pos.y));
+                gold -= magemanCost;
+                b = new Mageman(new Vector2(buildingTemplates[selectedBuilding].pos.x, buildingTemplates[selectedBuilding].pos.y));
             } else {
                 alert("NOT ENOUGH GOLD");
             }
             break;
         case 4:
             if (gold >= wallCost) {
-            gold -= wallCost;
-            b = new Wall(new Vector2(buildingTemplates[selectedBuilding].pos.x, buildingTemplates[selectedBuilding].pos.y));
+                gold -= wallCost;
+                b = new Wall(new Vector2(buildingTemplates[selectedBuilding].pos.x, buildingTemplates[selectedBuilding].pos.y));
             } else {
                 alert("NOT ENOUGH GOLD");
             }
@@ -244,8 +242,6 @@ function rectangleOverlap(r1center, r1width, r1height, r2center, r2width, r2heig
     let r2TopLeft = new Vector2(r2center.x - (r2width / 2), r2center.y + (r2height / 2));
     let r2BottomRight = new Vector2(r2center.x + (r2width / 2), r2center.y - (r2height / 2));
 
-    // console.log(r1TopLeft, r1BottomRight, r2TopLeft, r2BottomRight);
-
     if (r1TopLeft.x >= r2BottomRight.x || r2TopLeft.x >= r1BottomRight.x)
         return false;
 
@@ -254,10 +250,3 @@ function rectangleOverlap(r1center, r1width, r1height, r2center, r2width, r2heig
 
     return true;
 }
-
-console.log(rectangleOverlap(new Vector2(0, 0), 1, 1, new Vector2(-1, 1), 1, 1));
-
-// Wall
-
-
-// temp
