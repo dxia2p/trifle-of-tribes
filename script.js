@@ -5,17 +5,12 @@ canvas.height = "480";
 
 // Add HTML Elements (Buttons)
 let goldTestEl = document.getElementById("goldTest");
-let buildingBtn1 = document.getElementById("building-btn-1");
-let buildingBtn2 = document.getElementById("building-btn-2");
-let buildingBtn3 = document.getElementById("building-btn-3");
-let buildingBtn4 = document.getElementById("building-btn-4");
-let buildingBtn5 = document.getElementById("building-btn-5");
 let buildingBtnArray = [
-    buildingBtn1,
-    buildingBtn2,
-    buildingBtn3,
-    buildingBtn4,
-    buildingBtn5,
+    document.getElementById("building-btn-1"),
+    document.getElementById("building-btn-2"),
+    document.getElementById("building-btn-3"),
+    document.getElementById("building-btn-4"),
+    document.getElementById("building-btn-5"),
 ]
 
 // Gold Variables
@@ -168,11 +163,9 @@ goldTestEl.addEventListener("click", () => {
     }
 });
 
-buildingBtn1.addEventListener("click", () => { selectBuilding(0) });
-buildingBtn2.addEventListener("click", () => { selectBuilding(1) });
-buildingBtn3.addEventListener("click", () => { selectBuilding(2) });
-buildingBtn4.addEventListener("click", () => { selectBuilding(3) });
-buildingBtn5.addEventListener("click", () => { selectBuilding(4) });
+for (let i = 0; i < buildingBtnArray.length; i++) {
+    buildingBtnArray[i].addEventListener("click", () => { selectBuilding(i) })
+}
 
 // Place Gold Storage
 let goldStorage = new GoldStorage(new Vector2(0 + 15, 0 + 15), 4, 4);
