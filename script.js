@@ -10,6 +10,13 @@ let buildingBtn2 = document.getElementById("building-btn-2");
 let buildingBtn3 = document.getElementById("building-btn-3");
 let buildingBtn4 = document.getElementById("building-btn-4");
 let buildingBtn5 = document.getElementById("building-btn-5");
+let buildingBtnArray = [
+    buildingBtn1,
+    buildingBtn2,
+    buildingBtn3,
+    buildingBtn4,
+    buildingBtn5,
+]
 
 // Gold Variables
 let gold = 0;
@@ -20,6 +27,14 @@ let bowmanCost = 25;
 let rockmanCost = 30;
 let magemanCost = 40;
 let wallCost = 15;
+
+let costsArray = [
+    rockmanCost,
+    spearmanCost,
+    bowmanCost,
+    magemanCost,
+    wallCost
+]
 
 // Draw Background
 let cam = new Camera(854, 480, new Vector2(0, 0));
@@ -116,22 +131,12 @@ window.setInterval(() => {
     document.getElementById("goldAmount").innerHTML = gold;
 
     // Check if buildings can be bought
-    if (gold >= rockmanCost) {
-        buildingBtn1.disabled = false;
-    } else if (gold >= spearmanCost) {
-        buildingBtn2.disabled = false;
-    } else if (gold >= bowmanCost) {
-        buildingBtn3.disabled = false;
-    } else if (gold >= magemanCost) {
-        buildingBtn4.disabled = false;
-    } else if (gold >= wallCost) {
-        buildingBtn5.disabled = false;
-    } else {
-        buildingBtn1.disabled = true;
-        buildingBtn2.disabled = true;
-        buildingBtn3.disabled = true;
-        buildingBtn4.disabled = true;
-        buildingBtn5.disabled = true;
+    for (let i = 0; i < costsArray.length; i++) {
+        if (gold >= costsArray[i]) {
+            buildingBtnArray[i].disabled = false;
+        } else {
+            buildingBtnArray[i].disabled = true;
+        }
     }
 }, 600);
 
