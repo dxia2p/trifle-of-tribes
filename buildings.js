@@ -42,8 +42,8 @@ class GoldStorage extends Building {
 }
 
 class RockThrower extends Building {
-    maxTimeBtwAttack = 0.5;
-    timeBtwAttack = 0.5;
+    maxTimeBtwAttack = 1;
+    timeBtwAttack = 1;
     range = 200;
     constructor(pos) {
         let maxHealth = 200;
@@ -55,20 +55,21 @@ class RockThrower extends Building {
     }
 
     update(time) {
-        let closestEnemyData = getClosestEnemy(this.pos); // returns closest dist and closest enemy
+        let closestEnemyData = getClosestEnemy(this.pos); // returns closestDist and closestEnemy
         if (closestEnemyData.closestDist > this.range) {
             return;
         }
         if (this.timeBtwAttack <= 0) {
             this.timeBtwAttack = this.maxTimeBtwAttack;
-            this.attack();
+            this.attack(new Vector2(closestEnemyData.closestEnemy.pos.x, closestEnemyData.closestEnemy.pos.y));
         } else {
             this.timeBtwAttack -= time;
         }
     }
 
-    attack() {
-        new Projectile(this.pos, 50, 2, new SpriteRenderer(this.pos, 60, 60, 1, rockImg, cam));
+    attack(closestEnemyPos) {
+    
+        new Projectile(new Vector2(this.pos.x, this.pos.y), 50, 2, 30, rockImg);
     }
 }
 
@@ -117,11 +118,13 @@ class Mageman extends Building {
 let projectiles = [];
 
 class Projectile {
-    constructor(pos, damage, lifetime, spriteRenderer) {
+    constructor(pos, damage, lifetime, radius, img) {
         this.pos = pos;
         this.damage = damage;
         this.lifetime = lifetime;
-        this.spriteRenderer = spriteRenderer;
+        this.radius = radius;
+        this.spriteRenderer = new SpriteRenderer(pos, 60, 60, 1, img, cam);
+        console.log(this.spriteRenderer);
         projectiles.push(this);
     }
 
@@ -133,7 +136,7 @@ class Projectile {
             
         } else {
             this.lifetime -= time;
-            this.spriteRenderer.rotation += 1;
+            this.spriteRenderer.rotation += 0.02;
         }
     }
 }

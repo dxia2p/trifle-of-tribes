@@ -268,7 +268,5 @@ function rectangleOverlap(r1center, r1width, r1height, r2center, r2width, r2heig
 
 console.log(rectangleOverlap(new Vector2(0, 0), 1, 1, new Vector2(-1, 1), 1, 1));
 
-// Wall
-
-
 // temp
+let gooblin = new Goblin(new Vector2(100, 100));

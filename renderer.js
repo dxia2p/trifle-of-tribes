@@ -53,11 +53,13 @@ class SpriteRenderer extends Renderer{
         ctx.save();
 
         //ctx.translate(this.width / 2, this.height / 2);
-        let posOnCanvas = new Vector2((this.pos.x - (this.width / 2) - this.camera.pos.x + (this.camera.width / 2)),
-        -this.pos.y - (this.height / 2) - (-this.camera.pos.y - this.camera.height / 2))
+        let posOnCanvas = new Vector2((this.pos.x - this.camera.pos.x + (this.camera.width / 2)),
+        -this.pos.y - (-this.camera.pos.y - this.camera.height / 2));
 
         ctx.translate(posOnCanvas.x, posOnCanvas.y);
         ctx.rotate(this.rotation);
+        posOnCanvas = new Vector2(-(this.width / 2), -(this.height / 2));
+        ctx.translate(posOnCanvas.x, posOnCanvas.y);
 
         ctx.globalAlpha = this.alpha;
         ctx.drawImage(this.img, 0, 0, this.width, this.height);

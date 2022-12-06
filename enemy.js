@@ -10,7 +10,7 @@ function getClosestEnemy(pos){
             closestEnemy = enemies[i];
         }
     }
-    return {closestEnemty: closestEnemy,
+    return {closestEnemy: closestEnemy,
             closestDist: Math.sqrt(closestDistSquared)};
 }
 
