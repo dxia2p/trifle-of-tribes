@@ -107,8 +107,12 @@ function loop(time) {
     cam.pos.x += leftRightValue;
 
     updateAllBuildings(changeInTime / 1000);
-    for(let i = 0; i < projectiles.length; i++){
+    for (let i = 0; i < projectiles.length; i++) {
         projectiles[i].update(changeInTime / 1000);
+    }
+
+    for (let i = 0; i < enemies.length; i++) {
+        enemies[i].update(changeInTime / 1000);
     }
 
     drawAll(ctx);
@@ -272,3 +276,7 @@ console.log(rectangleOverlap(new Vector2(0, 0), 1, 1, new Vector2(-1, 1), 1, 1))
 
 
 // temp
+enemies.push(new Goblin(new Vector2(Math.random() * 100, Math.random() * 100)));
+enemies.push(new Goblin(new Vector2(Math.random() * -100, Math.random() * 100)));
+enemies.push(new Goblin(new Vector2(Math.random() * 100, Math.random() * -100)));
+enemies.push(new Goblin(new Vector2(Math.random() * -100, Math.random() * -100)));
