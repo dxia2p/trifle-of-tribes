@@ -45,3 +45,12 @@ button:active {
     background-color: gray;
     border-color: darkgray;
 }
+
+button:disabled {
+    background-color: lightgray;
+    cursor: default;
+}
+
+button:disabled:active {
+    border-color: lightgray;
+}

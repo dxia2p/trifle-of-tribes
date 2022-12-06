@@ -5,12 +5,13 @@ canvas.height = "480";
 
 // Add HTML Elements (Buttons)
 let goldTestEl = document.getElementById("goldTest");
-let buildingBtn1 = document.getElementById("building-btn-1");
-let buildingBtn2 = document.getElementById("building-btn-2");
-let buildingBtn3 = document.getElementById("building-btn-3");
-let buildingBtn4 = document.getElementById("building-btn-4");
-let buildingBtn5 = document.getElementById("building-btn-5");
-
+let buildingBtnArray = [
+    document.getElementById("building-btn-1"),
+    document.getElementById("building-btn-2"),
+    document.getElementById("building-btn-3"),
+    document.getElementById("building-btn-4"),
+    document.getElementById("building-btn-5"),
+]
 
 // Gold Variables
 let gold = 10000;
@@ -22,6 +23,14 @@ let rockmanCost = 30;
 let magemanCost = 40;
 let wallCost = 15;
 
+let costsArray = [
+    rockmanCost,
+    spearmanCost,
+    bowmanCost,
+    magemanCost,
+    wallCost
+]
+
 // Draw Background
 let cam = new Camera(854, 480, new Vector2(0, 0));
 let square = new RectRenderer(new Vector2(0, 0), BACKGROUND_SIZE, BACKGROUND_SIZE, "#A6E57A", 1, cam);
@@ -31,14 +40,12 @@ let offsetRow = false;
 for (let y = (BACKGROUND_SIZE / 2); y > -(BACKGROUND_SIZE / 2); y -= GRID_SIZE) {
     if (!offsetRow) {
         for (let x = BACKGROUND_SIZE / -2; x < BACKGROUND_SIZE / 2; x += GRID_SIZE * 2) {
-            backgroundSquares.push(new RectRenderer(new Vector2(x, y),
-                GRID_SIZE, GRID_SIZE, "#78D03B", 1, cam));
+            backgroundSquares.push(new RectRenderer(new Vector2(x, y), GRID_SIZE, GRID_SIZE, "#78D03B", 1, cam));
         }
         offsetRow = true;
     } else {
         for (let x = (BACKGROUND_SIZE / -2) + GRID_SIZE; x < BACKGROUND_SIZE / 2; x += GRID_SIZE * 2) {
-            backgroundSquares.push(new RectRenderer(new Vector2(x, y),
-                GRID_SIZE, GRID_SIZE, "#78D03B", 1, cam));
+            backgroundSquares.push(new RectRenderer(new Vector2(x, y), GRID_SIZE, GRID_SIZE, "#78D03B", 1, cam));
         }
         offsetRow = false;
     }
@@ -113,15 +120,22 @@ requestAnimationFrame(loop);
 // Gold
 function goldLevelIncrease() {
     goldStorageCost *= 3;
-    console.log(goldStorageCost);
     goldLevel *= 2;
-    console.log(goldLevel);
     document.getElementById("upgradeCost").innerHTML = goldStorageCost;
 }
 
 window.setInterval(() => {
     gold += goldLevel;
     document.getElementById("goldAmount").innerHTML = gold;
+
+    // Check if buildings can be bought
+    for (let i = 0; i < costsArray.length; i++) {
+        if (gold >= costsArray[i]) {
+            buildingBtnArray[i].disabled = false;
+        } else {
+            buildingBtnArray[i].disabled = true;
+        }
+    }
 }, 600);
 
 // Select Building
@@ -148,16 +162,13 @@ goldTestEl.addEventListener("click", () => {
     // Upgrade Gold Storage, Deduct Gold
     if (gold >= goldStorageCost) {
         gold -= goldStorageCost;
-
         goldLevelIncrease();
     }
 });
 
-buildingBtn1.addEventListener("click", () => { selectBuilding(0) });
-buildingBtn2.addEventListener("click", () => { selectBuilding(1) });
-buildingBtn3.addEventListener("click", () => { selectBuilding(2) });
-buildingBtn4.addEventListener("click", () => { selectBuilding(3) });
-buildingBtn5.addEventListener("click", () => { selectBuilding(4) });
+for (let i = 0; i < buildingBtnArray.length; i++) {
+    buildingBtnArray[i].addEventListener("click", () => { selectBuilding(i) })
+}
 
 // Place Gold Storage
 let goldStorage = new GoldStorage(new Vector2(0 + 15, 0 + 15), 4, 4);
@@ -180,7 +191,7 @@ function drawBuildingTemplate(mp) {
 // Place building
 document.addEventListener('mousedown', (event) => {
     let mousePos = getMousePos(canvas, event); // get mouse pos function defined in mouse movement section
-    if(mousePos.x < -canvas.width / 2 || mousePos.x > canvas.width / 2 || mousePos.y > canvas.height / 2 || mousePos.y < -canvas.height / 2){
+    if (mousePos.x < -canvas.width / 2 || mousePos.x > canvas.width / 2 || mousePos.y > canvas.height / 2 || mousePos.y < -canvas.height / 2) {
         return;
     }
     if (selectedBuilding === -1) {
@@ -195,43 +206,43 @@ document.addEventListener('mousedown', (event) => {
         }
     }
     let b;
-    switch(selectedBuilding){
+    switch (selectedBuilding) {
         case 0:
             if (gold >= rockmanCost) {
-            gold -= rockmanCost;
-            b = new RockThrower(new Vector2(buildingTemplates[selectedBuilding].pos.x, buildingTemplates[selectedBuilding].pos.y));
+                gold -= rockmanCost;
+                b = new RockThrower(new Vector2(buildingTemplates[selectedBuilding].pos.x, buildingTemplates[selectedBuilding].pos.y));
             } else {
                 alert("NOT ENOUGH GOLD");
             }
             break;
         case 1:
             if (gold >= spearmanCost) {
-            gold -= spearmanCost;
-            b = new Spearman(new Vector2(buildingTemplates[selectedBuilding].pos.x, buildingTemplates[selectedBuilding].pos.y));
+                gold -= spearmanCost;
+                b = new Spearman(new Vector2(buildingTemplates[selectedBuilding].pos.x, buildingTemplates[selectedBuilding].pos.y));
             } else {
                 alert("NOT ENOUGH GOLD");
             }
             break;
         case 2:
             if (gold >= bowmanCost) {
-            gold -= bowmanCost;
-            b = new Bowman(new Vector2(buildingTemplates[selectedBuilding].pos.x, buildingTemplates[selectedBuilding].pos.y));
+                gold -= bowmanCost;
+                b = new Bowman(new Vector2(buildingTemplates[selectedBuilding].pos.x, buildingTemplates[selectedBuilding].pos.y));
             } else {
                 alert("NOT ENOUGH GOLD");
             }
             break;
-        case 3: 
+        case 3:
             if (gold >= magemanCost) {
-            gold -= magemanCost;
-            b = new Mageman(new Vector2(buildingTemplates[selectedBuilding].pos.x, buildingTemplates[selectedBuilding].pos.y));
+                gold -= magemanCost;
+                b = new Mageman(new Vector2(buildingTemplates[selectedBuilding].pos.x, buildingTemplates[selectedBuilding].pos.y));
             } else {
                 alert("NOT ENOUGH GOLD");
             }
             break;
         case 4:
             if (gold >= wallCost) {
-            gold -= wallCost;
-            b = new Wall(new Vector2(buildingTemplates[selectedBuilding].pos.x, buildingTemplates[selectedBuilding].pos.y));
+                gold -= wallCost;
+                b = new Wall(new Vector2(buildingTemplates[selectedBuilding].pos.x, buildingTemplates[selectedBuilding].pos.y));
             } else {
                 alert("NOT ENOUGH GOLD");
             }
@@ -246,8 +257,6 @@ function rectangleOverlap(r1center, r1width, r1height, r2center, r2width, r2heig
     let r2TopLeft = new Vector2(r2center.x - (r2width / 2), r2center.y + (r2height / 2));
     let r2BottomRight = new Vector2(r2center.x + (r2width / 2), r2center.y - (r2height / 2));
 
-    // console.log(r1TopLeft, r1BottomRight, r2TopLeft, r2BottomRight);
-
     if (r1TopLeft.x >= r2BottomRight.x || r2TopLeft.x >= r1BottomRight.x)
         return false;
 
@@ -260,18 +269,6 @@ function rectangleOverlap(r1center, r1width, r1height, r2center, r2width, r2heig
 console.log(rectangleOverlap(new Vector2(0, 0), 1, 1, new Vector2(-1, 1), 1, 1));
 
 // Wall
-let wall = new Wall(new Vector2(0, 90));
-let wall1 = new Wall(new Vector2(30, 90));
-let wall2 = new Wall(new Vector2(60, 90));
-let wall3 = new Wall(new Vector2(-30, 90));
-let wall4 = new Wall(new Vector2(-60, 90));
-let wall5 = new Wall(new Vector2(-60, 60));
-let wall6 = new Wall(new Vector2(-60, 30));
-let wall7 = new Wall(new Vector2(-60, 0));
-let spearman1 = new Spearman(new Vector2(-105, 15));
-let bowman1 = new Bowman(new Vector2(-105, 195))
-let mageman1 = new Mageman(new Vector2(-105, 105));
 
-let goblin = new Goblin(new Vector2(100, 0));
 
 // temp
