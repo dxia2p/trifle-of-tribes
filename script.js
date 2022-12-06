@@ -139,11 +139,11 @@ window.setInterval(() => {
 let buildings = [];
 let selectedBuilding = -1;
 let buildingTemplates = [
-    new BuildingTemplate(new Vector2(0, 0), 2, 2, rockThrowerImg, cam),
-    new BuildingTemplate(new Vector2(0, 0), 2, 2, spearmanImg, cam),
-    new BuildingTemplate(new Vector2(0, 0), 2, 2, bowmanImg, cam),
-    new BuildingTemplate(new Vector2(0, 0), 2, 2, magemanImg, cam),
-    new BuildingTemplate(new Vector2(0, 0), 1, 1, wallImg, cam)
+    new BuildingTemplate(new Vector2(1200, 1200), 2, 2, rockThrowerImg, cam),
+    new BuildingTemplate(new Vector2(1200, 1200), 2, 2, spearmanImg, cam),
+    new BuildingTemplate(new Vector2(1200, 1200), 2, 2, bowmanImg, cam),
+    new BuildingTemplate(new Vector2(1200, 1200), 2, 2, magemanImg, cam),
+    new BuildingTemplate(new Vector2(1200, 1200), 1, 1, wallImg, cam)
 ];
 
 function selectBuilding(buildingType) {
