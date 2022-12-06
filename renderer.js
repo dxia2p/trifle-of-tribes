@@ -39,6 +39,7 @@ class RectRenderer extends Renderer {
 }
 
 class SpriteRenderer extends Renderer{
+    rotation = 0; // in radians
     constructor(pos, width, height, alpha, img, camera) {
         super();
         this.pos = pos;
@@ -49,10 +50,24 @@ class SpriteRenderer extends Renderer{
         this.camera = camera;
     }
     draw(ctx) {
+        ctx.save();
+
+        //ctx.translate(this.width / 2, this.height / 2);
+        let posOnCanvas = new Vector2((this.pos.x - (this.width / 2) - this.camera.pos.x + (this.camera.width / 2)),
+        -this.pos.y - (this.height / 2) - (-this.camera.pos.y - this.camera.height / 2))
+
+        ctx.translate(posOnCanvas.x, posOnCanvas.y);
+        ctx.rotate(this.rotation);
+
         ctx.globalAlpha = this.alpha;
-        ctx.drawImage(this.img, (this.pos.x - (this.width / 2) - this.camera.pos.x + (this.camera.width / 2)),
-        -this.pos.y - (this.height / 2) - (-this.camera.pos.y - this.camera.height / 2), this.width, this.height);
+        ctx.drawImage(this.img, 0, 0, this.width, this.height);
         ctx.globalAlpha = 1;
+        ctx.restore();
+    }
+
+    removeFromDrawList(){
+        let i = drawList.indexOf(this);
+        drawList.splice(i, 1);
     }
 }
 

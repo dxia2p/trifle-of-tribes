@@ -13,7 +13,7 @@ let buildingBtn5 = document.getElementById("building-btn-5");
 
 
 // Gold Variables
-let gold = 0;
+let gold = 10000;
 var goldLevel = 1;
 let goldStorageCost = 30;
 let spearmanCost = 25;
@@ -99,8 +99,10 @@ function loop(time) {
     cam.pos.y += upDownValue;
     cam.pos.x += leftRightValue;
 
-    updateAllBuildings(changeInTime);
-
+    updateAllBuildings(changeInTime / 1000);
+    for(let i = 0; i < projectiles.length; i++){
+        projectiles[i].update(changeInTime / 1000);
+    }
 
     drawAll(ctx);
     prevTime = time;
@@ -258,6 +260,18 @@ function rectangleOverlap(r1center, r1width, r1height, r2center, r2width, r2heig
 console.log(rectangleOverlap(new Vector2(0, 0), 1, 1, new Vector2(-1, 1), 1, 1));
 
 // Wall
+let wall = new Wall(new Vector2(0, 90));
+let wall1 = new Wall(new Vector2(30, 90));
+let wall2 = new Wall(new Vector2(60, 90));
+let wall3 = new Wall(new Vector2(-30, 90));
+let wall4 = new Wall(new Vector2(-60, 90));
+let wall5 = new Wall(new Vector2(-60, 60));
+let wall6 = new Wall(new Vector2(-60, 30));
+let wall7 = new Wall(new Vector2(-60, 0));
+let spearman1 = new Spearman(new Vector2(-105, 15));
+let bowman1 = new Bowman(new Vector2(-105, 195))
+let mageman1 = new Mageman(new Vector2(-105, 105));
 
+let goblin = new Goblin(new Vector2(100, 0));
 
 // temp
