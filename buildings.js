@@ -45,6 +45,7 @@ class RockThrower extends Building {
     maxTimeBtwAttack = 1;
     timeBtwAttack = 1;
     range = 200;
+    projectileSpeed = 500;
     constructor(pos) {
         let maxHealth = 200;
         let gridWidth = 2;
@@ -68,8 +69,13 @@ class RockThrower extends Building {
     }
 
     attack(closestEnemyPos) {
-    
-        new Projectile(new Vector2(this.pos.x, this.pos.y), 50, 2, 30, rockImg);
+        let direction = new Vector2(closestEnemyPos.x - this.pos.x, closestEnemyPos.y - this.pos.y);
+        let directionMagnitude = Math.sqrt(direction.x ** 2 + direction.y ** 2)
+        direction.x /= directionMagnitude;
+        direction.y /= directionMagnitude; // make the direction on the unit circle by dividing it by its magnitude
+        let p = new Projectile(new Vector2(this.pos.x, this.pos.y), 50, 2, 30, rockImg);
+        p.speed = this.projectileSpeed;
+        p.direction = direction;
     }
 }
 
@@ -118,6 +124,8 @@ class Mageman extends Building {
 let projectiles = [];
 
 class Projectile {
+    direction = new Vector2(0, 0);
+    speed = 0;
     constructor(pos, damage, lifetime, radius, img) {
         this.pos = pos;
         this.damage = damage;
@@ -137,6 +145,8 @@ class Projectile {
         } else {
             this.lifetime -= time;
             this.spriteRenderer.rotation += 0.02;
+            this.pos.x += this.direction.x * this.speed * time;
+            this.pos.y += this.direction.y * this.speed * time;
         }
     }
 }
