@@ -276,14 +276,7 @@ console.log(rectangleOverlap(new Vector2(0, 0), 1, 1, new Vector2(-1, 1), 1, 1))
 setInterval(spawnGoblin, 1000);
 
 function spawnGoblin() {
-    let random = Math.random();
-    if (random <= 0.25) {
-        enemies.push(new Goblin(new Vector2((Math.random() + 1) * -500, (Math.random() + 1)  * -500))); 
-    } else if (random <= 0.50) {
-        enemies.push(new Goblin(new Vector2((Math.random() + 1)  * 500,(Math.random() + 1)  * -500))); 
-    } else if (random <= 0.75) {
-        enemies.push(new Goblin(new Vector2((Math.random() + 1)  * -500, (Math.random() + 1)  * 500))); 
-    } else {
-        enemies.push(new Goblin(new Vector2((Math.random() + 1)  * 500, (Math.random() + 1)  * 500)));    
-    }
+    let randAngle = 2 * Math.PI * Math.random();
+    let coords = new Vector2(Math.cos(randAngle) * 1000, Math.sin(randAngle) * 1000);
+    enemies.push(new Goblin(coords, Math.random() * Math.sin((360 * Math.random()) * Math.PI / 180)));
 }
