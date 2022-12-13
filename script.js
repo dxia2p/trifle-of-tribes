@@ -273,7 +273,7 @@ function rectangleOverlap(r1center, r1width, r1height, r2center, r2width, r2heig
 
 // temp
 
-// setInterval(spawnGoblin, 5000);
+setInterval(spawnGoblin, 50);
 
 function spawnGoblin() {
     let randAngle = 2 * Math.PI * Math.random();

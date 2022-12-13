@@ -1,5 +1,5 @@
 let enemies = [];
-function updateAllEnemies(changeInTime){
+function updateAllEnemies(changeInTime) {
     for (let i = 0; i < enemies.length; i++) {
         enemies[i].update(changeInTime);
     }
@@ -33,19 +33,19 @@ class Enemy { // Base enemy class
         enemies.push(this);
     }
 
-    takeDamage(damage, projectile){
-        if(this.projectilesHit.includes(projectile)){
+    takeDamage(damage, projectile) {
+        if (this.projectilesHit.includes(projectile)) {
             return;
         }
         this.health -= damage;
         //console.log(this.health);
-        if(this.health <= 0){
+        if (this.health <= 0) {
             this.die();
         }
         this.projectilesHit.push(projectile);
     }
 
-    die(){        
+    die() {
         this.sr.removeFromDrawList();
         //this.sr = null;
         enemies.splice(enemies.indexOf(this), 1);
@@ -54,11 +54,11 @@ class Enemy { // Base enemy class
 
 class Goblin extends Enemy {
     constructor(pos) {
-        super(pos, 100, 1, 30, new SpriteRenderer(pos, 30, 30, 30, goblinImg, cam));
+        super(pos, 100, 2, 30, new SpriteRenderer(pos, 30, 30, 30, goblinImg, cam));
     }
 
     update(time) {
-        if(Math.sqrt(this.pos.x ** 2 + this.pos.y ** 2) < 60){
+        if (Math.sqrt(this.pos.x ** 2 + this.pos.y ** 2) < 60) {
             return;
         }
         let a = Math.atan2(this.pos.y, this.pos.x); // opposite of tan (tan = y/x so we can get the angle between goblin and center from this)
