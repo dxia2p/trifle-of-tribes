@@ -46,6 +46,7 @@ class RockThrower extends Building {
     timeBtwAttack = 1;
     range = 200;
     projectileSpeed = 500;
+    damage = 50;
     constructor(pos) {
         let maxHealth = 200;
         let gridWidth = 2;
@@ -56,7 +57,6 @@ class RockThrower extends Building {
     }
 
     update(time) {
-
         if (this.timeBtwAttack <= 0) {
             let closestEnemyData = getClosestEnemy(this.pos); // returns closestDist and closestEnemy
             if (closestEnemyData.closestDist < this.range) {
@@ -68,14 +68,13 @@ class RockThrower extends Building {
         }
     }
 
-    attack(closestEnemyPos) {
+    attack(closestEnemyPos) { // BUG: ROCKMAN THROWS ROCK ONCE AFTER GOBLIN DIES
         let direction = new Vector2(closestEnemyPos.x - this.pos.x, closestEnemyPos.y - this.pos.y);
-        let directionMagnitude = Math.sqrt(direction.x ** 2 + direction.y ** 2)
-        direction.x /= directionMagnitude;
-        direction.y /= directionMagnitude; // make the direction on the unit circle by dividing it by its magnitude
-        let p = new Projectile(new Vector2(this.pos.x, this.pos.y), 1000, 2, 20, rockImg);
-        p.speed = this.projectileSpeed;
-        p.direction = direction;
+        let m = direction.magnitude();
+        direction.x /= m;
+        direction.y /= m; // make the direction on the unit circle by dividing it by its magnitude
+        let p = new Projectile(new Vector2(this.pos.x, this.pos.y), direction, this.projectileSpeed, this.damage, 20, rockImg);
+
     }
 }
 
@@ -129,12 +128,12 @@ function updateAllProjectiles(changeInTime) {
 }
 
 class Projectile {
-    direction = new Vector2(0, 0);
-    speed = 0;
-    constructor(pos, damage, lifetime, collisionRadius, img) {
+    lifetime = 2;
+    constructor(pos, direction, speed, damage, collisionRadius, img) {
         this.pos = pos;
+        this.direction = direction;
+        this.speed = speed;
         this.damage = damage;
-        this.lifetime = lifetime;
         this.collisionRadius = collisionRadius;
         this.spriteRenderer = new SpriteRenderer(pos, 60, 60, 1, img, cam);
         projectiles.push(this);
