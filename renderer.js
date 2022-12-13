@@ -69,7 +69,10 @@ class SpriteRenderer extends Renderer{
 
     removeFromDrawList(){
         let i = drawList.indexOf(this);
-        drawList.splice(i, 1);
+        if(i !== -1){
+            drawList.splice(i, 1);
+        }
+
     }
 }
 

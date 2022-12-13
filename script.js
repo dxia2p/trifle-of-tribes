@@ -87,6 +87,8 @@ function keydownHandler(event) {
         leftRightValue = -3;
     } else if (event.code == "KeyD") {
         leftRightValue = 3;
+    }else if(event.code === "KeyP"){
+        pause = true;
     }
 }
 
@@ -101,23 +103,22 @@ function keyupHandler(event) {
 // Main Game Loop--------------------------------------------------------
 let prevTime = 0;
 let changeInTime = 0;
+let pause = false;
 function loop(time) {
     changeInTime = time - prevTime;
     cam.pos.y += upDownValue;
     cam.pos.x += leftRightValue;
 
     updateAllBuildings(changeInTime / 1000);
-    for (let i = 0; i < projectiles.length; i++) {
-        projectiles[i].update(changeInTime / 1000);
-    }
+    updateAllProjectiles(changeInTime / 1000);
+    updateAllEnemies(changeInTime / 1000);
 
-    for (let i = 0; i < enemies.length; i++) {
-        enemies[i].update(changeInTime / 1000);
-    }
+    checkCollisionBetweenProjectilesAndEnemies();
 
     drawAll(ctx);
     prevTime = time;
-    requestAnimationFrame(loop);
+    if(!pause)
+        requestAnimationFrame(loop);
 }
 requestAnimationFrame(loop);
 
@@ -270,13 +271,14 @@ function rectangleOverlap(r1center, r1width, r1height, r2center, r2width, r2heig
     return true;
 }
 
-console.log(rectangleOverlap(new Vector2(0, 0), 1, 1, new Vector2(-1, 1), 1, 1));
 
 // temp
+
 setInterval(spawnGoblin, 1000);
 
 function spawnGoblin() {
     let randAngle = 2 * Math.PI * Math.random();
     let coords = new Vector2(Math.cos(randAngle) * 1000, Math.sin(randAngle) * 1000);
-    enemies.push(new Goblin(coords, Math.random() * Math.sin((360 * Math.random()) * Math.PI / 180)));
+    enemies.push(new Goblin(coords));
 }
+

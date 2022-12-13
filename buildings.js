@@ -42,7 +42,7 @@ class GoldStorage extends Building {
 }
 
 class RockThrower extends Building {
-    maxTimeBtwAttack = 1;
+    maxTimeBtwAttack = 0.5;
     timeBtwAttack = 1;
     range = 200;
     projectileSpeed = 500;
@@ -56,13 +56,13 @@ class RockThrower extends Building {
     }
 
     update(time) {
-        let closestEnemyData = getClosestEnemy(this.pos); // returns closestDist and closestEnemy
-        if (closestEnemyData.closestDist > this.range) {
-            return;
-        }
+
         if (this.timeBtwAttack <= 0) {
-            this.timeBtwAttack = this.maxTimeBtwAttack;
-            this.attack(new Vector2(closestEnemyData.closestEnemy.pos.x, closestEnemyData.closestEnemy.pos.y));
+            let closestEnemyData = getClosestEnemy(this.pos); // returns closestDist and closestEnemy
+            if (closestEnemyData.closestDist < this.range) {
+                this.timeBtwAttack = this.maxTimeBtwAttack;
+                this.attack(new Vector2(closestEnemyData.closestEnemy.pos.x, closestEnemyData.closestEnemy.pos.y));
+            }
         } else {
             this.timeBtwAttack -= time;
         }
@@ -73,7 +73,7 @@ class RockThrower extends Building {
         let directionMagnitude = Math.sqrt(direction.x ** 2 + direction.y ** 2)
         direction.x /= directionMagnitude;
         direction.y /= directionMagnitude; // make the direction on the unit circle by dividing it by its magnitude
-        let p = new Projectile(new Vector2(this.pos.x, this.pos.y), 50, 2, 30, rockImg);
+        let p = new Projectile(new Vector2(this.pos.x, this.pos.y), 1000, 2, 20, rockImg);
         p.speed = this.projectileSpeed;
         p.direction = direction;
     }
@@ -122,17 +122,21 @@ class Mageman extends Building {
 }
 
 let projectiles = [];
+function updateAllProjectiles(changeInTime) {
+    for (let i = 0; i < projectiles.length; i++) {
+        projectiles[i].update(changeInTime);
+    }
+}
 
 class Projectile {
     direction = new Vector2(0, 0);
     speed = 0;
-    constructor(pos, damage, lifetime, radius, img) {
+    constructor(pos, damage, lifetime, collisionRadius, img) {
         this.pos = pos;
         this.damage = damage;
         this.lifetime = lifetime;
-        this.radius = radius;
+        this.collisionRadius = collisionRadius;
         this.spriteRenderer = new SpriteRenderer(pos, 60, 60, 1, img, cam);
-        console.log(this.spriteRenderer);
         projectiles.push(this);
     }
 
@@ -141,12 +145,36 @@ class Projectile {
             this.spriteRenderer.removeFromDrawList();
             this.spriteRenderer = null;
             projectiles.splice(projectiles.indexOf(this), 1);
-            
+
         } else {
             this.lifetime -= time;
-            this.spriteRenderer.rotation += 0.02;
+            this.spriteRenderer.rotation += 0.04;
             this.pos.x += this.direction.x * this.speed * time;
             this.pos.y += this.direction.y * this.speed * time;
         }
     }
+
+    onCollision() {
+
+    }
+}
+
+function checkCollisionBetweenProjectilesAndEnemies() {
+    for (let i = 0; i < projectiles.length; i++) {
+        for (let j = 0; j < enemies.length; j++) {
+            if (circleCollision(projectiles[i].pos, projectiles[i].collisionRadius,
+                enemies[j].pos, enemies[j].collisionRadius)) {
+                projectiles[i].onCollision();
+                enemies[j].takeDamage(projectiles[i].damage, projectiles[i]);
+            }
+        }
+    }
+}
+
+function circleCollision(pos1, radius1, pos2, radius2) {
+    let dist = Math.sqrt(Math.abs(pos2.x - pos1.x) ** 2 + Math.abs(pos2.y - pos1.y) ** 2);
+    if (dist <= radius1 + radius2) {
+        return true;
+    }
+    return false;
 }
