@@ -61,7 +61,7 @@ document.addEventListener('mousemove', (event) => {
 
 function setMouseRectPos(mp) {
     mouseRect.pos.x = Math.round((mp.x + cam.pos.x) / 30) * 30;
-    mouseRect.pos.y = Math.round((mp.y - cam.pos.y) / 30) * 30;
+    mouseRect.pos.y = -Math.round((mp.y - cam.pos.y) / 30) * 30; // reversed because if not selecting square is broken
 }
 
 function getMousePos(canvas, evt) {
@@ -105,6 +105,7 @@ let prevTime = 0;
 let changeInTime = 0;
 let pause = false;
 function loop(time) {
+
     changeInTime = time - prevTime;
     cam.pos.y += upDownValue;
     cam.pos.x += leftRightValue;
@@ -271,10 +272,7 @@ function rectangleOverlap(r1center, r1width, r1height, r2center, r2width, r2heig
     return true;
 }
 
-// temp
-
-setInterval(spawnGoblin, 50);
-
+setInterval(spawnGoblin, 1);
 function spawnGoblin() {
     let randAngle = 2 * Math.PI * Math.random();
     let coords = new Vector2(Math.cos(randAngle) * 1000, Math.sin(randAngle) * 1000);

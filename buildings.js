@@ -46,7 +46,7 @@ class RockThrower extends Building {
     timeBtwAttack = 1;
     range = 200;
     projectileSpeed = 400;
-    damage = 100;
+    damage = 50;
     constructor(pos) {
         let maxHealth = 200;
         let gridWidth = 2;
@@ -100,11 +100,11 @@ class Spearman extends Building {
 }
 
 class Bowman extends Building {
-    maxTimeBtwAttack = 0.001;
-    timeBtwAttack = 0.35;
+    maxTimeBtwAttack = 0;
+    timeBtwAttack = 0;
     range = 350;
     projectileSpeed = 750;
-    damage = 60;
+    damage = 1;
     constructor(pos) {
         let maxHealth = 150;
         let gridWidth = 2;

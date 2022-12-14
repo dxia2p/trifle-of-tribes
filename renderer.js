@@ -15,6 +15,12 @@ class Renderer {
     draw() {
 
     }
+    removeFromDrawList(){
+        let i = drawList.indexOf(this);
+        if(i !== -1){
+            drawList.splice(i, 1);
+        }
+    }
 }
 
 class RectRenderer extends Renderer {
@@ -31,8 +37,9 @@ class RectRenderer extends Renderer {
         ctx.beginPath();
         ctx.fillStyle = this.color;
         ctx.globalAlpha = this.alpha;
+        
         ctx.rect((this.pos.x - (this.width / 2) - this.camera.pos.x + (this.camera.width / 2)),
-            this.pos.y - (this.height / 2) - (-this.camera.pos.y - this.camera.height / 2), this.width, this.height);
+            (-this.pos.y - (this.height / 2) - (-this.camera.pos.y - this.camera.height / 2)), this.width, this.height);
         ctx.fill();
         ctx.globalAlpha = 1;
     }
@@ -65,14 +72,6 @@ class SpriteRenderer extends Renderer{
         ctx.drawImage(this.img, 0, 0, this.width, this.height);
         ctx.globalAlpha = 1;
         ctx.restore();
-    }
-
-    removeFromDrawList(){
-        let i = drawList.indexOf(this);
-        if(i !== -1){
-            drawList.splice(i, 1);
-        }
-
     }
 }
 
