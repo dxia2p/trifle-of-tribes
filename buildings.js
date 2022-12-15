@@ -25,11 +25,33 @@ class Building {
         this.health = maxHealth;
         this.spriteRenderer = spriteRenderer;
 
+        this.healthBar = new HealthBar(new Vector2(this.pos.x, this.pos.y), this.spriteRenderer.width - 5, 10, "green");
+        this.healthBar.offset.y = 32;
+
+        this.cornerPoints = [
+            new Vector2(this.pos.x - (this.gridWidth * GRID_SIZE / 2), this.pos.y + (this.gridHeight * GRID_SIZE / 2)),
+            new Vector2(this.pos.x + (this.gridWidth * GRID_SIZE / 2), this.pos.y + (this.gridHeight * GRID_SIZE / 2)),
+            new Vector2(this.pos.x + (this.gridWidth * GRID_SIZE / 2), this.pos.y - (this.gridHeight * GRID_SIZE / 2)),
+            new Vector2(this.pos.x - (this.gridWidth * GRID_SIZE / 2), this.pos.y - (this.gridHeight * GRID_SIZE / 2)),
+        ];
+        console.log(this.cornerPoints);
+
         placedBuildings.push(this);
     }
 
-    update(time) {
+    takeDamage(damage){
+        this.health -= damage;
+        if(this.health <= 0){
+            die();
+        }
+    }
 
+    die(){
+
+    }
+
+    update(time) {
+        this.healthBar.healthBarUpdate(this.pos);
     }
 }
 
@@ -38,6 +60,10 @@ class GoldStorage extends Building {
         let maxHealth = 500;
         let sr = new SpriteRenderer(pos, GRID_SIZE * gridWidth, GRID_SIZE * gridHeight, 1, goldStorageImg, cam);
         super(pos, gridWidth, gridHeight, maxHealth, sr);
+    }
+
+    update(time){
+        super.update(time);
     }
 }
 
@@ -54,9 +80,11 @@ class RockThrower extends Building {
         let sr = new SpriteRenderer(pos, GRID_SIZE * gridWidth, GRID_SIZE * gridHeight, 1, rockThrowerImg, cam);
 
         super(pos, gridWidth, gridHeight, maxHealth, sr);
+
     }
 
     update(time) {
+        super.update(time);
         if (this.timeBtwAttack <= 0) {
             let closestEnemyData = getClosestEnemy(this.pos); // returns closestDist and closestEnemy
             if (closestEnemyData.closestDist < this.range) {
@@ -104,7 +132,7 @@ class Bowman extends Building {
     timeBtwAttack = 0;
     range = 350;
     projectileSpeed = 750;
-    damage = 1;
+    damage = 20;
     constructor(pos) {
         let maxHealth = 150;
         let gridWidth = 2;
@@ -114,6 +142,7 @@ class Bowman extends Building {
     }
 
     update(time) {
+        super.update(time);
         if (this.timeBtwAttack <= 0) {
             let closestEnemyData = getClosestEnemy(this.pos); // returns closestDist and closestEnemy
             if (closestEnemyData.closestDist < this.range) {
@@ -130,7 +159,7 @@ class Bowman extends Building {
         let m = direction.magnitude();
         direction.x /= m;
         direction.y /= m; // make the direction on the unit circle by dividing it by its magnitude
-        let p = new Projectile(new Vector2(this.pos.x, this.pos.y), direction, this.projectileSpeed, this.damage, 20, arrowImg);
+        let p = new Projectile(new Vector2(this.pos.x, this.pos.y), direction, this.projectileSpeed, this.damage, 15, arrowImg);
 
     }
 }

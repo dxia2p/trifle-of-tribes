@@ -21,6 +21,25 @@ function getClosestEnemy(pos) {
     };
 }
 
+function rayCastAgainstBuildings(myPos, direction, length) {
+    let endPoint = new Vector2(myPos.x + direction.x * length, myPos.y + direction.y * length);
+
+    for (let i = 0; i < placedBuildings.length; i++) {
+        if (isIntersecting(myPos, endPoint, placedBuildings[i].cornerPoints[0], placedBuildings[i].cornerPoints[1])) {
+            return placedBuildings[i];
+
+        } else if (isIntersecting(myPos, endPoint, placedBuildings[i].cornerPoints[1], placedBuildings[i].cornerPoints[2])) {
+            return placedBuildings[i];
+        } else if (isIntersecting(myPos, endPoint, placedBuildings[i].cornerPoints[2], placedBuildings[i].cornerPoints[3])) {
+            return placedBuildings[i];
+        } else if (isIntersecting(myPos, endPoint, placedBuildings[i].cornerPoints[3], placedBuildings[i].cornerPoints[0])) {
+            return placedBuildings[i];
+        }
+
+    }
+    return null;
+}
+
 class HealthBar {
     offset = new Vector2(0, 20);
     constructor(pos, width, height, color) {
@@ -51,6 +70,7 @@ class HealthBar {
 
 class Enemy { // Base enemy class
     projectilesHit = [];
+    attackRange = 5;
     constructor(pos, maxHealth, speed, collisionRadius, sr) {
         this.pos = pos;
         this.maxHealth = maxHealth;
@@ -65,7 +85,17 @@ class Enemy { // Base enemy class
     }
 
     update(time) {
+        let dir = new Vector2(this.pos.unit().x * -1, this.pos.unit().y * -1);
+
         this.healthBar.healthBarUpdate(this.pos);
+        let result = rayCastAgainstBuildings(this.pos, dir, this.attackRange);
+
+        if (result === null) { // if the enemy is not close enough to attack building
+            this.pos.x += dir.x * this.speed * time;
+            this.pos.y += dir.y * this.speed * time;
+        } else {
+
+        }
     }
 
     takeDamage(damage, projectile) {
@@ -93,16 +123,10 @@ class Enemy { // Base enemy class
 
 class Goblin extends Enemy {
     constructor(pos) {
-        super(pos, 100, 100, 30, new SpriteRenderer(pos, 30, 30, 30, goblinImg, cam));
+        super(pos, 100, 999, 30, new SpriteRenderer(pos, 30, 30, 30, goblinImg, cam));
     }
 
     update(time) {
-        if (Math.sqrt(this.pos.x ** 2 + this.pos.y ** 2) > 60) {
-            let a = Math.atan2(this.pos.y, this.pos.x); // opposite of tan (tan = y/x so we can get the angle between goblin and center from this)
-            this.pos.x -= this.speed * Math.cos(a) * time;
-            this.pos.y -= this.speed * Math.sin(a) * time;
-        }
-
         super.update(time);
     }
 
