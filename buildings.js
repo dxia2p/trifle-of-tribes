@@ -39,14 +39,14 @@ class Building {
         placedBuildings.push(this);
     }
 
-    takeDamage(damage){
+    takeDamage(damage) {
         this.health -= damage;
-        if(this.health <= 0){
+        if (this.health <= 0) {
             die();
         }
     }
 
-    die(){
+    die() {
 
     }
 
@@ -62,7 +62,7 @@ class GoldStorage extends Building {
         super(pos, gridWidth, gridHeight, maxHealth, sr);
     }
 
-    update(time){
+    update(time) {
         super.update(time);
     }
 }
@@ -128,11 +128,11 @@ class Spearman extends Building {
 }
 
 class Bowman extends Building {
-    maxTimeBtwAttack = 0;
-    timeBtwAttack = 0;
+    maxTimeBtwAttack = 0.5;
+    timeBtwAttack = 0.5;
     range = 350;
     projectileSpeed = 750;
-    damage = 20;
+    damage = 30;
     constructor(pos) {
         let maxHealth = 150;
         let gridWidth = 2;
@@ -189,7 +189,7 @@ class Projectile {
     constructor(pos, direction, speed, damage, collisionRadius, img) {
         this.pos = pos;
         this.direction = direction;
-    
+
         this.speed = speed;
         this.damage = damage;
         this.collisionRadius = collisionRadius;
@@ -213,19 +213,19 @@ class Projectile {
         }
     }
 
-    destroy(){
+    destroy() {
         this.spriteRenderer.removeFromDrawList();
         this.spriteRenderer = null;
         projectiles.splice(projectiles.indexOf(this), 1);
     }
 
     onCollision() {
-        
-        if(!this.pierce){
+
+        if (!this.pierce) {
             this.destroySelf = true;
         }
-        
-       
+
+
     }
 }
 
@@ -236,7 +236,7 @@ function checkCollisionBetweenProjectilesAndEnemies() {
                 enemies[j].pos, enemies[j].collisionRadius)) {
                 enemies[j].takeDamage(projectiles[i].damage, projectiles[i]);
                 projectiles[i].onCollision();
-                
+
             }
         }
     }

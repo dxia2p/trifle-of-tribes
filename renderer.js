@@ -15,9 +15,9 @@ class Renderer {
     draw() {
 
     }
-    removeFromDrawList(){
+    removeFromDrawList() {
         let i = drawList.indexOf(this);
-        if(i !== -1){
+        if (i !== -1) {
             drawList.splice(i, 1);
         }
     }
@@ -37,7 +37,7 @@ class RectRenderer extends Renderer {
         ctx.beginPath();
         ctx.fillStyle = this.color;
         ctx.globalAlpha = this.alpha;
-        
+
         ctx.rect((this.pos.x - (this.width / 2) - this.camera.pos.x + (this.camera.width / 2)),
             (-this.pos.y - (this.height / 2) - (-this.camera.pos.y - this.camera.height / 2)), this.width, this.height);
         ctx.fill();
@@ -45,7 +45,7 @@ class RectRenderer extends Renderer {
     }
 }
 
-class SpriteRenderer extends Renderer{
+class SpriteRenderer extends Renderer {
     rotation = 0; // in radians
     constructor(pos, width, height, alpha, img, camera) {
         super();
@@ -60,8 +60,7 @@ class SpriteRenderer extends Renderer{
         ctx.save();
 
         //ctx.translate(this.width / 2, this.height / 2);
-        let posOnCanvas = new Vector2((this.pos.x - this.camera.pos.x + (this.camera.width / 2)),
-        -this.pos.y - (-this.camera.pos.y - this.camera.height / 2));
+        let posOnCanvas = new Vector2((this.pos.x - this.camera.pos.x + (this.camera.width / 2)), -this.pos.y - (-this.camera.pos.y - this.camera.height / 2));
 
         ctx.translate(posOnCanvas.x, posOnCanvas.y);
         ctx.rotate(this.rotation);

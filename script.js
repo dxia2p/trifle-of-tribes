@@ -87,7 +87,7 @@ function keydownHandler(event) {
         leftRightValue = -3;
     } else if (event.code == "KeyD") {
         leftRightValue = 3;
-    }else if(event.code === "KeyP"){
+    } else if (event.code === "KeyP") {
         pause = true;
     }
 }
@@ -118,7 +118,7 @@ function loop(time) {
 
     drawAll(ctx);
     prevTime = time;
-    if(!pause)
+    if (!pause)
         requestAnimationFrame(loop);
 }
 requestAnimationFrame(loop);
@@ -273,7 +273,7 @@ function rectangleOverlap(r1center, r1width, r1height, r2center, r2width, r2heig
 }
 
 
-setInterval(spawnGoblin, 0);
+setInterval(spawnGoblin, 200);
 function spawnGoblin() {
     let randAngle = 2 * Math.PI * Math.random();
     let coords = new Vector2(Math.cos(randAngle) * 1000, Math.sin(randAngle) * 1000);
