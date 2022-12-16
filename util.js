@@ -64,4 +64,4 @@ function isIntersecting(p1, q1, p2, q2){
     return false;
 }
 
-isIntersecting(new Vector2(1, 0), new Vector2(2, 0), new Vector2(0.5, -0.5), new Vector2(0.5, 0.5));
+isIntersecting(new Vector2(0, 0), new Vector2(2, 0), new Vector2(0.5, -0.5), new Vector2(0.5, 0.5));

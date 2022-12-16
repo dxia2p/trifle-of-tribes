@@ -81,3 +81,9 @@ function drawAll(ctx) {
         drawList[i].draw(ctx);
     }
 }
+
+class ParticleSystem{
+    constructor(pos, renderer){
+        
+    }
+}
