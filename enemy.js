@@ -123,7 +123,7 @@ class Enemy { // Base enemy class
 
 class Goblin extends Enemy {
     constructor(pos) {
-        super(pos, 100, 999, 30, new SpriteRenderer(pos, 30, 30, 30, goblinImg, cam));
+        super(pos, 100, 200, 30, new SpriteRenderer(pos, 30, 30, 30, goblinImg, cam));
     }
 
     update(time) {
