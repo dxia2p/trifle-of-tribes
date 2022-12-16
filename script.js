@@ -11,7 +11,7 @@ let buildingBtnArray = [
     document.getElementById("building-btn-3"),
     document.getElementById("building-btn-4"),
     document.getElementById("building-btn-5"),
-]
+];
 
 // Gold Variables
 let gold = 10000;
@@ -87,8 +87,6 @@ function keydownHandler(event) {
         leftRightValue = -3;
     } else if (event.code == "KeyD") {
         leftRightValue = 3;
-    }else if(event.code === "KeyP"){
-        pause = true;
     }
 }
 
@@ -103,23 +101,24 @@ function keyupHandler(event) {
 // Main Game Loop--------------------------------------------------------
 let prevTime = 0;
 let changeInTime = 0;
-let pause = false;
 function loop(time) {
-
     changeInTime = time - prevTime;
     cam.pos.y += upDownValue;
     cam.pos.x += leftRightValue;
+    canvas.width = 0.6 * window.innerWidth;
+    canvas.height = 0.6 * window.innerHeight;
+    cam.width = canvas.width;
+    cam.height = canvas.height;
 
     updateAllBuildings(changeInTime / 1000);
     updateAllProjectiles(changeInTime / 1000);
     updateAllEnemies(changeInTime / 1000);
 
     checkCollisionBetweenProjectilesAndEnemies();
-
     drawAll(ctx);
     prevTime = time;
-    if(!pause)
-        requestAnimationFrame(loop);
+    requestAnimationFrame(loop);
+        
 }
 requestAnimationFrame(loop);
 

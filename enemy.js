@@ -63,7 +63,7 @@ class HealthBar {
         this.innerRect.pos.y = this.pos.y;
     }
     takeDamage(maxHealth, health) {
-        this.innerRect.width = this.width * (health / maxHealth);
+        this.innerRect.width = this.width * (Math.max(health, 0) / maxHealth);
         this.innerRect.pos.x = this.pos.x - (this.width - this.innerRect.width) / 2;
     }
 }
@@ -71,6 +71,9 @@ class HealthBar {
 class Enemy { // Base enemy class
     projectilesHit = [];
     attackRange = 5;
+    maxTimeBtwAttack = 1;
+    timeBtwAttack = 1;
+    damage = 50;
     constructor(pos, maxHealth, speed, collisionRadius, sr) {
         this.pos = pos;
         this.maxHealth = maxHealth;
@@ -94,8 +97,17 @@ class Enemy { // Base enemy class
             this.pos.x += dir.x * this.speed * time;
             this.pos.y += dir.y * this.speed * time;
         } else {
-
+            if(this.timeBtwAttack <= 0){
+                this.timeBtwAttack = this.maxTimeBtwAttack;
+                this.attack(result);
+            }else{
+                this.timeBtwAttack -= time;
+            }
         }
+    }
+
+    attack(buildingToAttack){
+        buildingToAttack.takeDamage(this.damage);
     }
 
     takeDamage(damage, projectile) {
@@ -123,11 +135,10 @@ class Enemy { // Base enemy class
 
 class Goblin extends Enemy {
     constructor(pos) {
-        super(pos, 100, 200, 30, new SpriteRenderer(pos, 30, 30, 30, goblinImg, cam));
+        super(pos, 100, 100, 30, new SpriteRenderer(pos, 30, 30, 30, goblinImg, cam));
     }
 
     update(time) {
         super.update(time);
     }
-
 }

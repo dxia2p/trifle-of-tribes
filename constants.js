@@ -5,7 +5,7 @@ const rockImg = document.getElementById("rock");
 const wallImg = document.getElementById("wall");
 const spearmanImg = document.getElementById("spearman");
 const bowmanImg = document.getElementById("bowman");
-const magemanImg =document.getElementById("mageman");
+const magemanImg = document.getElementById("mageman");
 const goblinImg = document.getElementById("goblin");
 const arrowImg = document.getElementById("arrow");
 // values

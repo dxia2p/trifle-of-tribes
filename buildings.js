@@ -34,19 +34,19 @@ class Building {
             new Vector2(this.pos.x + (this.gridWidth * GRID_SIZE / 2), this.pos.y - (this.gridHeight * GRID_SIZE / 2)),
             new Vector2(this.pos.x - (this.gridWidth * GRID_SIZE / 2), this.pos.y - (this.gridHeight * GRID_SIZE / 2)),
         ];
-        console.log(this.cornerPoints);
 
         placedBuildings.push(this);
     }
 
-    takeDamage(damage){
+    takeDamage(damage) {
         this.health -= damage;
         if(this.health <= 0){
-            die();
+            this.die();
         }
+        this.healthBar.takeDamage(this.maxHealth, this.health);
     }
 
-    die(){
+    die() {
 
     }
 
@@ -62,7 +62,7 @@ class GoldStorage extends Building {
         super(pos, gridWidth, gridHeight, maxHealth, sr);
     }
 
-    update(time){
+    update(time) {
         super.update(time);
     }
 }
@@ -128,11 +128,11 @@ class Spearman extends Building {
 }
 
 class Bowman extends Building {
-    maxTimeBtwAttack = 0;
-    timeBtwAttack = 0;
+    maxTimeBtwAttack = 0.5;
+    timeBtwAttack = 0.5;
     range = 350;
-    projectileSpeed = 750;
-    damage = 20;
+    projectileSpeed = 900;
+    damage = 30;
     constructor(pos) {
         let maxHealth = 150;
         let gridWidth = 2;
@@ -160,7 +160,24 @@ class Bowman extends Building {
         direction.x /= m;
         direction.y /= m; // make the direction on the unit circle by dividing it by its magnitude
         let p = new Projectile(new Vector2(this.pos.x, this.pos.y), direction, this.projectileSpeed, this.damage, 15, arrowImg);
-
+        // for fun remove later
+        let angle = Math.atan2(direction.y, direction.x);
+        angle += 0.2
+        let a = new Projectile(new Vector2(this.pos.x, this.pos.y), new Vector2(Math.cos(angle), Math.sin(angle)), this.projectileSpeed, this.damage, 15, arrowImg);
+        angle -= 0.4;
+        let ab = new Projectile(new Vector2(this.pos.x, this.pos.y), new Vector2(Math.cos(angle), Math.sin(angle)), this.projectileSpeed, this.damage, 15, arrowImg);
+        angle += 0.6;
+        let abc = new Projectile(new Vector2(this.pos.x, this.pos.y), new Vector2(Math.cos(angle), Math.sin(angle)), this.projectileSpeed, this.damage, 15, arrowImg);
+        angle -= 0.8;
+        let abd = new Projectile(new Vector2(this.pos.x, this.pos.y), new Vector2(Math.cos(angle), Math.sin(angle)), this.projectileSpeed, this.damage, 15, arrowImg);
+        angle += 1
+        let abcd = new Projectile(new Vector2(this.pos.x, this.pos.y), new Vector2(Math.cos(angle), Math.sin(angle)), this.projectileSpeed, this.damage, 15, arrowImg);
+        angle -= 1.2;
+        let abdas = new Projectile(new Vector2(this.pos.x, this.pos.y), new Vector2(Math.cos(angle), Math.sin(angle)), this.projectileSpeed, this.damage, 15, arrowImg);
+        angle += 1.4;
+        let abcw = new Projectile(new Vector2(this.pos.x, this.pos.y), new Vector2(Math.cos(angle), Math.sin(angle)), this.projectileSpeed, this.damage, 15, arrowImg);
+        angle -= 1.6;
+        let abda = new Projectile(new Vector2(this.pos.x, this.pos.y), new Vector2(Math.cos(angle), Math.sin(angle)), this.projectileSpeed, this.damage, 15, arrowImg);
     }
 }
 
@@ -189,7 +206,7 @@ class Projectile {
     constructor(pos, direction, speed, damage, collisionRadius, img) {
         this.pos = pos;
         this.direction = direction;
-    
+
         this.speed = speed;
         this.damage = damage;
         this.collisionRadius = collisionRadius;
@@ -213,19 +230,19 @@ class Projectile {
         }
     }
 
-    destroy(){
+    destroy() {
         this.spriteRenderer.removeFromDrawList();
         this.spriteRenderer = null;
         projectiles.splice(projectiles.indexOf(this), 1);
     }
 
     onCollision() {
-        
-        if(!this.pierce){
+
+        if (!this.pierce) {
             this.destroySelf = true;
         }
-        
-       
+
+
     }
 }
 
@@ -236,7 +253,7 @@ function checkCollisionBetweenProjectilesAndEnemies() {
                 enemies[j].pos, enemies[j].collisionRadius)) {
                 enemies[j].takeDamage(projectiles[i].damage, projectiles[i]);
                 projectiles[i].onCollision();
-                
+
             }
         }
     }
