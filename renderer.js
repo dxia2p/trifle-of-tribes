@@ -8,7 +8,8 @@ class Camera {
 }
 
 class Renderer {
-    //drawOrder = 0; // higher draw order means it is on top
+    //drawOrder = 0; // higher draw order means it is on top (DOESN'T WORK AND I DONT KNOW HOW TO MAKE IT WORK)
+    render = true;
     constructor() {
         drawList.push(this);
     }
@@ -21,9 +22,14 @@ class Renderer {
             drawList.splice(i, 1);
         }
     }
+
+    clone(){
+
+    }
 }
 
 class RectRenderer extends Renderer {
+
     constructor(pos, width, height, color, alpha, camera) {
         super();
         this.pos = pos;
@@ -34,6 +40,8 @@ class RectRenderer extends Renderer {
         this.camera = camera;
     }
     draw(ctx) {
+        if(!this.render)
+            return;
         ctx.beginPath();
         ctx.fillStyle = this.color;
         ctx.globalAlpha = this.alpha;
@@ -43,10 +51,15 @@ class RectRenderer extends Renderer {
         ctx.fill();
         ctx.globalAlpha = 1;
     }
+
+    clone(){
+        return new RectRenderer(new Vector2(this.pos.x, this.pos.y), this.width, this.height, this.color, this.alpha, this.camera);
+    }
 }
 
 class SpriteRenderer extends Renderer {
     rotation = 0; // in radians
+
     constructor(pos, width, height, alpha, img, camera) {
         super();
         this.pos = pos;
@@ -57,6 +70,8 @@ class SpriteRenderer extends Renderer {
         this.camera = camera;
     }
     draw(ctx) {
+        if(!this.render)
+            return;
         ctx.save();
 
         //ctx.translate(this.width / 2, this.height / 2);
@@ -72,6 +87,7 @@ class SpriteRenderer extends Renderer {
         ctx.globalAlpha = 1;
         ctx.restore();
     }
+    //add clone function later im dont want to do it right now
 }
 
 function drawAll(ctx) {
@@ -82,7 +98,21 @@ function drawAll(ctx) {
 }
 
 class ParticleSystem{
-    constructor(pos, renderer){
-        
+    particles = [];
+    constructor(pos, renderer, amount, speed){
+        this.pos = pos;
+        this.renderer = renderer;
+        this.amount = amount;
+        this.speed = speed;
+        this.particles.push(renderer);
+        this.particles[0].render = false;
+        for(let i = 1; i < this.amount; i++){
+            this.particles.push(renderer.clone());
+            this.particles[i].render = false;
+        }
+
+    }
+    play(){
+
     }
 }
