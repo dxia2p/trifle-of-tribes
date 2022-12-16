@@ -11,7 +11,7 @@ let buildingBtnArray = [
     document.getElementById("building-btn-3"),
     document.getElementById("building-btn-4"),
     document.getElementById("building-btn-5"),
-]
+];
 
 // Gold Variables
 let gold = 10000;
@@ -102,17 +102,19 @@ function keyupHandler(event) {
 let prevTime = 0;
 let changeInTime = 0;
 function loop(time) {
-
     changeInTime = time - prevTime;
     cam.pos.y += upDownValue;
     cam.pos.x += leftRightValue;
+    canvas.width = 0.6 * window.innerWidth;
+    canvas.height = 0.6 * window.innerHeight;
+    cam.width = canvas.width;
+    cam.height = canvas.height;
 
     updateAllBuildings(changeInTime / 1000);
     updateAllProjectiles(changeInTime / 1000);
     updateAllEnemies(changeInTime / 1000);
 
     checkCollisionBetweenProjectilesAndEnemies();
-
     drawAll(ctx);
     prevTime = time;
     requestAnimationFrame(loop);
@@ -269,11 +271,9 @@ function rectangleOverlap(r1center, r1width, r1height, r2center, r2width, r2heig
     return true;
 }
 
-
-setInterval(spawnGoblin, 0);
+setInterval(spawnGoblin, 200);
 function spawnGoblin() {
     let randAngle = 2 * Math.PI * Math.random();
     let coords = new Vector2(Math.cos(randAngle) * 1000, Math.sin(randAngle) * 1000);
     new Goblin(coords);
 }
-
