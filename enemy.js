@@ -129,5 +129,4 @@ class Goblin extends Enemy {
     update(time) {
         super.update(time);
     }
-
 }

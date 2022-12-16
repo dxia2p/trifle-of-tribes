@@ -11,18 +11,22 @@
 
 <body>
     <h1>Trifle of Tribes</h1>
-    <div>
+    <div class="container">
         <canvas id="canv"></canvas><br>
-        <button class="building-btn" id="building-btn-1" disabled>Rockman</button>
-        <button class="building-btn" id="building-btn-2" disabled>Spearman</button>
-        <button class="building-btn" id="building-btn-3" disabled>Bowman</button>
-        <button class="building-btn" id="building-btn-4" disabled>Mageman</button>
-        <button class="building-btn" id="building-btn-5" disabled>Wall</button>
+        <div class="building-sidebar">
+            <h2>Building Name</h2>
+            <p>Building Description</p>
+        </div>
     </div>
-    <p>Gold: <span id="goldAmount">0</span></p>
+    <button class="building-btn" id="building-btn-1" disabled>Rockman</button>
+    <button class="building-btn" id="building-btn-2" disabled>Spearman</button>
+    <button class="building-btn" id="building-btn-3" disabled>Bowman</button>
+    <button class="building-btn" id="building-btn-4" disabled>Mageman</button>
+    <button class="building-btn" id="building-btn-5" disabled>Wall</button>
+    <p class="ui">Gold: <span id="goldAmount">0</span></p>
     <button id="goldTest">Upgrade Gold Storage</button>
-    <p>Gold Storage Upgrade Cost: <span id="upgradeCost">30</span></p>
-    <p>
+    <p class="ui">Gold Storage Upgrade Cost: <span id="upgradeCost">30</span></p>
+    <p class="ui">
         Game developed by Albert, David, and Sungmin.<br>
         Instructions: Watch out! Enemies are attempting to infiltrate and destroy your base! Spend gold to build
         defensive structures to fend off the enemies. How long can you survive?
