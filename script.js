@@ -53,8 +53,9 @@ for (let y = (BACKGROUND_SIZE / 2); y > -(BACKGROUND_SIZE / 2); y -= GRID_SIZE) 
 
 // Mouse Movement Event (snap mouse to grid)
 let mouseRect = new RectRenderer(new Vector2(0, 0), GRID_SIZE, GRID_SIZE, "#FFFFFF", 0.7, cam);
+let mousePos = new Vector2(0, 0);
 document.addEventListener('mousemove', (event) => {
-    let mousePos = getMousePos(canvas, event);
+    mousePos = getMousePos(canvas, event);
     drawBuildingTemplate(mousePos);
     setMouseRectPos(mousePos);
 });
@@ -64,12 +65,10 @@ function setMouseRectPos(mp) {
     mouseRect.pos.y = -Math.round((mp.y - cam.pos.y) / 30) * 30; // reversed because if not selecting square is broken
 }
 
-function getMousePos(canvas, evt) {
-    var rect = canvas.getBoundingClientRect();
-    return {
-        x: (evt.clientX - rect.left) - canvas.width / 2,
-        y: (evt.clientY - rect.top) - canvas.height / 2
-    };
+function getMousePos(cnv, evt) {
+    var rect = cnv.getBoundingClientRect();
+    return new Vector2((evt.clientX - rect.left) - cnv.width / 2, (evt.clientY - rect.top) - cnv.height / 2);
+
 }
 
 // Camera Movement
@@ -79,14 +78,16 @@ let upDownValue = 0;
 let leftRightValue = 0;
 
 function keydownHandler(event) {
-    if (event.code == "KeyW") {
+    if (event.code === "KeyW") {
         upDownValue = 3;
-    } else if (event.code == "KeyS") {
+    } else if (event.code === "KeyS") {
         upDownValue = -3;
-    } else if (event.code == "KeyA") {
+    } else if (event.code === "KeyA") {
         leftRightValue = -3;
-    } else if (event.code == "KeyD") {
+    } else if (event.code === "KeyD") {
         leftRightValue = 3;
+    } else if (event.code === "Backspace") {
+        deleteBuilding(event);
     }
 }
 
@@ -118,7 +119,7 @@ function loop(time) {
     drawAll(ctx);
     prevTime = time;
     requestAnimationFrame(loop);
-        
+
 }
 requestAnimationFrame(loop);
 
@@ -271,26 +272,19 @@ function rectangleOverlap(r1center, r1width, r1height, r2center, r2width, r2heig
     return true;
 }
 
-document.addEventListener('backspace', (deleteBuilding) => {;
-    let mousedeletePos = getMousePos(canvas, deleteBuilding);
-if (mousedeletePos.x < -canvas.width / 2 || mousedeletePos.x > canvas.width / 2 || mousedeletePos.y > canvas.height / 2 || mousedeletePos.y < -canvas.height / 2) {
-    return;
-}
-
-if (selectedBuilding === -1) {
+function deleteBuilding() {
+    if (mousePos.x < -canvas.width / 2 || mousePos.x > canvas.width / 2 || mousePos.y > canvas.height / 2 || mousePos.y < -canvas.height / 2) {
+        return;
+    }
     for (let i = 0; i < placedBuildings.length; i++) {
-        if (
-            rectangleOverlap(buildingTemplates[selectedBuilding].pos, buildingTemplates[selectedBuilding].gridWidth * GRID_SIZE, buildingTemplates[selectedBuilding].gridHeight * GRID_SIZE,
-            placedBuildings[i].pos, placedBuildings[i].gridWidth * GRID_SIZE, placedBuildings[i].gridHeight * GRID_SIZE)
-        ) { 
-            placedBuildings.splice(i, 1);
+        if (rectangleOverlap(mouseRect.pos, mouseRect.width, mouseRect.height, placedBuildings[i].pos, placedBuildings[i].gridWidth * GRID_SIZE, placedBuildings[i].gridHeight * GRID_SIZE)) {
+            placedBuildings[i].die();
+            console.log("ASdKASJDLKASJDKAL")
         }
     }
 }
-});
 
-
-setInterval(spawnGoblin, 0);
+setInterval(spawnGoblin, 1000);
 function spawnGoblin() {
     let randAngle = 2 * Math.PI * Math.random();
     let coords = new Vector2(Math.cos(randAngle) * 1000, Math.sin(randAngle) * 1000);

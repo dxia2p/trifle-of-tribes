@@ -47,7 +47,10 @@ class Building {
     }
 
     die() {
-
+        this.spriteRenderer.removeFromDrawList();
+        this.spriteRenderer = null;
+        this.healthBar.destroy();
+        placedBuildings.splice(placedBuildings.indexOf(this), 1);
     }
 
     update(time) {
@@ -128,7 +131,7 @@ class Spearman extends Building {
 }
 
 class Bowman extends Building {
-    maxTimeBtwAttack = 0.5;
+    maxTimeBtwAttack = 0;
     timeBtwAttack = 0.5;
     range = 350;
     projectileSpeed = 900;
