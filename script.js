@@ -270,13 +270,29 @@ function rectangleOverlap(r1center, r1width, r1height, r2center, r2width, r2heig
 
     return true;
 }
-/*
-setInterval(spawnGoblin, 200);
+
+document.addEventListener('backspace', (deleteBuilding) => {;
+    let mousedeletePos = getMousePos(canvas, deleteBuilding);
+if (mousedeletePos.x < -canvas.width / 2 || mousedeletePos.x > canvas.width / 2 || mousedeletePos.y > canvas.height / 2 || mousedeletePos.y < -canvas.height / 2) {
+    return;
+}
+
+if (selectedBuilding === -1) {
+    for (let i = 0; i < placedBuildings.length; i++) {
+        if (
+            rectangleOverlap(buildingTemplates[selectedBuilding].pos, buildingTemplates[selectedBuilding].gridWidth * GRID_SIZE, buildingTemplates[selectedBuilding].gridHeight * GRID_SIZE,
+            placedBuildings[i].pos, placedBuildings[i].gridWidth * GRID_SIZE, placedBuildings[i].gridHeight * GRID_SIZE)
+        ) { 
+            placedBuildings.splice(i, 1);
+        }
+    }
+}
+});
+
+
+setInterval(spawnGoblin, 0);
 function spawnGoblin() {
     let randAngle = 2 * Math.PI * Math.random();
     let coords = new Vector2(Math.cos(randAngle) * 1000, Math.sin(randAngle) * 1000);
     new Goblin(coords);
 }
-*/
-let ps = new ParticleSystem(new Vector2(200, 0),
- new RectRenderer(new Vector2(0, 0), 10, 10, "gray", 1, cam));
