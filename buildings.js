@@ -47,10 +47,14 @@ class Building {
     }
 
     die() {
+        let buildingIndex = placedBuildings.indexOf(this)
         this.spriteRenderer.removeFromDrawList();
         this.spriteRenderer = null;
         this.healthBar.destroy();
-        placedBuildings.splice(placedBuildings.indexOf(this), 1);
+        placedBuildings.splice(buildingIndex, 1);
+        if (buildingIndex === 0) {
+            console.log("Game Over");
+        }
     }
 
     update(time) {
@@ -120,14 +124,39 @@ class Wall extends Building {
 }
 
 class Spearman extends Building {
+    maxTimeBtwAttack = 0.8;
+    timeBtwAttack = 0.8;
+    range = 50;
+    projectileSpeed = 900;
+    damage = 40;
     constructor(pos) {
-        let maxHealth = 250;
+        let maxHealth = 400;
         let gridWidth = 2;
         let gridHeight = 2;
         let sr = new SpriteRenderer(pos, GRID_SIZE * gridWidth, GRID_SIZE * gridHeight, 1, spearmanImg, cam);
 
         super(pos, gridWidth, gridHeight, maxHealth, sr);
+    } 
+    update(time) {
+        super.update(time);
+        if (this.timeBtwAttack <= 0) {
+            let closestEnemyData = getClosestEnemy(this.pos); // returns closestDist and closestEnemy
+            if (closestEnemyData.closestDist < this.range) {
+                this.timeBtwAttack = this.maxTimeBtwAttack;
+                this.attack(new Vector2(closestEnemyData.closestEnemy.pos.x, closestEnemyData.closestEnemy.pos.y));
+            }
+        } else {
+            this.timeBtwAttack -= time;
+        }
     }
+
+    attack(closestEnemyPos) {
+        let direction = new Vector2(closestEnemyPos.x - this.pos.x, closestEnemyPos.y - this.pos.y).unit();
+
+        let p = new Projectile(new Vector2(this.pos.x, this.pos.y), direction, this.projectileSpeed, this.damage, 20, spearImg);
+        p.rotate = true;
+        p.pierce = false;
+}
 }
 
 class Bowman extends Building {
@@ -185,6 +214,11 @@ class Bowman extends Building {
 }
 
 class Mageman extends Building {
+    maxTimeBtwAttack = 3;
+    timeBtwAttack = 3;
+    range = 200;
+    projectileSpeed = 400;
+    damage = 200;
     constructor(pos) {
         let maxHealth = 150;
         let gridWidth = 2;
@@ -192,6 +226,27 @@ class Mageman extends Building {
         let sr = new SpriteRenderer(pos, GRID_SIZE * gridWidth, GRID_SIZE * gridHeight, 1, magemanImg, cam);
         super(pos, gridWidth, gridHeight, maxHealth, sr);
     }
+    
+    update(time) {
+        super.update(time);
+        if (this.timeBtwAttack <= 0) {
+            let closestEnemyData = getClosestEnemy(this.pos); // returns closestDist and closestEnemy
+            if (closestEnemyData.closestDist < this.range) {
+                this.timeBtwAttack = this.maxTimeBtwAttack;
+                this.attack(new Vector2(closestEnemyData.closestEnemy.pos.x, closestEnemyData.closestEnemy.pos.y));
+            }
+        } else {
+            this.timeBtwAttack -= time;
+        }
+    }
+
+    attack(closestEnemyPos) {
+        let direction = new Vector2(closestEnemyPos.x - this.pos.x, closestEnemyPos.y - this.pos.y).unit();
+
+        let p = new Projectile(new Vector2(this.pos.x, this.pos.y), direction, this.projectileSpeed, this.damage, 20, fireballImg);
+        p.rotate = true;
+        p.pierce = false;
+}
 }
 
 let projectiles = [];

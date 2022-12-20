@@ -279,11 +279,10 @@ function deleteBuilding() {
     for (let i = 0; i < placedBuildings.length; i++) {
         if (rectangleOverlap(mouseRect.pos, mouseRect.width, mouseRect.height, placedBuildings[i].pos, placedBuildings[i].gridWidth * GRID_SIZE, placedBuildings[i].gridHeight * GRID_SIZE)) {
             placedBuildings[i].die();
-            console.log("ASdKASJDLKASJDKAL")
         }
     }
 }
-
+ 
 setInterval(spawnGoblin, 1000);
 function spawnGoblin() {
     let randAngle = 2 * Math.PI * Math.random();
