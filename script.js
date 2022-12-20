@@ -280,17 +280,20 @@ function deleteBuilding() {
     for (let i = 0; i < placedBuildings.length; i++) {
         if (rectangleOverlap(mouseRect.pos, mouseRect.width, mouseRect.height, placedBuildings[i].pos, placedBuildings[i].gridWidth * GRID_SIZE, placedBuildings[i].gridHeight * GRID_SIZE)) {
             placedBuildings[i].die();
-            console.log("ASdKASJDLKASJDKAL")
         }
     }
 }
 
-setInterval(spawnGoblin, 1000);
+setInterval(spawnGoblin, 20);
 function spawnGoblin() {
     let randAngle = 2 * Math.PI * Math.random();
     let coords = new Vector2(Math.cos(randAngle) * 1000, Math.sin(randAngle) * 1000);
     new Goblin(coords);
 }
 
-let ps = new ParticleSystem(new Vector2(150, 150), new RectRenderer(new Vector2(0, 0), 10, 10, "red", 1, cam), 20, 100, 2, true);
-ps.play();
+setInterval(spawnOrc, 3000);
+function spawnOrc() {
+    let randAngle = 2 * Math.PI * Math.random();
+    let coords = new Vector2(Math.cos(randAngle) * 500, Math.sin(randAngle) * 500);
+    new Orc(coords);
+}
