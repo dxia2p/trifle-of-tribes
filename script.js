@@ -103,7 +103,7 @@ function keyupHandler(event) {
 let prevTime = 0;
 let changeInTime = 0;
 function loop(time) {
-    changeInTime = time - prevTime;
+    changeInTime = (time - prevTime) / 1000;
     cam.pos.y += upDownValue;
     cam.pos.x += leftRightValue;
     canvas.width = 0.6 * window.innerWidth;
@@ -111,9 +111,10 @@ function loop(time) {
     cam.width = canvas.width;
     cam.height = canvas.height;
 
-    updateAllBuildings(changeInTime / 1000);
-    updateAllProjectiles(changeInTime / 1000);
-    updateAllEnemies(changeInTime / 1000);
+    updateAllBuildings(changeInTime);
+    updateAllProjectiles(changeInTime);
+    updateAllEnemies(changeInTime);
+    updateAllParticleSystems(changeInTime);
 
     checkCollisionBetweenProjectilesAndEnemies();
     drawAll(ctx);
@@ -290,3 +291,6 @@ function spawnGoblin() {
     let coords = new Vector2(Math.cos(randAngle) * 1000, Math.sin(randAngle) * 1000);
     new Goblin(coords);
 }
+
+let ps = new ParticleSystem(new Vector2(150, 150), new RectRenderer(new Vector2(0, 0), 10, 10, "red", 1, cam), 20, 100, 2, true);
+ps.play();

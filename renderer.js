@@ -97,22 +97,92 @@ function drawAll(ctx) {
     }
 }
 
+class Particle{
+    direction = new Vector2(0, 0);
+    speed = 0;
+    constructor(renderer){
+        this.renderer = renderer;
+    }
+
+    update(time){
+        this.renderer.pos.x += this.direction.x * this.speed * time;
+        this.renderer.pos.y += this.direction.y * this.speed * time;
+    }
+
+    destroy(){
+        this.renderer.removeFromDrawList();
+        this.renderer = null;
+    }
+}
+
+let particleSystems = [];
 class ParticleSystem{
     particles = [];
-    constructor(pos, renderer, amount, speed){
+    isPlaying = false;
+    constructor(pos, renderer, amount, speed, time, destroyAfterPlay){
         this.pos = pos;
-        this.renderer = renderer;
         this.amount = amount;
         this.speed = speed;
-        this.particles.push(renderer);
-        this.particles[0].render = false;
+        this.maxTime = time;
+        this.time = time;
+        this.destroyAfterPlay = destroyAfterPlay;
+        this.particles.push(new Particle(renderer));
+        this.particles[0].renderer.render = false;
+        this.particles[0].speed = this.speed;
         for(let i = 1; i < this.amount; i++){
-            this.particles.push(renderer.clone());
-            this.particles[i].render = false;
+            this.particles.push(new Particle(renderer.clone()));
+            this.particles[i].renderer.render = false;
+            this.particles[i].speed = this.speed;
+        }
+        particleSystems.push(this)
+    }
+    updateAll(time){
+        if(this.isPlaying){
+            for(let i = 0; i < this.particles.length; i++){
+                this.particles[i].update(time);
+            }
+            if(this.time <= 0){
+                this.stop();
+                this.maxTime = time;
+            }else{
+                this.time -= time;
+            }
+        }
+    }
+    stop(){
+        if(!this.destroyAfterPlay){
+            this.isPlaying = false;
+            for(let i = 0; i < this.particles.length; i++){
+                this.particles[i].renderer.render = false;
+            }
+        }else{
+            this.destroy();
         }
 
     }
     play(){
-        
+        this.isPlaying = true;
+
+        for(let i = 0; i < this.particles.length; i++){
+            this.particles[i].renderer.render = true;
+            this.particles[i].renderer.pos.x = this.pos.x;
+            this.particles[i].renderer.pos.y = this.pos.y;
+            let randAngle = Math.random() * 2 * Math.PI;
+            this.particles[i].direction.x = Math.cos(randAngle);
+            this.particles[i].direction.y = Math.sin(randAngle);
+        }   
+    }
+    destroy(){
+        for(let i = 0; i < this.particles.length; i++){
+            this.particles[i].destroy();
+        }
+        this.particles = [];
+        particleSystems.splice(particleSystems.indexOf(this), 1);
+    }
+}
+
+function updateAllParticleSystems(time){
+    for(let i = 0; i < particleSystems.length; i++){
+        particleSystems[i].updateAll(time);
     }
 }
