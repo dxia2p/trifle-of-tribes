@@ -8,6 +8,7 @@ const bowmanImg = document.getElementById("bowman");
 const magemanImg = document.getElementById("mageman");
 const goblinImg = document.getElementById("goblin");
 const arrowImg = document.getElementById("arrow");
+const orcImg = document.getElementById("orc");
 // values
 const BACKGROUND_SIZE = 1980;
 const GRID_SIZE = 30;

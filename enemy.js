@@ -97,16 +97,16 @@ class Enemy { // Base enemy class
             this.pos.x += dir.x * this.speed * time;
             this.pos.y += dir.y * this.speed * time;
         } else {
-            if(this.timeBtwAttack <= 0){
+            if (this.timeBtwAttack <= 0) {
                 this.timeBtwAttack = this.maxTimeBtwAttack;
                 this.attack(result);
-            }else{
+            } else {
                 this.timeBtwAttack -= time;
             }
         }
     }
 
-    attack(buildingToAttack){
+    attack(buildingToAttack) {
         buildingToAttack.takeDamage(this.damage);
     }
 
@@ -135,7 +135,17 @@ class Enemy { // Base enemy class
 
 class Goblin extends Enemy {
     constructor(pos) {
-        super(pos, 100, 100, 30, new SpriteRenderer(pos, 30, 30, 30, goblinImg, cam));
+        super(pos, 100, 100, 30, new SpriteRenderer(pos, 30, 30, 1, goblinImg, cam));
+    }
+
+    update(time) {
+        super.update(time);
+    }
+}
+
+class Orc extends Enemy {
+    constructor(pos) {
+        super(pos, 1000, 25, 60, new SpriteRenderer(pos, 60, 60, 1, orcImg, cam));
     }
 
     update(time) {

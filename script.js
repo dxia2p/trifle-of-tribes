@@ -284,9 +284,16 @@ function deleteBuilding() {
     }
 }
 
-setInterval(spawnGoblin, 1000);
+setInterval(spawnGoblin, 20);
 function spawnGoblin() {
     let randAngle = 2 * Math.PI * Math.random();
     let coords = new Vector2(Math.cos(randAngle) * 1000, Math.sin(randAngle) * 1000);
     new Goblin(coords);
+}
+
+setInterval(spawnOrc, 3000);
+function spawnOrc() {
+    let randAngle = 2 * Math.PI * Math.random();
+    let coords = new Vector2(Math.cos(randAngle) * 500, Math.sin(randAngle) * 500);
+    new Orc(coords);
 }
