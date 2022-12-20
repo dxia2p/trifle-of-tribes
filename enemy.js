@@ -145,7 +145,19 @@ class Goblin extends Enemy {
 
 class Orc extends Enemy {
     constructor(pos) {
-        super(pos, 1000, 25, 60, new SpriteRenderer(pos, 60, 60, 1, orcImg, cam));
+        super(pos, 1000, 25, 90, new SpriteRenderer(pos, 90, 90, 1, orcImg, cam));
+        this.healthBar.offset.y += 22;
+    }
+
+    update(time) {
+        super.update(time);
+    }
+}
+
+class Troll extends Enemy {
+    constructor(pos) {
+        super(pos, 500, 50, 60, new SpriteRenderer(pos, 60, 60, 1, trollImg, cam));
+        this.healthBar.offset.y += 15;
     }
 
     update(time) {
