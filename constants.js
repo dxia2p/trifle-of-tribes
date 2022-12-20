@@ -10,6 +10,7 @@ const goblinImg = document.getElementById("goblin");
 const arrowImg = document.getElementById("arrow");
 const fireballImg = document.getElementById("fireball");
 const spearImg = document.getElementById("spear");
+const orcImg = document.getElementById("orc");
 // values
 const BACKGROUND_SIZE = 1980;
 const GRID_SIZE = 30;
