@@ -11,6 +11,7 @@ const arrowImg = document.getElementById("arrow");
 const fireballImg = document.getElementById("fireball");
 const spearImg = document.getElementById("spear");
 const orcImg = document.getElementById("orc");
+const trollImg = document.getElementById("troll");
 // values
 const BACKGROUND_SIZE = 1980;
 const GRID_SIZE = 30;
