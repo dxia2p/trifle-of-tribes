@@ -164,7 +164,7 @@ class Bowman extends Building {
     timeBtwAttack = 0.5;
     range = 350;
     projectileSpeed = 900;
-    damage = 30;
+    damage = 60;
     constructor(pos) {
         let maxHealth = 150;
         let gridWidth = 2;

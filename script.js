@@ -297,3 +297,17 @@ function spawnOrc() {
     let coords = new Vector2(Math.cos(randAngle) * 500, Math.sin(randAngle) * 500);
     new Orc(coords);
 }
+
+/*
+let ps = new ParticleSystem(new Vector2(100, 100), new RectRenderer(new Vector2(0, 0), 5, 5, "red", 1, cam), 20, 50, 2, false);
+ps.play();
+
+let ps1 = new ParticleSystem(new Vector2(-100, -200), new RectRenderer(new Vector2(0, 0), 5, 5, "green", 1, cam), 100, 150, 2, false);
+ps1.play();
+
+let ps2 = new ParticleSystem(new Vector2(150, 0), new RectRenderer(new Vector2(0, 0), 15, 5, "blue", 0.5, cam), 40, 200, 2, false);
+ps2.play();
+
+let ps3 = new ParticleSystem(new Vector2(-100, 200), new RectRenderer(new Vector2(0, 0), 20, 20, "yellow", 1, cam), 40, 200, 1, false);
+ps3.play();
+*/
