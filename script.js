@@ -14,14 +14,14 @@ let buildingBtnArray = [
 ];
 
 // Gold Variables
-let gold = 10000;
+let gold = 50;
 var goldLevel = 1;
-let goldStorageCost = 30;
+let goldStorageCost = 50;
 let spearmanCost = 25;
-let bowmanCost = 25;
-let rockmanCost = 30;
-let magemanCost = 40;
-let wallCost = 15;
+let bowmanCost = 35;
+let rockmanCost = 50;
+let magemanCost = 60;
+let wallCost = 10;
 
 let costsArray = [
     rockmanCost,
@@ -126,7 +126,7 @@ requestAnimationFrame(loop);
 
 // Gold
 function goldLevelIncrease() {
-    goldStorageCost *= 3;
+    goldStorageCost *= 4;
     goldLevel *= 2;
     document.getElementById("upgradeCost").innerHTML = goldStorageCost;
 }
@@ -284,30 +284,63 @@ function deleteBuilding() {
     }
 }
 
-setInterval(spawnGoblin, 800);
+setInterval(spawnGoblin, 6000);
 function spawnGoblin() {
     let randAngle = 2 * Math.PI * Math.random();
     let coords = new Vector2(Math.cos(randAngle) * 1000, Math.sin(randAngle) * 1000);
     new Goblin(coords);
 }
 
-setInterval(spawnOrc, 3000);
+
 function spawnOrc() {
     let randAngle = 2 * Math.PI * Math.random();
     let coords = new Vector2(Math.cos(randAngle) * 500, Math.sin(randAngle) * 500);
     new Orc(coords);
 }
 
-setInterval(spawnTroll, 1500);
+
 function spawnTroll() {
     let randAngle = 2 * Math.PI * Math.random();
     let coords = new Vector2(Math.cos(randAngle) * 500, Math.sin(randAngle) * 500);
     new Troll(coords);
 }
 
-setInterval(spawnDragon, 4500);
+
 function spawnDragon() {
     let randAngle = 2 * Math.PI * Math.random();
     let coords = new Vector2(Math.cos(randAngle) * 500, Math.sin(randAngle) * 500);
     new Dragon(coords);
 }
+
+let goblinAmount = 6, trollAmount = 3, orcAmount = 2, dragonAmount = 1;
+let waveNumber = 0;
+function spawnWave() {
+    waveNumber++
+    console.log(waveNumber);
+    if (waveNumber >= 0) {
+        for (let n = 0; n < goblinAmount; n++) {
+            spawnGoblin(); 
+        }
+        goblinAmount += 6;
+    } 
+    if (waveNumber >= 6) {
+        for (let n = 0; n < trollAmount; n++) {
+            spawnTroll(); 
+        }
+        trollAmount += 3;
+    } 
+    if (waveNumber >= 12) {
+        for (let n = 0; n < orcAmount; n++) {
+            spawnOrc(); 
+        }
+        orcAmount += 2;
+    }
+    if (waveNumber >= 18) {
+        for (let n = 0; n < dragonAmount; n++) {
+            spawnDragon(); 
+        }
+        dragonAmount += 1;
+    }
+}
+
+setInterval(spawnWave, 60000)
