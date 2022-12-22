@@ -100,6 +100,8 @@ function drawAll(ctx) {
 class Particle{
     direction = new Vector2(0, 0);
     speed = 0;
+    lifetime = 0;
+    maxLifetime = 0;
     constructor(renderer){
         this.renderer = renderer;
     }
@@ -107,6 +109,12 @@ class Particle{
     update(time){
         this.renderer.pos.x += this.direction.x * this.speed * time;
         this.renderer.pos.y += this.direction.y * this.speed * time;
+        if(this.lifetime <= 0){
+            this.renderer.render = false;
+
+        }else{
+            this.lifetime -= time;
+        }
     }
 
     destroy(){
@@ -119,12 +127,12 @@ let particleSystems = [];
 class ParticleSystem{
     particles = [];
     isPlaying = false;
-    constructor(pos, renderer, amount, speed, time, destroyAfterPlay){
+    constructor(pos, renderer, amount, speed, maxTime, destroyAfterPlay){
         this.pos = pos;
         this.amount = amount;
         this.speed = speed;
-        this.maxTime = time;
-        this.time = time;
+        this.maxTime = maxTime; // the maximum lifetime of every particle, but particles can have their individual lifetimes
+        this.time = maxTime;
         this.destroyAfterPlay = destroyAfterPlay;
         this.particles.push(new Particle(renderer));
         this.particles[0].renderer.render = false;
@@ -133,6 +141,8 @@ class ParticleSystem{
             this.particles.push(new Particle(renderer.clone()));
             this.particles[i].renderer.render = false;
             this.particles[i].speed = this.speed;
+            this.particles[i].maxLifetime = maxTime;
+            this.particles[i].lifetime = maxTime;
         }
         particleSystems.push(this)
     }
@@ -164,12 +174,14 @@ class ParticleSystem{
         this.isPlaying = true;
 
         for(let i = 0; i < this.particles.length; i++){
-            this.particles[i].renderer.render = true;
-            this.particles[i].renderer.pos.x = this.pos.x;
-            this.particles[i].renderer.pos.y = this.pos.y;
+            let p = this.particles[i];
+            p.renderer.render = true;
+            p.lifetime = p.maxLifetime;
+            p.renderer.pos.x = this.pos.x;
+            p.renderer.pos.y = this.pos.y;
             let randAngle = Math.random() * 2 * Math.PI;
-            this.particles[i].direction.x = Math.cos(randAngle);
-            this.particles[i].direction.y = Math.sin(randAngle);
+            p.direction.x = Math.cos(randAngle);
+            p.direction.y = Math.sin(randAngle);
         }   
     }
     destroy(){
