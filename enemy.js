@@ -164,3 +164,15 @@ class Troll extends Enemy {
         super.update(time);
     }
 }
+
+
+class Dragon extends Enemy {
+    constructor(pos) {
+        super(pos, 2000, 15, 60, new SpriteRenderer(pos, 135, 135, 1, dragonImg, cam));
+        this.healthBar.offset.y += 55;
+    }
+
+    update(time) {
+        super.update(time);
+    }
+}

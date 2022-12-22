@@ -304,3 +304,10 @@ function spawnTroll() {
     let coords = new Vector2(Math.cos(randAngle) * 500, Math.sin(randAngle) * 500);
     new Troll(coords);
 }
+
+setInterval(spawnDragon, 4500);
+function spawnDragon() {
+    let randAngle = 2 * Math.PI * Math.random();
+    let coords = new Vector2(Math.cos(randAngle) * 500, Math.sin(randAngle) * 500);
+    new Dragon(coords);
+}
