@@ -1,9 +1,55 @@
 let drawList = [];
 class Camera {
+    isShaking = false;
+    shakeStrength = 0;
+    maxShakeInterval = 0;
+    shakeInterval = 0;
+    shakeTime = 0;
+    direction = new Vector2(0, 0);
     constructor(width, height, pos) {
         this.width = width;
         this.height = height;
         this.pos = pos;
+    }
+
+    update(time){
+        if(this.isShaking){
+            if(this.shakeTime <= 0){
+                this.isShaking = false;
+            }else{
+                if(this.shakeInterval <= 0){
+                    this.shakeOnce();
+                    this.shakeInterval = this.maxShakeInterval;
+                }else{
+                    if(this.shakeInterval <= this.maxShakeInterval / 2){
+                        this.pos.x -= this.direction.x;
+                        this.pos.y -= this.direction.y;
+                    }
+                    //console.log(this.shakeInterval)
+                    this.shakeInterval -= time;
+                }
+                this.shakeTime -= time;
+            }
+        }
+    }
+
+    shakeOnce(){
+        let randAngle = randomRange(0, 2 * Math.PI); // get random angle from 0 to 2 pi (radians)
+        let x = Math.cos(randAngle) * this.shakeStrength;
+        let y = Math.sin(randAngle) * this.shakeStrength;
+        this.pos.x += x;
+        this.pos.y += y;
+        this.direction.x = x;
+        this.direction.y = y;
+    }
+
+    cameraShake(strength, shakeInterval, shakeTime){
+        //console.log("AAAA")
+        this.isShaking = true;
+        this.shakeStrength = strength;
+        this.maxShakeInterval = shakeInterval;
+        //this.shakeInterval = shakeInterval;
+        this.shakeTime = shakeTime;
     }
 }
 

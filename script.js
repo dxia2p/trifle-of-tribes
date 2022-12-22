@@ -100,6 +100,7 @@ function keyupHandler(event) {
 }
 
 // Main Game Loop--------------------------------------------------------
+
 let prevTime = 0;
 let changeInTime = 0;
 function loop(time) {
@@ -110,6 +111,8 @@ function loop(time) {
     canvas.height = 0.6 * window.innerHeight;
     cam.width = canvas.width;
     cam.height = canvas.height;
+    cam.update(changeInTime);
+    cam.cameraShake(5, 0.02, 0.3)
 
     updateAllBuildings(changeInTime);
     updateAllProjectiles(changeInTime);
@@ -157,6 +160,9 @@ let buildingTemplates = [
 ];
 
 function selectBuilding(buildingType) {
+    if(selectedBuilding !== -1){
+        buildingTemplates[selectedBuilding].pos.x = 10000; // set the building template's position to somewhere far away so it doesn't show up
+    }
     if (buildingType === selectedBuilding) {
         selectedBuilding = -1;
         return;
