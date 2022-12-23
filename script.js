@@ -377,7 +377,6 @@ function spawnWave() {
         dragonAmount += 1;
     }
 }
-spawnWave();
-spawnWave();
-spawnWave();
-setInterval(spawnWave, 20000);
+
+setInterval(spawnWave, 20000)
+document.getElementById("waveNumberIndicator").innerHTML = waveNumber;
