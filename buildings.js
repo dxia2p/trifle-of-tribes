@@ -72,7 +72,9 @@ class GoldStorage extends Building {
     }
 
     die(){
+        // Do Game Over Stuff
         console.log("Game Over");
+        gameOver = true;
         super.die();
     }
 }

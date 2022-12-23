@@ -103,6 +103,7 @@ function keyupHandler(event) {
 
 let prevTime = 0;
 let changeInTime = 0;
+let gameOver = false;
 gold += 10000; // temp
 function loop(time) {
     changeInTime = (time - prevTime) / 1000;
@@ -112,7 +113,7 @@ function loop(time) {
     
     setMouseRectPos(mousePos);
     drawBuildingTemplate(mousePos);
-    canvas.width = 0.6 * window.innerWidth;
+    canvas.width = 0.8 * window.innerWidth;
     canvas.height = 0.6 * window.innerHeight;
     cam.width = canvas.width;
     cam.height = canvas.height;
@@ -125,10 +126,20 @@ function loop(time) {
     updateAllParticleSystems(changeInTime);
 
     checkCollisionBetweenProjectilesAndEnemies();
-    drawAll(ctx);
-    prevTime = time;
-    requestAnimationFrame(loop);
 
+    // Game Over Stuff
+    if (gameOver) {
+        ctx.fillStyle = "black";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "red";
+        ctx.font = "48px Times New Roman";
+        ctx.textAlign = "center";
+        ctx.fillText("Game Over", canvas.width / 2, canvas.height / 2);
+    } else {
+        drawAll(ctx);
+        prevTime = time;
+        requestAnimationFrame(loop);
+    }
 }
 requestAnimationFrame(loop);
 
@@ -295,6 +306,7 @@ function deleteBuilding() {
     }
 }
 
+// Enemy Spawn Functions
 setInterval(spawnGoblin, 6000);
 function spawnGoblin() {
     let randAngle = 2 * Math.PI * Math.random();
@@ -354,4 +366,4 @@ function spawnWave() {
     }
 }
 
-setInterval(spawnWave, 60000)
+setInterval(spawnWave, 60000);

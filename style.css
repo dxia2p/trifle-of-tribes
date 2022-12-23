@@ -54,16 +54,3 @@ button:disabled {
 button:disabled:active {
     border-color: lightgray;
 }
-
-.container {
-    padding-left: 100px;
-    display: flex;
-    flex-direction: "row";
-}
-
-.building-sidebar {
-    width: 600px;
-    margin: auto;
-    padding-top: 30px;
-    font-weight: bold;;
-}
