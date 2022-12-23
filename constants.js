@@ -14,5 +14,5 @@ const orcImg = document.getElementById("orc");
 const trollImg = document.getElementById("troll");
 const dragonImg = document.getElementById("dragon");
 // values
-const BACKGROUND_SIZE = 1980;
+const BACKGROUND_SIZE = 3000;
 const GRID_SIZE = 30;

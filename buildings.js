@@ -47,14 +47,12 @@ class Building {
     }
 
     die() {
+        cam.cameraShake(3, 0.02, 0.2);
         let buildingIndex = placedBuildings.indexOf(this)
         this.spriteRenderer.removeFromDrawList();
         this.spriteRenderer = null;
         this.healthBar.destroy();
         placedBuildings.splice(buildingIndex, 1);
-        if (buildingIndex === 0) {
-            console.log("Game Over");
-        }
     }
 
     update(time) {
@@ -71,6 +69,11 @@ class GoldStorage extends Building {
 
     update(time) {
         super.update(time);
+    }
+
+    die(){
+        console.log("Game Over");
+        super.die();
     }
 }
 

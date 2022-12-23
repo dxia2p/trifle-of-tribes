@@ -56,8 +56,8 @@ let mouseRect = new RectRenderer(new Vector2(0, 0), GRID_SIZE, GRID_SIZE, "#FFFF
 let mousePos = new Vector2(0, 0);
 document.addEventListener('mousemove', (event) => {
     mousePos = getMousePos(canvas, event);
-    drawBuildingTemplate(mousePos);
-    setMouseRectPos(mousePos);
+    //drawBuildingTemplate(mousePos);
+    //setMouseRectPos(mousePos);
 });
 
 function setMouseRectPos(mp) {
@@ -103,16 +103,21 @@ function keyupHandler(event) {
 
 let prevTime = 0;
 let changeInTime = 0;
+gold += 10000; // temp
 function loop(time) {
     changeInTime = (time - prevTime) / 1000;
     cam.pos.y += upDownValue;
     cam.pos.x += leftRightValue;
+
+    
+    setMouseRectPos(mousePos);
+    drawBuildingTemplate(mousePos);
     canvas.width = 0.6 * window.innerWidth;
     canvas.height = 0.6 * window.innerHeight;
     cam.width = canvas.width;
     cam.height = canvas.height;
     cam.update(changeInTime);
-    cam.cameraShake(5, 0.02, 0.3)
+    //cam.cameraShake(5, 0.02, 0.3)
 
     updateAllBuildings(changeInTime);
     updateAllProjectiles(changeInTime);
@@ -151,7 +156,7 @@ window.setInterval(() => {
 // Select Building
 let buildings = [];
 let selectedBuilding = -1;
-let buildingTemplates = [
+let buildingTemplates = [ // transparent previews for the buildings
     new BuildingTemplate(new Vector2(1200, 1200), 2, 2, rockThrowerImg, cam),
     new BuildingTemplate(new Vector2(1200, 1200), 2, 2, spearmanImg, cam),
     new BuildingTemplate(new Vector2(1200, 1200), 2, 2, bowmanImg, cam),

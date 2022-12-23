@@ -145,6 +145,9 @@ class Enemy { // Base enemy class
 class Goblin extends Enemy {
     constructor(pos) {
         super(pos, 100, 100, 30, new SpriteRenderer(pos, 30, 30, 1, goblinImg, cam));
+        this.maxTimeBtwAttack = 0.5;
+        this.timeBtwAttack = 0.5;
+        this.damage = 10;
     }
 
     update(time) {
