@@ -355,3 +355,4 @@ function spawnWave() {
 }
 
 setInterval(spawnWave, 60000)
+document.getElementById("waveNumberIndicator").innerHTML = waveNumber;
