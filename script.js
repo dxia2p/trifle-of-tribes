@@ -87,7 +87,9 @@ function keydownHandler(event) {
     } else if (event.code === "KeyD") {
         leftRightValue = 3;
     } else if (event.code === "Backspace") {
-        deleteBuilding(event);
+        deleteBuilding();
+    } else if(event.code === "KeyR"){
+        repairBuilding();
     }
 }
 
@@ -295,6 +297,28 @@ function deleteBuilding() {
     }
 }
 
+function repairBuilding(){
+    if (mousePos.x < -canvas.width / 2 || mousePos.x > canvas.width / 2 || mousePos.y > canvas.height / 2 || mousePos.y < -canvas.height / 2) {
+        return;
+    }
+    for (let i = 0; i < placedBuildings.length; i++) {
+        if (rectangleOverlap(mouseRect.pos, mouseRect.width, mouseRect.height, placedBuildings[i].pos, placedBuildings[i].gridWidth * GRID_SIZE, placedBuildings[i].gridHeight * GRID_SIZE)) {
+            let pb = placedBuildings[i];
+            if(pb.buildingType === -1){
+                break;
+            }
+            let goldCost = Math.floor((1 - (pb.health / pb.maxHealth)) * costsArray[pb.buildingType]);
+            if(goldCost <= gold){
+                pb.repairToMax();
+                gold -= goldCost;
+                console.log("Repair Successful!");
+            }else{
+                console.log("Not Enough Gold to Repair!");
+            }
+        }
+    }
+}
+
 setInterval(spawnGoblin, 6000);
 function spawnGoblin() {
     let randAngle = 2 * Math.PI * Math.random();
@@ -353,5 +377,7 @@ function spawnWave() {
         dragonAmount += 1;
     }
 }
-
-setInterval(spawnWave, 60000)
+spawnWave();
+spawnWave();
+spawnWave();
+setInterval(spawnWave, 20000);

@@ -46,6 +46,11 @@ class Building {
         this.healthBar.takeDamage(this.maxHealth, this.health);
     }
 
+    repairToMax(){
+        this.health = this.maxHealth;
+        this.healthBar.takeDamage(this.maxHealth, this.health);
+    }
+
     die() {
         cam.cameraShake(3, 0.02, 0.2);
         let buildingIndex = placedBuildings.indexOf(this)
@@ -61,6 +66,7 @@ class Building {
 }
 
 class GoldStorage extends Building {
+    buildingType = -1;
     constructor(pos, gridWidth, gridHeight) {
         let maxHealth = 500;
         let sr = new SpriteRenderer(pos, GRID_SIZE * gridWidth, GRID_SIZE * gridHeight, 1, goldStorageImg, cam);
@@ -78,11 +84,13 @@ class GoldStorage extends Building {
 }
 
 class RockThrower extends Building {
+    buildingType = 0;
     maxTimeBtwAttack = 1;
     timeBtwAttack = 1;
     range = 200;
     projectileSpeed = 400;
     damage = 50;
+
     constructor(pos) {
         let maxHealth = 200;
         let gridWidth = 2;
@@ -115,23 +123,15 @@ class RockThrower extends Building {
     }
 }
 
-class Wall extends Building {
-    constructor(pos) {
-        let maxHealth = 300;
-        let gridWidth = 1;
-        let gridHeight = 1;
-        let sr = new SpriteRenderer(pos, GRID_SIZE * gridWidth, GRID_SIZE * gridHeight, 1, wallImg, cam);
 
-        super(pos, gridWidth, gridHeight, maxHealth, sr);
-    }
-}
 
 class Spearman extends Building {
+    buidlingType = 1;
     maxTimeBtwAttack = 0.8;
     timeBtwAttack = 0.8;
-    range = 50;
+    range = 70;
     projectileSpeed = 900;
-    damage = 40;
+    damage = 120;
     constructor(pos) {
         let maxHealth = 400;
         let gridWidth = 2;
@@ -163,6 +163,7 @@ class Spearman extends Building {
 }
 
 class Bowman extends Building {
+    buidlingType = 2
     maxTimeBtwAttack = 0.5;
     timeBtwAttack = 0.5;
     range = 350;
@@ -199,11 +200,12 @@ class Bowman extends Building {
 }
 
 class Mageman extends Building {
+    buildingType = 3;
     maxTimeBtwAttack = 3;
     timeBtwAttack = 3;
     range = 200;
     projectileSpeed = 400;
-    damage = 200;
+    damage = 250;
     constructor(pos) {
         let maxHealth = 150;
         let gridWidth = 2;
@@ -229,7 +231,7 @@ class Mageman extends Building {
         let direction = new Vector2(closestEnemyPos.x - this.pos.x, closestEnemyPos.y - this.pos.y).unit();
 
         let p = new Projectile(new Vector2(this.pos.x, this.pos.y), direction, this.projectileSpeed, this.damage, 20, fireballImg);
-        p.rotate = true;
+        p.rotate = false;
         p.pierce = false;
 }
 }
@@ -238,6 +240,18 @@ let projectiles = [];
 function updateAllProjectiles(changeInTime) {
     for (let i = 0; i < projectiles.length; i++) {
         projectiles[i].update(changeInTime);
+    }
+}
+
+class Wall extends Building {
+    buildingType = 4;
+    constructor(pos) {
+        let maxHealth = 300;
+        let gridWidth = 1;
+        let gridHeight = 1;
+        let sr = new SpriteRenderer(pos, GRID_SIZE * gridWidth, GRID_SIZE * gridHeight, 1, wallImg, cam);
+
+        super(pos, gridWidth, gridHeight, maxHealth, sr);
     }
 }
 
