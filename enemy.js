@@ -147,7 +147,7 @@ class Goblin extends Enemy {
     constructor(pos) {
         super(pos, 100, 100, 30, new SpriteRenderer(pos, 30, 30, 1, goblinImg, cam));
         this.maxTimeBtwAttack = 0.5;
-        this.timeBtwAttack = 0.5;
+        this.timeBtwAttack = 0;
         this.damage = 10;
     }
 
@@ -160,6 +160,9 @@ class Orc extends Enemy {
     constructor(pos) {
         super(pos, 1000, 25, 90, new SpriteRenderer(pos, 90, 90, 1, orcImg, cam));
         this.healthBar.offset.y += 22;
+        this.maxTimeBtwAttack = 2;
+        this.timeBtwAttack = 0;
+        this.damage = 60;
     }
 
     update(time) {
@@ -171,6 +174,9 @@ class Troll extends Enemy {
     constructor(pos) {
         super(pos, 500, 50, 60, new SpriteRenderer(pos, 60, 60, 1, trollImg, cam));
         this.healthBar.offset.y += 15;
+        this.maxTimeBtwAttack = 1;
+        this.timeBtwAttack = 0;
+        this.damage = 25;
     }
 
     update(time) {
@@ -183,6 +189,9 @@ class Dragon extends Enemy {
     constructor(pos) {
         super(pos, 2000, 15, 60, new SpriteRenderer(pos, 135, 135, 1, dragonImg, cam));
         this.healthBar.offset.y += 55;
+        this.maxTimeBtwAttack = 5;
+        this.timeBtwAttack = 0;
+        this.damage = 200;
     }
 
     update(time) {
