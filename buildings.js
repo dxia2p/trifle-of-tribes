@@ -58,6 +58,14 @@ class Building {
         this.spriteRenderer = null;
         this.healthBar.destroy();
         placedBuildings.splice(buildingIndex, 1);
+        let ps = new ParticleSystem(this.pos, new SpriteRenderer(new Vector2(0, 0), 10, 10, 1, coinImg, cam), 30, 100, 0.6, true);
+        ps.gravity = -3;
+        ps.play();
+        for(let i = 0; i < ps.particles.length; i++){ // add random lifetime and random pos to particles
+            ps.particles[i].lifetime = randomRange(0.1, 0.5);
+            ps.particles[i].renderer.pos.x += randomRange(-8, 8);
+            ps.particles[i].renderer.pos.y += randomRange(-8, 8);
+        }
     }
 
     update(time) {

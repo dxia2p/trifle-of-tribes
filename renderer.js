@@ -133,7 +133,9 @@ class SpriteRenderer extends Renderer {
         ctx.globalAlpha = 1;
         ctx.restore();
     }
-    //add clone function later im dont want to do it right now
+    clone(){
+        return new SpriteRenderer(new Vector2(this.pos.x, this.pos.y), this.width, this.height, this.alpha, this.img, this.camera);
+    }
 }
 
 function drawAll(ctx) {
@@ -179,6 +181,7 @@ class ParticleSystem{
         this.speed = speed;
         this.maxTime = maxTime; // the maximum lifetime of every particle, but particles can have their individual lifetimes
         this.time = maxTime;
+        this.gravity = 0;
         this.destroyAfterPlay = destroyAfterPlay;
         this.particles.push(new Particle(renderer));
         this.particles[0].renderer.render = false;
@@ -196,6 +199,7 @@ class ParticleSystem{
         if(this.isPlaying){
             for(let i = 0; i < this.particles.length; i++){
                 this.particles[i].update(time);
+                this.particles[i].direction.y += this.gravity * time;
             }
             if(this.time <= 0){
                 this.stop();
