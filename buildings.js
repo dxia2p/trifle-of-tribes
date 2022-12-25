@@ -100,7 +100,6 @@ class RockThrower extends Building {
         let sr = new SpriteRenderer(pos, GRID_SIZE * gridWidth, GRID_SIZE * gridHeight, 1, rockThrowerImg, cam);
 
         super(pos, gridWidth, gridHeight, maxHealth, sr);
-
     }
 
     update(time) {
@@ -134,6 +133,7 @@ class Spearman extends Building {
     range = 70;
     projectileSpeed = 900;
     damage = 120;
+    lifetime = 0.1;
     constructor(pos) {
         let maxHealth = 400;
         let gridWidth = 2;
@@ -142,6 +142,7 @@ class Spearman extends Building {
 
         super(pos, gridWidth, gridHeight, maxHealth, sr);
     }
+    
     update(time) {
         super.update(time);
         if (this.timeBtwAttack <= 0) {
@@ -159,7 +160,7 @@ class Spearman extends Building {
         let direction = new Vector2(closestEnemyPos.x - this.pos.x, closestEnemyPos.y - this.pos.y).unit();
 
         let p = new Projectile(new Vector2(this.pos.x, this.pos.y), direction, this.projectileSpeed, this.damage, 20, spearImg);
-        p.rotate = true;
+        p.rotate = false;
         p.pierce = false;
     }
 }
@@ -297,12 +298,9 @@ class Projectile {
     }
 
     onCollision() {
-
         if (!this.pierce) {
             this.destroySelf = true;
         }
-
-
     }
 }
 

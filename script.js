@@ -328,32 +328,36 @@ function repairBuilding() {
     }
 }
 
-setInterval(spawnGoblin, 6000);
+setInterval(spawnGoblin, 0);
 
 function spawnGoblin() {
+    let dist = 2000;
     let randAngle = 2 * Math.PI * Math.random();
-    let coords = new Vector2(Math.cos(randAngle) * 1000, Math.sin(randAngle) * 1000);
+    let coords = new Vector2(Math.cos(randAngle) * dist, Math.sin(randAngle) * dist);
     new Goblin(coords);
 }
 
 
 function spawnOrc() {
+    let dist = 1000;
     let randAngle = 2 * Math.PI * Math.random();
-    let coords = new Vector2(Math.cos(randAngle) * 500, Math.sin(randAngle) * 500);
+    let coords = new Vector2(Math.cos(randAngle) * dist, Math.sin(randAngle) * dist);
     new Orc(coords);
 }
 
 
 function spawnTroll() {
+    let dist = 1000;
     let randAngle = 2 * Math.PI * Math.random();
-    let coords = new Vector2(Math.cos(randAngle) * 500, Math.sin(randAngle) * 500);
+    let coords = new Vector2(Math.cos(randAngle) * dist, Math.sin(randAngle) * dist);
     new Troll(coords);
 }
 
 
 function spawnDragon() {
+    let dist = 1000;
     let randAngle = 2 * Math.PI * Math.random();
-    let coords = new Vector2(Math.cos(randAngle) * 500, Math.sin(randAngle) * 500);
+    let coords = new Vector2(Math.cos(randAngle) * dist, Math.sin(randAngle) * dist);
     new Dragon(coords);
 }
 
@@ -365,7 +369,6 @@ let waveNumber = 0;
 
 function spawnWave() {
     waveNumber++
-    console.log(waveNumber);
     if (waveNumber >= 0) {
         for (let n = 0; n < goblinAmount; n++) {
             spawnGoblin();
