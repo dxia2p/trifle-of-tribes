@@ -1,4 +1,5 @@
 let enemies = [];
+
 function updateAllEnemies(changeInTime) {
     for (let i = 0; i < enemies.length; i++) {
         enemies[i].update(changeInTime);
@@ -122,7 +123,7 @@ class Enemy { // Base enemy class
         this.projectilesHit.push(projectile);
         let psPos = new Vector2((projectile.pos.x + this.pos.x) / 2, (projectile.pos.y + this.pos.y) / 2);
         let ps = new ParticleSystem(psPos, new RectRenderer(new Vector2(0, 0), 5, 5, "red", 1, cam), 15, 100, 0.15, true);
-        for(let i = 0; i < ps.particles.length; i++){ // apply random lifetime and size
+        for (let i = 0; i < ps.particles.length; i++) { // apply random lifetime and size
             let p = ps.particles[i];
             p.lifetime = randomRange(0.1, 0.2);
             let randSize = randomRange(3, 6);

@@ -40,13 +40,13 @@ class Building {
 
     takeDamage(damage) {
         this.health -= damage;
-        if(this.health <= 0){
+        if (this.health <= 0) {
             this.die();
         }
         this.healthBar.takeDamage(this.maxHealth, this.health);
     }
 
-    repairToMax(){
+    repairToMax() {
         this.health = this.maxHealth;
         this.healthBar.takeDamage(this.maxHealth, this.health);
     }
@@ -77,7 +77,7 @@ class GoldStorage extends Building {
         super.update(time);
     }
 
-    die(){
+    die() {
         // Do Game Over Stuff
         console.log("Game Over");
         gameOver = true;
@@ -141,7 +141,7 @@ class Spearman extends Building {
         let sr = new SpriteRenderer(pos, GRID_SIZE * gridWidth, GRID_SIZE * gridHeight, 1, spearmanImg, cam);
 
         super(pos, gridWidth, gridHeight, maxHealth, sr);
-    } 
+    }
     update(time) {
         super.update(time);
         if (this.timeBtwAttack <= 0) {
@@ -161,7 +161,7 @@ class Spearman extends Building {
         let p = new Projectile(new Vector2(this.pos.x, this.pos.y), direction, this.projectileSpeed, this.damage, 20, spearImg);
         p.rotate = true;
         p.pierce = false;
-}
+    }
 }
 
 class Bowman extends Building {
@@ -215,7 +215,7 @@ class Mageman extends Building {
         let sr = new SpriteRenderer(pos, GRID_SIZE * gridWidth, GRID_SIZE * gridHeight, 1, magemanImg, cam);
         super(pos, gridWidth, gridHeight, maxHealth, sr);
     }
-    
+
     update(time) {
         super.update(time);
         if (this.timeBtwAttack <= 0) {
@@ -235,10 +235,11 @@ class Mageman extends Building {
         let p = new Projectile(new Vector2(this.pos.x, this.pos.y), direction, this.projectileSpeed, this.damage, 20, fireballImg);
         p.rotate = false;
         p.pierce = false;
-}
+    }
 }
 
 let projectiles = [];
+
 function updateAllProjectiles(changeInTime) {
     for (let i = 0; i < projectiles.length; i++) {
         projectiles[i].update(changeInTime);
@@ -309,7 +310,7 @@ function checkCollisionBetweenProjectilesAndEnemies() {
     for (let i = 0; i < projectiles.length; i++) {
         for (let j = 0; j < enemies.length; j++) {
             if (circleCollision(projectiles[i].pos, projectiles[i].collisionRadius,
-                enemies[j].pos, enemies[j].collisionRadius)) {
+                    enemies[j].pos, enemies[j].collisionRadius)) {
                 enemies[j].takeDamage(projectiles[i].damage, projectiles[i]);
                 projectiles[i].onCollision();
 
