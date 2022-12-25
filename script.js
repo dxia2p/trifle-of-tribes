@@ -4,7 +4,7 @@ canvas.width = "854";
 canvas.height = "480";
 
 // Add HTML Elements (Buttons)
-let goldTestEl = document.getElementById("goldTest");
+let goldTestEl = document.getElementById("gold-test");
 let buildingBtnArray = [
     document.getElementById("building-btn-1"),
     document.getElementById("building-btn-2"),
@@ -145,12 +145,12 @@ requestAnimationFrame(loop);
 function goldLevelIncrease() {
     goldStorageCost *= 4;
     goldLevel *= 2;
-    document.getElementById("upgradeCost").innerHTML = goldStorageCost;
+    document.getElementById("upgrade-cost").innerHTML = goldStorageCost;
 }
 
 window.setInterval(() => {
     gold += goldLevel;
-    document.getElementById("goldAmount").innerHTML = gold;
+    document.getElementById("gold-amount").innerHTML = gold;
 
     // Check if buildings can be bought
     for (let i = 0; i < costsArray.length; i++) {
@@ -390,7 +390,7 @@ function spawnWave() {
         }
         dragonAmount += 1;
     }
-    document.getElementById("waveNumberIndicator").innerHTML = waveNumber;
+    document.getElementById("wave-number-indicator").innerHTML = waveNumber;
 }
 
 setInterval(spawnWave, 20000);
