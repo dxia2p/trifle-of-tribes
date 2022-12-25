@@ -71,7 +71,7 @@ class HealthBar {
 
 class Enemy { // Base enemy class
     projectilesHit = [];
-    attackRange = 5;
+    attackRange = 8;
     maxTimeBtwAttack = 1;
     timeBtwAttack = 1;
     damage = 50;

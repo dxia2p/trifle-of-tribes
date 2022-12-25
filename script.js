@@ -113,12 +113,13 @@ function keyupHandler(event) {
 let prevTime = 0;
 let changeInTime = 0;
 let gameOver = false;
+let cameraSpeed = 150;
 gold += 10000; // temp
 function loop(time) {
     changeInTime = (time - prevTime) / 1000;
-    cam.pos.y += upDownValue;
-    cam.pos.x += leftRightValue;
-
+    cam.pos.y += upDownValue * changeInTime * cameraSpeed;
+    cam.pos.x += leftRightValue * changeInTime * cameraSpeed;
+    
     setMouseRectPos(mousePos);
     drawBuildingTemplate(mousePos);
     canvas.width = 0.7 * window.innerWidth;
