@@ -78,18 +78,25 @@ let upDownValue = 0;
 let leftRightValue = 0;
 
 function keydownHandler(event) {
-    if (event.code === "KeyW") {
-        upDownValue = 3;
-    } else if (event.code === "KeyS") {
-        upDownValue = -3;
-    } else if (event.code === "KeyA") {
-        leftRightValue = -3;
-    } else if (event.code === "KeyD") {
-        leftRightValue = 3;
-    } else if (event.code === "Backspace") {
-        deleteBuilding();
-    } else if (event.code === "KeyR") {
-        repairBuilding();
+    switch (event.code) {
+        case "KeyW":
+            upDownValue = 3;
+            break;
+        case "KeyS":
+            upDownValue = -3;
+            break;
+        case "KeyA":
+            leftRightValue = -3;
+            break;
+        case "KeyD":
+            leftRightValue = 3;
+            break;
+        case "Backspace":
+            deleteBuilding();
+            break;
+        case "KeyR":
+            repairBuilding();
+            break;
     }
 }
 
