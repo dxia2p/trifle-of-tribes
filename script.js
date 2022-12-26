@@ -114,12 +114,11 @@ let prevTime = 0;
 let changeInTime = 0;
 let gameOver = false;
 let cameraSpeed = 150;
-gold += 10000; // temp
 function loop(time) {
     changeInTime = (time - prevTime) / 1000;
     cam.pos.y += upDownValue * changeInTime * cameraSpeed;
     cam.pos.x += leftRightValue * changeInTime * cameraSpeed;
-    
+
     setMouseRectPos(mousePos);
     drawBuildingTemplate(mousePos);
     canvas.width = 0.7 * window.innerWidth;
@@ -329,7 +328,6 @@ function repairBuilding() {
     }
 }
 
-setInterval(spawnGoblin, 0);
 
 function spawnGoblin() {
     let dist = 2000;
@@ -397,7 +395,9 @@ function spawnWave() {
     document.getElementById("wave-number-indicator").innerHTML = waveNumber;
 }
 
-setInterval(spawnWave, 20000);
+setInterval(spawnWave, 60000);
+let increaseGoblinRate = waveNumber * 50
+setInterval(spawnGoblin, 4000 - increaseGoblinRate);
 
 function checkGameOver() {
     if (gameOver) {
