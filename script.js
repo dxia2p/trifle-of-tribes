@@ -314,9 +314,10 @@ function repairBuilding() {
         if (rectangleOverlap(mouseRect.pos, mouseRect.width, mouseRect.height, placedBuildings[i].pos, placedBuildings[i].gridWidth * GRID_SIZE, placedBuildings[i].gridHeight * GRID_SIZE)) {
             let pb = placedBuildings[i];
             if (pb.buildingType === -1) {
-                break;
+                return; // the building the cursor is hovering over is the gold storage, then return because the gold storage cannot be upgraded and we also do not need to check any more buildings because only one building can be in a grid square at a time
             }
             let goldCost = Math.floor((1 - (pb.health / pb.maxHealth)) * costsArray[pb.buildingType]);
+            console.log(costsArray[pb.buildingType]);
             if (goldCost <= gold) {
                 pb.repairToMax();
                 gold -= goldCost;

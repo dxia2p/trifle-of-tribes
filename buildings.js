@@ -135,7 +135,7 @@ class RockThrower extends Building {
 
 
 class Spearman extends Building {
-    buidlingType = 1;
+    buildingType = 1;
     maxTimeBtwAttack = 0.8;
     timeBtwAttack = 0.8;
     range = 70;
@@ -174,7 +174,7 @@ class Spearman extends Building {
 }
 
 class Bowman extends Building {
-    buidlingType = 2
+    buildingType = 2
     maxTimeBtwAttack = 0.5;
     timeBtwAttack = 0.5;
     range = 350;
