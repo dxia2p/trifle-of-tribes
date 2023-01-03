@@ -16,7 +16,7 @@ class BuildingTemplate { // class for building preview (not actual buildings)
     }
 }
 
-class Building {
+class Building { // base class for building
     constructor(pos, gridWidth, gridHeight, maxHealth, spriteRenderer) {
         this.gridWidth = gridWidth;
         this.gridHeight = gridHeight;
@@ -28,7 +28,7 @@ class Building {
         this.healthBar = new HealthBar(new Vector2(this.pos.x, this.pos.y), this.spriteRenderer.width - 5, 10, "green");
         this.healthBar.offset.y = 32;
 
-        this.cornerPoints = [
+        this.cornerPoints = [ // coordinates of the corners of the buildings
             new Vector2(this.pos.x - (this.gridWidth * GRID_SIZE / 2), this.pos.y + (this.gridHeight * GRID_SIZE / 2)),
             new Vector2(this.pos.x + (this.gridWidth * GRID_SIZE / 2), this.pos.y + (this.gridHeight * GRID_SIZE / 2)),
             new Vector2(this.pos.x + (this.gridWidth * GRID_SIZE / 2), this.pos.y - (this.gridHeight * GRID_SIZE / 2)),
@@ -267,7 +267,7 @@ class Wall extends Building {
     }
 }
 
-class Projectile {
+class Projectile { // projectile class
     lifetime = 1;
     rotate = false;
     pierce = false;
