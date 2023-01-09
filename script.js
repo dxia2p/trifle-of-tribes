@@ -105,7 +105,7 @@ function keyupHandler(event) {
 
 let prevTime = 0;
 let changeInTime = 0;
-gold += 10000; // temp
+//gold += 10000; // temp
 function loop(time) {
     changeInTime = (time - prevTime) / 1000;
     cam.pos.y += upDownValue;
