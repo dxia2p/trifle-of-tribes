@@ -4,7 +4,7 @@ canvas.width = "854";
 canvas.height = "480";
 
 // Add HTML Elements (Buttons)
-let goldTestEl = document.getElementById("goldTest");
+let goldTestEl = document.getElementById("gold-test");
 let buildingBtnArray = [
     document.getElementById("building-btn-1"),
     document.getElementById("building-btn-2"),
@@ -37,7 +37,7 @@ let square = new RectRenderer(new Vector2(0, 0), BACKGROUND_SIZE, BACKGROUND_SIZ
 let backgroundSquares = [];
 let offsetRow = false;
 
-for (let y = (BACKGROUND_SIZE / 2); y > -(BACKGROUND_SIZE / 2); y -= GRID_SIZE) {
+for (let y = (BACKGROUND_SIZE / 2); y > -(BACKGROUND_SIZE / 2); y -= GRID_SIZE) { // loop to draw the squares in background
     if (!offsetRow) {
         for (let x = BACKGROUND_SIZE / -2; x < BACKGROUND_SIZE / 2; x += GRID_SIZE * 2) {
             backgroundSquares.push(new RectRenderer(new Vector2(x, y), GRID_SIZE, GRID_SIZE, "#78D03B", 1, cam));
@@ -56,8 +56,6 @@ let mouseRect = new RectRenderer(new Vector2(0, 0), GRID_SIZE, GRID_SIZE, "#FFFF
 let mousePos = new Vector2(0, 0);
 document.addEventListener('mousemove', (event) => {
     mousePos = getMousePos(canvas, event);
-    //drawBuildingTemplate(mousePos);
-    //setMouseRectPos(mousePos);
 });
 
 function setMouseRectPos(mp) {
@@ -65,10 +63,9 @@ function setMouseRectPos(mp) {
     mouseRect.pos.y = -Math.round((mp.y - cam.pos.y) / 30) * 30; // reversed because if not selecting square is broken
 }
 
-function getMousePos(cnv, evt) {
+function getMousePos(cnv, evt) { // get the mouse's position in game
     var rect = cnv.getBoundingClientRect();
     return new Vector2((evt.clientX - rect.left) - cnv.width / 2, (evt.clientY - rect.top) - cnv.height / 2);
-
 }
 
 // Camera Movement
@@ -78,18 +75,25 @@ let upDownValue = 0;
 let leftRightValue = 0;
 
 function keydownHandler(event) {
-    if (event.code === "KeyW") {
-        upDownValue = 3;
-    } else if (event.code === "KeyS") {
-        upDownValue = -3;
-    } else if (event.code === "KeyA") {
-        leftRightValue = -3;
-    } else if (event.code === "KeyD") {
-        leftRightValue = 3;
-    } else if (event.code === "Backspace") {
-        deleteBuilding();
-    } else if(event.code === "KeyR"){
-        repairBuilding();
+    switch (event.code) {
+        case "KeyW":
+            upDownValue = 3;
+            break;
+        case "KeyS":
+            upDownValue = -3;
+            break;
+        case "KeyA":
+            leftRightValue = -3;
+            break;
+        case "KeyD":
+            leftRightValue = 3;
+            break;
+        case "Backspace":
+            deleteBuilding();
+            break;
+        case "KeyR":
+            repairBuilding();
+            break;
     }
 }
 
@@ -101,25 +105,23 @@ function keyupHandler(event) {
     }
 }
 
-// Main Game Loop--------------------------------------------------------
-
+// Main Game Loop
 let prevTime = 0;
 let changeInTime = 0;
-//gold += 10000; // temp
+let gameOver = false;
+let cameraSpeed = 150;
 function loop(time) {
     changeInTime = (time - prevTime) / 1000;
-    cam.pos.y += upDownValue;
-    cam.pos.x += leftRightValue;
+    cam.pos.y += upDownValue * changeInTime * cameraSpeed;
+    cam.pos.x += leftRightValue * changeInTime * cameraSpeed;
 
-    
     setMouseRectPos(mousePos);
     drawBuildingTemplate(mousePos);
-    canvas.width = 0.6 * window.innerWidth;
+    canvas.width = 0.7 * window.innerWidth;
     canvas.height = 0.6 * window.innerHeight;
     cam.width = canvas.width;
     cam.height = canvas.height;
     cam.update(changeInTime);
-    //cam.cameraShake(5, 0.02, 0.3)
 
     updateAllBuildings(changeInTime);
     updateAllProjectiles(changeInTime);
@@ -127,10 +129,11 @@ function loop(time) {
     updateAllParticleSystems(changeInTime);
 
     checkCollisionBetweenProjectilesAndEnemies();
-    drawAll(ctx);
-    prevTime = time;
-    requestAnimationFrame(loop);
-
+    if (!checkGameOver()) {
+        drawAll(ctx);
+        prevTime = time;
+        requestAnimationFrame(loop);
+    }
 }
 requestAnimationFrame(loop);
 
@@ -138,12 +141,12 @@ requestAnimationFrame(loop);
 function goldLevelIncrease() {
     goldStorageCost *= 4;
     goldLevel *= 2;
-    document.getElementById("upgradeCost").innerHTML = goldStorageCost;
+    document.getElementById("upgrade-cost").innerHTML = goldStorageCost;
 }
 
 window.setInterval(() => {
     gold += goldLevel;
-    document.getElementById("goldAmount").innerHTML = gold;
+    document.getElementById("gold-amount").innerHTML = gold;
 
     // Check if buildings can be bought
     for (let i = 0; i < costsArray.length; i++) {
@@ -167,7 +170,7 @@ let buildingTemplates = [ // transparent previews for the buildings
 ];
 
 function selectBuilding(buildingType) {
-    if(selectedBuilding !== -1){
+    if (selectedBuilding !== -1) {
         buildingTemplates[selectedBuilding].pos.x = 10000; // set the building template's position to somewhere far away so it doesn't show up
     }
     if (buildingType === selectedBuilding) {
@@ -187,7 +190,9 @@ goldTestEl.addEventListener("click", () => {
 });
 
 for (let i = 0; i < buildingBtnArray.length; i++) {
-    buildingBtnArray[i].addEventListener("click", () => { selectBuilding(i) })
+    buildingBtnArray[i].addEventListener("click", () => {
+        selectBuilding(i)
+    })
 }
 
 // Place Gold Storage
@@ -221,7 +226,7 @@ document.addEventListener('mousedown', (event) => {
     // Place Building Here
     for (let i = 0; i < placedBuildings.length; i++) {
         if (rectangleOverlap(buildingTemplates[selectedBuilding].pos, buildingTemplates[selectedBuilding].gridWidth * GRID_SIZE, buildingTemplates[selectedBuilding].gridHeight * GRID_SIZE,
-            placedBuildings[i].pos, placedBuildings[i].gridWidth * GRID_SIZE, placedBuildings[i].gridHeight * GRID_SIZE)) {
+                placedBuildings[i].pos, placedBuildings[i].gridWidth * GRID_SIZE, placedBuildings[i].gridHeight * GRID_SIZE)) {
             return;
         }
     }
@@ -297,86 +302,111 @@ function deleteBuilding() {
     }
 }
 
-function repairBuilding(){
+function repairBuilding() {
     if (mousePos.x < -canvas.width / 2 || mousePos.x > canvas.width / 2 || mousePos.y > canvas.height / 2 || mousePos.y < -canvas.height / 2) {
         return;
     }
     for (let i = 0; i < placedBuildings.length; i++) {
-        if (rectangleOverlap(mouseRect.pos, mouseRect.width, mouseRect.height, placedBuildings[i].pos, placedBuildings[i].gridWidth * GRID_SIZE, placedBuildings[i].gridHeight * GRID_SIZE)) {
+        if (rectangleOverlap(mouseRect.pos, mouseRect.width, mouseRect.height, placedBuildings[i].pos, placedBuildings[i].gridWidth * GRID_SIZE, placedBuildings[i].gridHeight * GRID_SIZE)) { // check if mouse is overlapping building
             let pb = placedBuildings[i];
-            if(pb.buildingType === -1){
-                break;
+            if (pb.buildingType === -1) {
+                return; // the building the cursor is hovering over is the gold storage, then return because the gold storage cannot be upgraded and we also do not need to check any more buildings because only one building can be in a grid square at a time
             }
             let goldCost = Math.floor((1 - (pb.health / pb.maxHealth)) * costsArray[pb.buildingType]);
-            if(goldCost <= gold){
+            console.log(costsArray[pb.buildingType]);
+            if (goldCost <= gold) {
                 pb.repairToMax();
                 gold -= goldCost;
                 console.log("Repair Successful!");
-            }else{
+            } else {
                 console.log("Not Enough Gold to Repair!");
             }
+            return; // return because there can only be one building on any tile so once we have found a building and repaired it we don't need to check all other buildings
         }
     }
 }
 
-setInterval(spawnGoblin, 6000);
+
 function spawnGoblin() {
+    let dist = 2000;
     let randAngle = 2 * Math.PI * Math.random();
-    let coords = new Vector2(Math.cos(randAngle) * 1000, Math.sin(randAngle) * 1000);
+    let coords = new Vector2(Math.cos(randAngle) * dist, Math.sin(randAngle) * dist);
     new Goblin(coords);
 }
 
 
 function spawnOrc() {
+    let dist = 1000;
     let randAngle = 2 * Math.PI * Math.random();
-    let coords = new Vector2(Math.cos(randAngle) * 500, Math.sin(randAngle) * 500);
+    let coords = new Vector2(Math.cos(randAngle) * dist, Math.sin(randAngle) * dist);
     new Orc(coords);
 }
 
 
 function spawnTroll() {
+    let dist = 1000;
     let randAngle = 2 * Math.PI * Math.random();
-    let coords = new Vector2(Math.cos(randAngle) * 500, Math.sin(randAngle) * 500);
+    let coords = new Vector2(Math.cos(randAngle) * dist, Math.sin(randAngle) * dist);
     new Troll(coords);
 }
 
 
 function spawnDragon() {
+    let dist = 1000;
     let randAngle = 2 * Math.PI * Math.random();
-    let coords = new Vector2(Math.cos(randAngle) * 500, Math.sin(randAngle) * 500);
+    let coords = new Vector2(Math.cos(randAngle) * dist, Math.sin(randAngle) * dist);
     new Dragon(coords);
 }
 
-let goblinAmount = 6, trollAmount = 3, orcAmount = 2, dragonAmount = 1;
+let goblinAmount = 6,
+    trollAmount = 3,
+    orcAmount = 2,
+    dragonAmount = 1;
 let waveNumber = 0;
+
 function spawnWave() {
     waveNumber++
-    console.log(waveNumber);
     if (waveNumber >= 0) {
         for (let n = 0; n < goblinAmount; n++) {
-            spawnGoblin(); 
+            spawnGoblin();
         }
         goblinAmount += 6;
-    } 
+    }
     if (waveNumber >= 6) {
         for (let n = 0; n < trollAmount; n++) {
-            spawnTroll(); 
+            spawnTroll();
         }
         trollAmount += 3;
-    } 
+    }
     if (waveNumber >= 12) {
         for (let n = 0; n < orcAmount; n++) {
-            spawnOrc(); 
+            spawnOrc();
         }
         orcAmount += 2;
     }
     if (waveNumber >= 18) {
         for (let n = 0; n < dragonAmount; n++) {
-            spawnDragon(); 
+            spawnDragon();
         }
         dragonAmount += 1;
     }
+    document.getElementById("wave-number-indicator").innerHTML = waveNumber;
 }
 
-setInterval(spawnWave, 20000)
-document.getElementById("waveNumberIndicator").innerHTML = waveNumber;
+setInterval(spawnWave, 30000);
+let increaseGoblinRate = waveNumber * 50
+setInterval(spawnGoblin, 4000 - increaseGoblinRate);
+
+function checkGameOver() {
+    if (gameOver) {
+        ctx.fillStyle = "black";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "red";
+        ctx.font = "48px Times New Roman";
+        ctx.textAlign = "center";
+        ctx.fillText("Game Over", canvas.width / 2, canvas.height / 2);
+        return true;
+    } else {
+        return false;
+    }
+}

@@ -1,14 +1,15 @@
 let enemies = [];
+
 function updateAllEnemies(changeInTime) {
     for (let i = 0; i < enemies.length; i++) {
         enemies[i].update(changeInTime);
     }
 }
 
-function getClosestEnemy(pos) {
+function getClosestEnemy(pos) { // returns the closest enemy to the position given
     let closestDistSquared = 99999999;
     let closestEnemy;
-    for (let i = 0; i < enemies.length; i++) {
+    for (let i = 0; i < enemies.length; i++) { // loop through all enemies to check their distance to given point
         let distSq = (enemies[i].pos.y - pos.y) ** 2 + (enemies[i].pos.x - pos.x) ** 2;
         if (distSq < closestDistSquared) {
             closestDistSquared = distSq;
@@ -27,7 +28,6 @@ function rayCastAgainstBuildings(myPos, direction, length) {
     for (let i = 0; i < placedBuildings.length; i++) {
         if (isIntersecting(myPos, endPoint, placedBuildings[i].cornerPoints[0], placedBuildings[i].cornerPoints[1])) {
             return placedBuildings[i];
-
         } else if (isIntersecting(myPos, endPoint, placedBuildings[i].cornerPoints[1], placedBuildings[i].cornerPoints[2])) {
             return placedBuildings[i];
         } else if (isIntersecting(myPos, endPoint, placedBuildings[i].cornerPoints[2], placedBuildings[i].cornerPoints[3])) {
@@ -70,7 +70,7 @@ class HealthBar {
 
 class Enemy { // Base enemy class
     projectilesHit = [];
-    attackRange = 5;
+    attackRange = 8;
     maxTimeBtwAttack = 1;
     timeBtwAttack = 1;
     damage = 50;
@@ -79,9 +79,7 @@ class Enemy { // Base enemy class
         this.maxHealth = maxHealth;
         this.health = maxHealth;
         this.sr = sr;
-
         this.healthBar = new HealthBar(new Vector2(pos.x, pos.y), this.sr.width, 5, "red");
-
         this.collisionRadius = collisionRadius;
         this.speed = speed;
         enemies.push(this);
@@ -89,7 +87,6 @@ class Enemy { // Base enemy class
 
     update(time) {
         let dir = new Vector2(this.pos.unit().x * -1, this.pos.unit().y * -1);
-
         this.healthBar.healthBarUpdate(this.pos);
         let result = rayCastAgainstBuildings(this.pos, dir, this.attackRange);
 
@@ -122,7 +119,7 @@ class Enemy { // Base enemy class
         this.projectilesHit.push(projectile);
         let psPos = new Vector2((projectile.pos.x + this.pos.x) / 2, (projectile.pos.y + this.pos.y) / 2);
         let ps = new ParticleSystem(psPos, new RectRenderer(new Vector2(0, 0), 5, 5, "red", 1, cam), 15, 100, 0.15, true);
-        for(let i = 0; i < ps.particles.length; i++){ // apply random lifetime and size
+        for (let i = 0; i < ps.particles.length; i++) { // apply random lifetime and size
             let p = ps.particles[i];
             p.lifetime = randomRange(0.1, 0.2);
             let randSize = randomRange(3, 6);
@@ -136,8 +133,6 @@ class Enemy { // Base enemy class
         this.sr.removeFromDrawList();
         this.healthBar.destroy();
         this.healthBar = null;
-
-        //this.sr = null;
         enemies.splice(enemies.indexOf(this), 1);
     }
 }
@@ -146,7 +141,7 @@ class Goblin extends Enemy {
     constructor(pos) {
         super(pos, 100, 100, 30, new SpriteRenderer(pos, 30, 30, 1, goblinImg, cam));
         this.maxTimeBtwAttack = 0.5;
-        this.timeBtwAttack = 0.5;
+        this.timeBtwAttack = 0;
         this.damage = 10;
     }
 
@@ -159,6 +154,9 @@ class Orc extends Enemy {
     constructor(pos) {
         super(pos, 1000, 25, 90, new SpriteRenderer(pos, 90, 90, 1, orcImg, cam));
         this.healthBar.offset.y += 22;
+        this.maxTimeBtwAttack = 2;
+        this.timeBtwAttack = 0;
+        this.damage = 60;
     }
 
     update(time) {
@@ -170,6 +168,9 @@ class Troll extends Enemy {
     constructor(pos) {
         super(pos, 500, 50, 60, new SpriteRenderer(pos, 60, 60, 1, trollImg, cam));
         this.healthBar.offset.y += 15;
+        this.maxTimeBtwAttack = 1;
+        this.timeBtwAttack = 0;
+        this.damage = 25;
     }
 
     update(time) {
@@ -182,6 +183,9 @@ class Dragon extends Enemy {
     constructor(pos) {
         super(pos, 2000, 15, 60, new SpriteRenderer(pos, 135, 135, 1, dragonImg, cam));
         this.healthBar.offset.y += 55;
+        this.maxTimeBtwAttack = 5;
+        this.timeBtwAttack = 0;
+        this.damage = 200;
     }
 
     update(time) {
