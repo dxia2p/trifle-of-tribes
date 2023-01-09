@@ -37,7 +37,7 @@ let square = new RectRenderer(new Vector2(0, 0), BACKGROUND_SIZE, BACKGROUND_SIZ
 let backgroundSquares = [];
 let offsetRow = false;
 
-for (let y = (BACKGROUND_SIZE / 2); y > -(BACKGROUND_SIZE / 2); y -= GRID_SIZE) {
+for (let y = (BACKGROUND_SIZE / 2); y > -(BACKGROUND_SIZE / 2); y -= GRID_SIZE) { // loop to draw the squares in background
     if (!offsetRow) {
         for (let x = BACKGROUND_SIZE / -2; x < BACKGROUND_SIZE / 2; x += GRID_SIZE * 2) {
             backgroundSquares.push(new RectRenderer(new Vector2(x, y), GRID_SIZE, GRID_SIZE, "#78D03B", 1, cam));
@@ -63,10 +63,9 @@ function setMouseRectPos(mp) {
     mouseRect.pos.y = -Math.round((mp.y - cam.pos.y) / 30) * 30; // reversed because if not selecting square is broken
 }
 
-function getMousePos(cnv, evt) {
+function getMousePos(cnv, evt) { // get the mouse's position in game
     var rect = cnv.getBoundingClientRect();
     return new Vector2((evt.clientX - rect.left) - cnv.width / 2, (evt.clientY - rect.top) - cnv.height / 2);
-
 }
 
 // Camera Movement
@@ -308,12 +307,13 @@ function repairBuilding() {
         return;
     }
     for (let i = 0; i < placedBuildings.length; i++) {
-        if (rectangleOverlap(mouseRect.pos, mouseRect.width, mouseRect.height, placedBuildings[i].pos, placedBuildings[i].gridWidth * GRID_SIZE, placedBuildings[i].gridHeight * GRID_SIZE)) {
+        if (rectangleOverlap(mouseRect.pos, mouseRect.width, mouseRect.height, placedBuildings[i].pos, placedBuildings[i].gridWidth * GRID_SIZE, placedBuildings[i].gridHeight * GRID_SIZE)) { // check if mouse is overlapping building
             let pb = placedBuildings[i];
             if (pb.buildingType === -1) {
-                break;
+                return; // the building the cursor is hovering over is the gold storage, then return because the gold storage cannot be upgraded and we also do not need to check any more buildings because only one building can be in a grid square at a time
             }
             let goldCost = Math.floor((1 - (pb.health / pb.maxHealth)) * costsArray[pb.buildingType]);
+            console.log(costsArray[pb.buildingType]);
             if (goldCost <= gold) {
                 pb.repairToMax();
                 gold -= goldCost;
@@ -321,6 +321,7 @@ function repairBuilding() {
             } else {
                 console.log("Not Enough Gold to Repair!");
             }
+            return; // return because there can only be one building on any tile so once we have found a building and repaired it we don't need to check all other buildings
         }
     }
 }
@@ -392,7 +393,7 @@ function spawnWave() {
     document.getElementById("wave-number-indicator").innerHTML = waveNumber;
 }
 
-setInterval(spawnWave, 60000);
+setInterval(spawnWave, 30000);
 let increaseGoblinRate = waveNumber * 50
 setInterval(spawnGoblin, 4000 - increaseGoblinRate);
 

@@ -27,7 +27,7 @@ function getOrientation(p, q, r) {
         return 2;
     }
 }
-function onSegment(p, q, r) {
+function onSegment(p, q, r) {// returns if a point is on a line segment
     if (q.x <= Math.max(p.x, r.x) && q.x >= Math.min(p.x, r.x) &&
         q.y <= Math.max(p.y, r.y) && q.y >= Math.min(p.y, r.y))
         return true;

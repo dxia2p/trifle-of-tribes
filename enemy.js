@@ -6,10 +6,10 @@ function updateAllEnemies(changeInTime) {
     }
 }
 
-function getClosestEnemy(pos) {
+function getClosestEnemy(pos) { // returns the closest enemy to the position given
     let closestDistSquared = 99999999;
     let closestEnemy;
-    for (let i = 0; i < enemies.length; i++) {
+    for (let i = 0; i < enemies.length; i++) { // loop through all enemies to check their distance to given point
         let distSq = (enemies[i].pos.y - pos.y) ** 2 + (enemies[i].pos.x - pos.x) ** 2;
         if (distSq < closestDistSquared) {
             closestDistSquared = distSq;
@@ -28,7 +28,6 @@ function rayCastAgainstBuildings(myPos, direction, length) {
     for (let i = 0; i < placedBuildings.length; i++) {
         if (isIntersecting(myPos, endPoint, placedBuildings[i].cornerPoints[0], placedBuildings[i].cornerPoints[1])) {
             return placedBuildings[i];
-
         } else if (isIntersecting(myPos, endPoint, placedBuildings[i].cornerPoints[1], placedBuildings[i].cornerPoints[2])) {
             return placedBuildings[i];
         } else if (isIntersecting(myPos, endPoint, placedBuildings[i].cornerPoints[2], placedBuildings[i].cornerPoints[3])) {
