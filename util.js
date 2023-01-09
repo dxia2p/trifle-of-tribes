@@ -1,6 +1,7 @@
 class Vector2 {
     x = 0;
     y = 0;
+
     constructor(x, y) {
         this.x = x;
         this.y = y;
@@ -18,11 +19,8 @@ class Vector2 {
 
 // line segment intersection
 function getOrientation(p, q, r) {
-    let val = (q.y - p.y) * (r.x - q.x) -
-        (q.x - p.x) * (r.y - q.y); // get the difference between slopes of the lines
-
+    let val = (q.y - p.y) * (r.x - q.x) - (q.x - p.x) * (r.y - q.y); // get the difference between slopes of the lines
     if (val == 0) return 0; // collinear
-
     if (val > 0) {
         return 1;
     } else {
@@ -33,7 +31,6 @@ function onSegment(p, q, r) {
     if (q.x <= Math.max(p.x, r.x) && q.x >= Math.min(p.x, r.x) &&
         q.y <= Math.max(p.y, r.y) && q.y >= Math.min(p.y, r.y))
         return true;
-
     return false;
 }
 // returns if 2 lines p1 q1 and p2 q2 are intersecting
@@ -43,7 +40,6 @@ function isIntersecting(p1, q1, p2, q2) {
     let o2 = getOrientation(p1, q1, q2);
     let o3 = getOrientation(p2, q2, p1);
     let o4 = getOrientation(p2, q2, q1);
-
     if (o1 != o2 && o3 != o4)
         return true;
 

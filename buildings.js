@@ -11,8 +11,7 @@ class BuildingTemplate { // class for building preview (not actual buildings)
         this.pos = pos;
         this.gridWidth = gridWidth;
         this.gridHeight = gridHeight;
-        this.spriteRenderer = new SpriteRenderer(this.pos, this.gridWidth * GRID_SIZE,
-            this.gridHeight * GRID_SIZE, 0.7, img, cam);
+        this.spriteRenderer = new SpriteRenderer(this.pos, this.gridWidth * GRID_SIZE, this.gridHeight * GRID_SIZE, 0.7, img, cam);
     }
 }
 
@@ -24,10 +23,8 @@ class Building {
         this.maxHealth = maxHealth;
         this.health = maxHealth;
         this.spriteRenderer = spriteRenderer;
-
         this.healthBar = new HealthBar(new Vector2(this.pos.x, this.pos.y), this.spriteRenderer.width - 5, 10, "green");
         this.healthBar.offset.y = 32;
-
         this.cornerPoints = [
             new Vector2(this.pos.x - (this.gridWidth * GRID_SIZE / 2), this.pos.y + (this.gridHeight * GRID_SIZE / 2)),
             new Vector2(this.pos.x + (this.gridWidth * GRID_SIZE / 2), this.pos.y + (this.gridHeight * GRID_SIZE / 2)),
@@ -106,7 +103,6 @@ class RockThrower extends Building {
         let gridWidth = 2;
         let gridHeight = 2;
         let sr = new SpriteRenderer(pos, GRID_SIZE * gridWidth, GRID_SIZE * gridHeight, 1, rockThrowerImg, cam);
-
         super(pos, gridWidth, gridHeight, maxHealth, sr);
     }
 
@@ -132,8 +128,6 @@ class RockThrower extends Building {
     }
 }
 
-
-
 class Spearman extends Building {
     buidlingType = 1;
     maxTimeBtwAttack = 0.8;
@@ -142,12 +136,12 @@ class Spearman extends Building {
     projectileSpeed = 900;
     damage = 120;
     lifetime = 0.1;
+
     constructor(pos) {
         let maxHealth = 400;
         let gridWidth = 2;
         let gridHeight = 2;
         let sr = new SpriteRenderer(pos, GRID_SIZE * gridWidth, GRID_SIZE * gridHeight, 1, spearmanImg, cam);
-
         super(pos, gridWidth, gridHeight, maxHealth, sr);
     }
     
@@ -166,7 +160,6 @@ class Spearman extends Building {
 
     attack(closestEnemyPos) {
         let direction = new Vector2(closestEnemyPos.x - this.pos.x, closestEnemyPos.y - this.pos.y).unit();
-
         let p = new Projectile(new Vector2(this.pos.x, this.pos.y), direction, this.projectileSpeed, this.damage, 20, spearImg);
         p.rotate = false;
         p.pierce = false;
@@ -180,6 +173,7 @@ class Bowman extends Building {
     range = 350;
     projectileSpeed = 900;
     damage = 60;
+
     constructor(pos) {
         let maxHealth = 150;
         let gridWidth = 2;
@@ -217,6 +211,7 @@ class Mageman extends Building {
     range = 200;
     projectileSpeed = 400;
     damage = 250;
+
     constructor(pos) {
         let maxHealth = 150;
         let gridWidth = 2;
@@ -240,7 +235,6 @@ class Mageman extends Building {
 
     attack(closestEnemyPos) {
         let direction = new Vector2(closestEnemyPos.x - this.pos.x, closestEnemyPos.y - this.pos.y).unit();
-
         let p = new Projectile(new Vector2(this.pos.x, this.pos.y), direction, this.projectileSpeed, this.damage, 20, fireballImg);
         p.rotate = false;
         p.pierce = false;
@@ -262,7 +256,6 @@ class Wall extends Building {
         let gridWidth = 1;
         let gridHeight = 1;
         let sr = new SpriteRenderer(pos, GRID_SIZE * gridWidth, GRID_SIZE * gridHeight, 1, wallImg, cam);
-
         super(pos, gridWidth, gridHeight, maxHealth, sr);
     }
 }
@@ -272,10 +265,10 @@ class Projectile {
     rotate = false;
     pierce = false;
     destroySelf = false;
+
     constructor(pos, direction, speed, damage, collisionRadius, img) {
         this.pos = pos;
         this.direction = direction;
-
         this.speed = speed;
         this.damage = damage;
         this.collisionRadius = collisionRadius;
@@ -287,7 +280,6 @@ class Projectile {
     update(time) {
         if (this.lifetime <= 0 || this.destroySelf) {
             this.destroy();
-
         } else {
             this.lifetime -= time;
             if (this.rotate) {
@@ -319,7 +311,6 @@ function checkCollisionBetweenProjectilesAndEnemies() {
                     enemies[j].pos, enemies[j].collisionRadius)) {
                 enemies[j].takeDamage(projectiles[i].damage, projectiles[i]);
                 projectiles[i].onCollision();
-
             }
         }
     }

@@ -80,9 +80,7 @@ class Enemy { // Base enemy class
         this.maxHealth = maxHealth;
         this.health = maxHealth;
         this.sr = sr;
-
         this.healthBar = new HealthBar(new Vector2(pos.x, pos.y), this.sr.width, 5, "red");
-
         this.collisionRadius = collisionRadius;
         this.speed = speed;
         enemies.push(this);
@@ -90,7 +88,6 @@ class Enemy { // Base enemy class
 
     update(time) {
         let dir = new Vector2(this.pos.unit().x * -1, this.pos.unit().y * -1);
-
         this.healthBar.healthBarUpdate(this.pos);
         let result = rayCastAgainstBuildings(this.pos, dir, this.attackRange);
 
@@ -137,8 +134,6 @@ class Enemy { // Base enemy class
         this.sr.removeFromDrawList();
         this.healthBar.destroy();
         this.healthBar = null;
-
-        //this.sr = null;
         enemies.splice(enemies.indexOf(this), 1);
     }
 }

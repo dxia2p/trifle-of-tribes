@@ -6,6 +6,7 @@ class Camera {
     shakeInterval = 0;
     shakeTime = 0;
     direction = new Vector2(0, 0);
+
     constructor(width, height, pos) {
         this.width = width;
         this.height = height;
@@ -25,7 +26,6 @@ class Camera {
                         this.pos.x -= this.direction.x;
                         this.pos.y -= this.direction.y;
                     }
-                    //console.log(this.shakeInterval)
                     this.shakeInterval -= time;
                 }
                 this.shakeTime -= time;
@@ -44,11 +44,9 @@ class Camera {
     }
 
     cameraShake(strength, shakeInterval, shakeTime) {
-        //console.log("AAAA")
         this.isShaking = true;
         this.shakeStrength = strength;
         this.maxShakeInterval = shakeInterval;
-        //this.shakeInterval = shakeInterval;
         this.shakeTime = shakeTime;
     }
 }
@@ -56,12 +54,15 @@ class Camera {
 class Renderer {
     //drawOrder = 0; // higher draw order means it is on top (DOESN'T WORK AND I DONT KNOW HOW TO MAKE IT WORK)
     render = true;
+
     constructor() {
         drawList.push(this);
     }
+
     draw() {
 
     }
+
     removeFromDrawList() {
         let i = drawList.indexOf(this);
         if (i !== -1) {
@@ -85,15 +86,14 @@ class RectRenderer extends Renderer {
         this.alpha = alpha;
         this.camera = camera;
     }
+
     draw(ctx) {
         if (!this.render)
             return;
         ctx.beginPath();
         ctx.fillStyle = this.color;
         ctx.globalAlpha = this.alpha;
-
-        ctx.rect((this.pos.x - (this.width / 2) - this.camera.pos.x + (this.camera.width / 2)),
-            (-this.pos.y - (this.height / 2) - (-this.camera.pos.y - this.camera.height / 2)), this.width, this.height);
+        ctx.rect((this.pos.x - (this.width / 2) - this.camera.pos.x + (this.camera.width / 2)), (-this.pos.y - (this.height / 2) - (-this.camera.pos.y - this.camera.height / 2)), this.width, this.height);
         ctx.fill();
         ctx.globalAlpha = 1;
     }
@@ -115,24 +115,22 @@ class SpriteRenderer extends Renderer {
         this.img = img;
         this.camera = camera;
     }
+
     draw(ctx) {
         if (!this.render)
             return;
         ctx.save();
-
-        //ctx.translate(this.width / 2, this.height / 2);
         let posOnCanvas = new Vector2((this.pos.x - this.camera.pos.x + (this.camera.width / 2)), -this.pos.y - (-this.camera.pos.y - this.camera.height / 2));
-
         ctx.translate(posOnCanvas.x, posOnCanvas.y);
         ctx.rotate(this.rotation);
         posOnCanvas = new Vector2(-(this.width / 2), -(this.height / 2));
         ctx.translate(posOnCanvas.x, posOnCanvas.y);
-
         ctx.globalAlpha = this.alpha;
         ctx.drawImage(this.img, 0, 0, this.width, this.height);
         ctx.globalAlpha = 1;
         ctx.restore();
     }
+
     clone(){
         return new SpriteRenderer(new Vector2(this.pos.x, this.pos.y), this.width, this.height, this.alpha, this.img, this.camera);
     }
@@ -150,6 +148,7 @@ class Particle {
     speed = 0;
     lifetime = 0;
     maxLifetime = 0;
+
     constructor(renderer) {
         this.renderer = renderer;
     }
@@ -159,7 +158,6 @@ class Particle {
         this.renderer.pos.y += this.direction.y * this.speed * time;
         if (this.lifetime <= 0) {
             this.renderer.render = false;
-
         } else {
             this.lifetime -= time;
         }
@@ -175,6 +173,7 @@ let particleSystems = [];
 class ParticleSystem {
     particles = [];
     isPlaying = false;
+
     constructor(pos, renderer, amount, speed, maxTime, destroyAfterPlay) {
         this.pos = pos;
         this.amount = amount;
@@ -193,8 +192,9 @@ class ParticleSystem {
             this.particles[i].maxLifetime = maxTime;
             this.particles[i].lifetime = maxTime;
         }
-        particleSystems.push(this)
+        particleSystems.push(this);
     }
+
     updateAll(time) {
         if (this.isPlaying) {
             for (let i = 0; i < this.particles.length; i++) {
@@ -209,6 +209,7 @@ class ParticleSystem {
             }
         }
     }
+
     stop() {
         if (!this.destroyAfterPlay) {
             this.isPlaying = false;
@@ -218,11 +219,10 @@ class ParticleSystem {
         } else {
             this.destroy();
         }
-
     }
+
     play() {
         this.isPlaying = true;
-
         for (let i = 0; i < this.particles.length; i++) {
             let p = this.particles[i];
             p.renderer.render = true;

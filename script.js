@@ -56,8 +56,6 @@ let mouseRect = new RectRenderer(new Vector2(0, 0), GRID_SIZE, GRID_SIZE, "#FFFF
 let mousePos = new Vector2(0, 0);
 document.addEventListener('mousemove', (event) => {
     mousePos = getMousePos(canvas, event);
-    //drawBuildingTemplate(mousePos);
-    //setMouseRectPos(mousePos);
 });
 
 function setMouseRectPos(mp) {
@@ -108,8 +106,7 @@ function keyupHandler(event) {
     }
 }
 
-// Main Game Loop--------------------------------------------------------
-
+// Main Game Loop
 let prevTime = 0;
 let changeInTime = 0;
 let gameOver = false;
